@@ -16,7 +16,9 @@ class PpeppModel extends Model
         'id_kriteria',
         'nested',
         'nama_ppepp',
-        'deskripsi'
+        'deskripsi',
+        'standar_minimum',
+        'skor'
     ];
     protected $perPage=99999999999999999999;
 

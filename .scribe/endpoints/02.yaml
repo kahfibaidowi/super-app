@@ -27,7 +27,7 @@ endpoints:
         name: username
         description: ''
         required: true
-        example: amet
+        example: voluptate
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -36,7 +36,7 @@ endpoints:
         name: email
         description: 'Must be a valid email address.'
         required: true
-        example: edyth.stracke@example.com
+        example: lmills@example.com
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -45,7 +45,7 @@ endpoints:
         name: password
         description: ''
         required: true
-        example: sequi
+        example: exercitationem
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -64,7 +64,7 @@ endpoints:
         name: nama_lengkap
         description: ''
         required: true
-        example: ut
+        example: animi
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -90,11 +90,11 @@ endpoints:
         exampleWasSpecified: false
         custom: []
     cleanBodyParameters:
-      username: amet
-      email: edyth.stracke@example.com
-      password: sequi
+      username: voluptate
+      email: lmills@example.com
+      password: exercitationem
       role: admin
-      nama_lengkap: ut
+      nama_lengkap: animi
       status: active
     fileParameters: []
     responses: []
@@ -129,13 +129,13 @@ endpoints:
         name: id
         description: 'The ID of the user.'
         required: true
-        example: tempore
+        example: non
         type: string
         enumValues: []
         exampleWasSpecified: false
         custom: []
     cleanUrlParameters:
-      id: tempore
+      id: non
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -152,7 +152,7 @@ endpoints:
         name: username
         description: ''
         required: true
-        example: odio
+        example: sequi
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -161,7 +161,7 @@ endpoints:
         name: email
         description: 'Must be a valid email address.'
         required: true
-        example: vgreenholt@example.com
+        example: ariel.volkman@example.net
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -179,7 +179,7 @@ endpoints:
         name: nama_lengkap
         description: ''
         required: true
-        example: magnam
+        example: autem
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -205,9 +205,9 @@ endpoints:
         exampleWasSpecified: false
         custom: []
     cleanBodyParameters:
-      username: odio
-      email: vgreenholt@example.com
-      nama_lengkap: magnam
+      username: sequi
+      email: ariel.volkman@example.net
+      nama_lengkap: autem
       status: active
     fileParameters: []
     responses: []
@@ -242,13 +242,13 @@ endpoints:
         name: id
         description: 'The ID of the user.'
         required: true
-        example: ut
+        example: nulla
         type: string
         enumValues: []
         exampleWasSpecified: false
         custom: []
     cleanUrlParameters:
-      id: ut
+      id: nulla
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -297,7 +297,7 @@ endpoints:
         name: per_page
         description: 'Must be at least 1.'
         required: false
-        example: 51
+        example: 23
         type: integer
         enumValues: []
         exampleWasSpecified: false
@@ -332,7 +332,7 @@ endpoints:
         exampleWasSpecified: false
         custom: []
     cleanQueryParameters:
-      per_page: 51
+      per_page: 23
       status: active
     bodyParameters: []
     cleanBodyParameters: []

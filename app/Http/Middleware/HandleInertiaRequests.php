@@ -34,6 +34,7 @@ class HandleInertiaRequests extends Middleware
             'auth'  =>[
                 'user'  =>isset($request['__data_user'])?$request['__data_user']:null
             ],
+            'kriteria'  =>isset($request['__data_user'])?\App\Repository\PpeppKriteriaRepo::gets([])['data']:null
         ];
     }
 }

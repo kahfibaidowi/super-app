@@ -92,10 +92,20 @@
 .modal{
     --tz-modal-border-radius: var(--tz-border-radius-lg);
 }
+.backdrop-nested{
+    z-index:1090;
+}
+.modal-nested,
+.offcanvas-nested{
+    z-index: 1095;
+}
 .modal-dialog{
     box-shadow: none;
     -webkit-box-shadow:none
 }
 .swal2-modal{
     max-width: 500px;
+}
+.side-nav-second-level a{
+    text-wrap: wrap !important;
 }

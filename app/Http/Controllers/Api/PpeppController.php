@@ -51,7 +51,17 @@ class PpeppController extends Controller
                 })
             ],
             'nama_ppepp'    =>"required",
-            'deskripsi'     =>"present"
+            'deskripsi'     =>"present",
+            'standar_minimum'=>"present",
+            'skor'          =>[
+                Rule::requiredIf(function()use($req){
+                    if(!isset($req['skor'])) return true;
+                    if($req['type']=="sub_ppepp") return true;
+                    return false;
+                }),
+                "integer",
+                "min:0"
+            ]
         ]);
         if($validation->fails()){
             return response()->json([
@@ -66,7 +76,9 @@ class PpeppController extends Controller
                 'id_kriteria'   =>trim($req['id_kriteria'])!=""?$req['id_kriteria']:null,
                 'nested'        =>trim($req['nested'])!=""?$req['nested']:null,
                 'nama_ppepp'    =>$req['nama_ppepp'],
-                'deskripsi'     =>$req['deskripsi']
+                'deskripsi'     =>$req['deskripsi'],
+                'standar_minimum'=>$req['standar_minimum'],
+                'skor'          =>trim($req['skor'])!=""?$req['skor']:null
             ]);
         });
 
@@ -100,7 +112,21 @@ class PpeppController extends Controller
                 Rule::exists("App\Models\PpeppModel")
             ],
             'nama_ppepp'    =>"required",
-            'deskripsi'     =>"present"
+            'deskripsi'     =>"present",
+            'standar_minimum'=>"present",
+            'skor'          =>[
+                Rule::requiredIf(function()use($req){
+                    if(!isset($req['skor'])) return true;
+                    
+                    $q=PpeppModel::where("id_ppepp", $req['id_ppepp'])->first();
+                    if(!isset($q)) return true;
+                    if(!is_null($q['nested'])) return true;
+
+                    return false;
+                }),
+                "integer",
+                "min:0"
+            ]
         ]);
         if($validation->fails()){
             return response()->json([
@@ -113,7 +139,9 @@ class PpeppController extends Controller
         DB::transaction(function()use($req){
             $data_update=[
                 'nama_ppepp'    =>$req['nama_ppepp'],
-                'deskripsi'     =>$req['deskripsi']
+                'deskripsi'     =>$req['deskripsi'],
+                'standar_minimum'=>$req['standar_minimum'],
+                'skor'          =>trim($req['skor'])!=""?$req['skor']:null
             ];
 
             PpeppModel::where("id_ppepp", $req['id_ppepp'])

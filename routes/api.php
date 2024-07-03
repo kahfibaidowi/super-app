@@ -9,6 +9,10 @@ use App\Http\Controllers\Api\FileController;
 use App\Http\Controllers\Api\ActivityProdiController;
 use App\Http\Controllers\Api\PpeppKriteriaController;
 use App\Http\Controllers\Api\PpeppController;
+use App\Http\Controllers\Api\BuktiController;
+use App\Http\Controllers\Api\PesanWhatsappController;
+use App\Http\Controllers\Api\KontakController;
+use App\Http\Controllers\Api\KontakGroupController;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,6 +58,37 @@ Route::controller(PpeppKriteriaController::class)->prefix("/ppepp_kriteria")->mi
 });
 
 Route::controller(PpeppController::class)->prefix("/ppepp")->middleware("auth:sanctum")->group(function(){
+    Route::post("/", "add");
+    Route::put("/{id}", "update");
+    Route::delete("/{id}", "delete");
+    Route::get("/", "gets");
+});
+
+Route::controller(BuktiController::class)->prefix("/bukti")->middleware("auth:sanctum")->group(function(){
+    Route::post("/", "add");
+    Route::put("/{id}", "update");
+    Route::delete("/{id}", "delete");
+    Route::get("/", "gets");
+});
+
+Route::controller(PesanWhatsappController::class)->prefix("/pesan_whatsapp")->middleware("auth:sanctum")->group(function(){
+    Route::post("/", "add");
+    Route::post("/action/send_message", "send_message");
+    Route::post("/action/send_message_schedule", "send_message_schedule");
+    Route::delete("/{id}", "delete");
+    Route::put("/{id}", "update");
+    Route::get("/", "gets");
+});
+
+Route::controller(KontakController::class)->prefix("/kontak")->middleware("auth:sanctum")->group(function(){
+    Route::post("/", "add");
+    Route::post("/type/upsert_multiple", "upsert_multiple");
+    Route::put("/{id}", "update");
+    Route::delete("/{id}", "delete");
+    Route::get("/", "gets");
+});
+
+Route::controller(KontakGroupController::class)->prefix("/kontak_group")->middleware("auth:sanctum")->group(function(){
     Route::post("/", "add");
     Route::put("/{id}", "update");
     Route::delete("/{id}", "delete");

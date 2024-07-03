@@ -29,7 +29,7 @@ endpoints:
         name: file_tor_rab
         description: ''
         required: true
-        example: quam
+        example: vel
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -56,7 +56,7 @@ endpoints:
         name: iku
         description: ''
         required: true
-        example: incidunt
+        example: repellat
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -65,7 +65,7 @@ endpoints:
         name: ik
         description: ''
         required: true
-        example: voluptas
+        example: ut
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -74,7 +74,7 @@ endpoints:
         name: program
         description: ''
         required: true
-        example: quia
+        example: repellendus
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -83,7 +83,7 @@ endpoints:
         name: judul_kegiatan
         description: ''
         required: true
-        example: impedit
+        example: ut
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -92,7 +92,7 @@ endpoints:
         name: penanggung_jawab_kegiatan
         description: ''
         required: true
-        example: unde
+        example: dolore
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -107,12 +107,12 @@ endpoints:
         exampleWasSpecified: false
         custom: []
     cleanBodyParameters:
-      file_tor_rab: quam
-      iku: incidunt
-      ik: voluptas
-      program: quia
-      judul_kegiatan: impedit
-      penanggung_jawab_kegiatan: unde
+      file_tor_rab: vel
+      iku: repellat
+      ik: ut
+      program: repellendus
+      judul_kegiatan: ut
+      penanggung_jawab_kegiatan: dolore
     fileParameters: []
     responses: []
     responseFields: []
@@ -146,13 +146,13 @@ endpoints:
         name: id
         description: 'The ID of the activity prodi.'
         required: true
-        example: aut
+        example: in
         type: string
         enumValues: []
         exampleWasSpecified: false
         custom: []
     cleanUrlParameters:
-      id: aut
+      id: in
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -169,7 +169,7 @@ endpoints:
         name: file_tor_rab
         description: ''
         required: true
-        example: quod
+        example: id
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -196,7 +196,7 @@ endpoints:
         name: iku
         description: ''
         required: true
-        example: placeat
+        example: asperiores
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -205,7 +205,7 @@ endpoints:
         name: ik
         description: ''
         required: true
-        example: accusamus
+        example: ratione
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -214,7 +214,7 @@ endpoints:
         name: program
         description: ''
         required: true
-        example: aut
+        example: deleniti
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -223,7 +223,7 @@ endpoints:
         name: judul_kegiatan
         description: ''
         required: true
-        example: esse
+        example: quo
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -232,7 +232,7 @@ endpoints:
         name: penanggung_jawab_kegiatan
         description: ''
         required: true
-        example: consequatur
+        example: recusandae
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -247,12 +247,12 @@ endpoints:
         exampleWasSpecified: false
         custom: []
     cleanBodyParameters:
-      file_tor_rab: quod
-      iku: placeat
-      ik: accusamus
-      program: aut
-      judul_kegiatan: esse
-      penanggung_jawab_kegiatan: consequatur
+      file_tor_rab: id
+      iku: asperiores
+      ik: ratione
+      program: deleniti
+      judul_kegiatan: quo
+      penanggung_jawab_kegiatan: recusandae
     fileParameters: []
     responses: []
     responseFields: []
@@ -286,13 +286,13 @@ endpoints:
         name: id
         description: 'The ID of the activity prodi.'
         required: true
-        example: sit
+        example: eum
         type: string
         enumValues: []
         exampleWasSpecified: false
         custom: []
     cleanUrlParameters:
-      id: sit
+      id: eum
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -341,7 +341,7 @@ endpoints:
         name: per_page
         description: 'Must be at least 1.'
         required: false
-        example: 81
+        example: 60
         type: integer
         enumValues: []
         exampleWasSpecified: false
@@ -356,7 +356,7 @@ endpoints:
         exampleWasSpecified: false
         custom: []
     cleanQueryParameters:
-      per_page: 81
+      per_page: 60
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []

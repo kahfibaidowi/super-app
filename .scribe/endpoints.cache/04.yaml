@@ -29,13 +29,13 @@ endpoints:
         name: nama_kriteria
         description: ''
         required: true
-        example: sequi
+        example: alias
         type: string
         enumValues: []
         exampleWasSpecified: false
         custom: []
     cleanBodyParameters:
-      nama_kriteria: sequi
+      nama_kriteria: alias
     fileParameters: []
     responses: []
     responseFields: []
@@ -69,13 +69,13 @@ endpoints:
         name: id
         description: 'The ID of the ppepp kriterium.'
         required: true
-        example: et
+        example: laborum
         type: string
         enumValues: []
         exampleWasSpecified: false
         custom: []
     cleanUrlParameters:
-      id: et
+      id: laborum
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -92,13 +92,13 @@ endpoints:
         name: nama_kriteria
         description: ''
         required: true
-        example: ducimus
+        example: ut
         type: string
         enumValues: []
         exampleWasSpecified: false
         custom: []
     cleanBodyParameters:
-      nama_kriteria: ducimus
+      nama_kriteria: ut
     fileParameters: []
     responses: []
     responseFields: []
@@ -132,13 +132,13 @@ endpoints:
         name: id
         description: 'The ID of the ppepp kriterium.'
         required: true
-        example: similique
+        example: incidunt
         type: string
         enumValues: []
         exampleWasSpecified: false
         custom: []
     cleanUrlParameters:
-      id: similique
+      id: incidunt
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -187,7 +187,7 @@ endpoints:
         name: per_page
         description: 'Must be at least 1.'
         required: false
-        example: 90
+        example: 35
         type: integer
         enumValues: []
         exampleWasSpecified: false
@@ -202,7 +202,7 @@ endpoints:
         exampleWasSpecified: false
         custom: []
     cleanQueryParameters:
-      per_page: 90
+      per_page: 35
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []

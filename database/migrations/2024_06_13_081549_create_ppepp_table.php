@@ -17,6 +17,8 @@ return new class extends Migration
             $table->unsignedBigInteger("nested")->nullable();
             $table->text("nama_ppepp");
             $table->text("deskripsi");
+            $table->text("standar_minimum");
+            $table->integer("skor")->nullable();
             $table->timestamps();
 
             //fk

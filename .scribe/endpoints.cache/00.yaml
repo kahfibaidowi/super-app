@@ -28,7 +28,7 @@ endpoints:
         name: username
         description: ''
         required: true
-        example: a
+        example: fugit
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -37,7 +37,7 @@ endpoints:
         name: password
         description: ''
         required: true
-        example: maiores
+        example: minima
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -46,15 +46,15 @@ endpoints:
         name: remember
         description: ''
         required: true
-        example: false
+        example: true
         type: boolean
         enumValues: []
         exampleWasSpecified: false
         custom: []
     cleanBodyParameters:
-      username: a
-      password: maiores
-      remember: false
+      username: fugit
+      password: minima
+      remember: true
     fileParameters: []
     responses: []
     responseFields: []

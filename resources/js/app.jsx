@@ -1,5 +1,6 @@
 import './bootstrap';
 
+import 'react-data-grid/lib/styles.css'
 import 'react-toastify/dist/ReactToastify.css'
 import '../css/app.css';
 import '../css/globals.css';

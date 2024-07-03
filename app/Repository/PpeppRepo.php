@@ -15,7 +15,11 @@ class PpeppRepo{
         $params['id_kriteria']=isset($params['id_kriteria'])?trim($params['id_kriteria']):"";
 
         //query
-        $query=PpeppModel::query();
+        $query=PpeppModel::with(
+            "kriteria:id_kriteria,nama_kriteria",
+            "parent:id_ppepp,id_kriteria,nested,nama_ppepp,deskripsi",
+            "parent.kriteria:id_kriteria,nama_kriteria"
+        );
         $query=$query->where(function($q)use($params){
             $q->where("nama_ppepp", "like", "%".$params['q']."%")
                 ->orWhere("deskripsi", "like", "%".$params['q']."%");
@@ -33,7 +37,16 @@ class PpeppRepo{
         }
         //--id_kriteria
         if($params['id_kriteria']!=""){
-            $query=$query->where("id_kriteria", $params['id_kriteria']);
+            switch($params['type']){
+                case "ppepp":
+                    $query=$query->where("id_kriteria", $params['id_kriteria']);
+                break;
+                case "sub_ppepp":
+                    $query=$query->whereHas("parent", function($q)use($params){
+                        $q->where("id_kriteria", $params['id_kriteria']);
+                    });
+                break;
+            }
         }
 
         $query=$query->orderByDesc("id_ppepp");

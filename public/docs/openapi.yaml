@@ -26,7 +26,7 @@ paths:
                 file_tor_rab:
                   type: string
                   description: ''
-                  example: quam
+                  example: vel
                 file_tor:
                   type: string
                   description: ''
@@ -38,23 +38,23 @@ paths:
                 iku:
                   type: string
                   description: ''
-                  example: incidunt
+                  example: repellat
                 ik:
                   type: string
                   description: ''
-                  example: voluptas
+                  example: ut
                 program:
                   type: string
                   description: ''
-                  example: quia
+                  example: repellendus
                 judul_kegiatan:
                   type: string
                   description: ''
-                  example: impedit
+                  example: ut
                 penanggung_jawab_kegiatan:
                   type: string
                   description: ''
-                  example: unde
+                  example: dolore
                 data:
                   type: object
                   description: ''
@@ -76,12 +76,12 @@ paths:
           in: query
           name: per_page
           description: 'Must be at least 1.'
-          example: 81
+          example: 60
           required: false
           schema:
             type: integer
             description: 'Must be at least 1.'
-            example: 81
+            example: 60
         -
           in: query
           name: q
@@ -704,7 +704,7 @@ paths:
                 file_tor_rab:
                   type: string
                   description: ''
-                  example: quod
+                  example: id
                 file_tor:
                   type: string
                   description: ''
@@ -716,23 +716,23 @@ paths:
                 iku:
                   type: string
                   description: ''
-                  example: placeat
+                  example: asperiores
                 ik:
                   type: string
                   description: ''
-                  example: accusamus
+                  example: ratione
                 program:
                   type: string
                   description: ''
-                  example: aut
+                  example: deleniti
                 judul_kegiatan:
                   type: string
                   description: ''
-                  example: esse
+                  example: quo
                 penanggung_jawab_kegiatan:
                   type: string
                   description: ''
-                  example: consequatur
+                  example: recusandae
                 data:
                   type: object
                   description: ''
@@ -769,7 +769,7 @@ paths:
         in: path
         name: id
         description: 'The ID of the activity prodi.'
-        example: aut
+        example: in
         required: true
         schema:
           type: string
@@ -792,15 +792,15 @@ paths:
                 username:
                   type: string
                   description: ''
-                  example: a
+                  example: fugit
                 password:
                   type: string
                   description: ''
-                  example: maiores
+                  example: minima
                 remember:
                   type: boolean
                   description: ''
-                  example: false
+                  example: true
               required:
                 - username
                 - password
@@ -1410,6 +1410,753 @@ paths:
       responses: {  }
       tags:
         - Authentikasi
+  /api/bukti:
+    post:
+      summary: 'tambah bukti'
+      operationId: tambahBukti
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Bukti
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                type:
+                  type: string
+                  description: ''
+                  example: evaluasi
+                  enum:
+                    - penetapan
+                    - pelaksanaan
+                    - evaluasi
+                    - pengendalian
+                id_ppepp:
+                  type: string
+                  description: ''
+                  example: eos
+                deskripsi:
+                  type: string
+                  description: ''
+                  example: null
+                file:
+                  type: string
+                  description: ''
+                  example: qui
+                link:
+                  type: string
+                  description: ''
+                  example: qui
+              required:
+                - type
+                - id_ppepp
+                - file
+                - link
+    get:
+      summary: 'list bukti'
+      operationId: listBukti
+      description: ''
+      parameters:
+        -
+          in: query
+          name: per_page
+          description: 'Must be at least 1.'
+          example: 48
+          required: false
+          schema:
+            type: integer
+            description: 'Must be at least 1.'
+            example: 48
+        -
+          in: query
+          name: q
+          description: ''
+          example: null
+          required: false
+          schema:
+            type: string
+            description: ''
+            example: null
+        -
+          in: query
+          name: type
+          description: ''
+          example: pengendalian
+          required: false
+          schema:
+            type: string
+            description: ''
+            example: pengendalian
+            enum:
+              - penetapan
+              - pelaksanaan
+              - evaluasi
+              - pengendalian
+        -
+          in: query
+          name: id_ppepp
+          description: ''
+          example: null
+          required: false
+          schema:
+            type: string
+            description: ''
+            example: null
+        -
+          in: query
+          name: id_kriteria
+          description: ''
+          example: null
+          required: false
+          schema:
+            type: string
+            description: ''
+            example: null
+      responses:
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'The route super-app/public/api/bukti could not be found.'
+                  exception: Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+                  file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Routing\AbstractRouteCollection.php'
+                  line: 44
+                  trace:
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Routing\RouteCollection.php'
+                      line: 162
+                      function: handleMatchedRoute
+                      class: Illuminate\Routing\AbstractRouteCollection
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Routing\Router.php'
+                      line: 761
+                      function: match
+                      class: Illuminate\Routing\RouteCollection
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Routing\Router.php'
+                      line: 748
+                      function: findRoute
+                      class: Illuminate\Routing\Router
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Routing\Router.php'
+                      line: 737
+                      function: dispatchToRoute
+                      class: Illuminate\Routing\Router
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Foundation\Http\Kernel.php'
+                      line: 200
+                      function: dispatch
+                      class: Illuminate\Routing\Router
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Pipeline\Pipeline.php'
+                      line: 144
+                      function: 'Illuminate\Foundation\Http\{closure}'
+                      class: Illuminate\Foundation\Http\Kernel
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Foundation\Http\Middleware\TransformsRequest.php'
+                      line: 21
+                      function: 'Illuminate\Pipeline\{closure}'
+                      class: Illuminate\Pipeline\Pipeline
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Foundation\Http\Middleware\TrimStrings.php'
+                      line: 40
+                      function: handle
+                      class: Illuminate\Foundation\Http\Middleware\TransformsRequest
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Pipeline\Pipeline.php'
+                      line: 183
+                      function: handle
+                      class: Illuminate\Foundation\Http\Middleware\TrimStrings
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Foundation\Http\Middleware\ValidatePostSize.php'
+                      line: 27
+                      function: 'Illuminate\Pipeline\{closure}'
+                      class: Illuminate\Pipeline\Pipeline
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Pipeline\Pipeline.php'
+                      line: 183
+                      function: handle
+                      class: Illuminate\Foundation\Http\Middleware\ValidatePostSize
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Foundation\Http\Middleware\PreventRequestsDuringMaintenance.php'
+                      line: 99
+                      function: 'Illuminate\Pipeline\{closure}'
+                      class: Illuminate\Pipeline\Pipeline
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Pipeline\Pipeline.php'
+                      line: 183
+                      function: handle
+                      class: Illuminate\Foundation\Http\Middleware\PreventRequestsDuringMaintenance
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Http\Middleware\HandleCors.php'
+                      line: 49
+                      function: 'Illuminate\Pipeline\{closure}'
+                      class: Illuminate\Pipeline\Pipeline
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Pipeline\Pipeline.php'
+                      line: 183
+                      function: handle
+                      class: Illuminate\Http\Middleware\HandleCors
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Http\Middleware\TrustProxies.php'
+                      line: 39
+                      function: 'Illuminate\Pipeline\{closure}'
+                      class: Illuminate\Pipeline\Pipeline
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Pipeline\Pipeline.php'
+                      line: 183
+                      function: handle
+                      class: Illuminate\Http\Middleware\TrustProxies
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Pipeline\Pipeline.php'
+                      line: 119
+                      function: 'Illuminate\Pipeline\{closure}'
+                      class: Illuminate\Pipeline\Pipeline
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Foundation\Http\Kernel.php'
+                      line: 175
+                      function: then
+                      class: Illuminate\Pipeline\Pipeline
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Foundation\Http\Kernel.php'
+                      line: 144
+                      function: sendRequestThroughRouter
+                      class: Illuminate\Foundation\Http\Kernel
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\Extracting\Strategies\Responses\ResponseCalls.php'
+                      line: 310
+                      function: handle
+                      class: Illuminate\Foundation\Http\Kernel
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\Extracting\Strategies\Responses\ResponseCalls.php'
+                      line: 298
+                      function: callLaravelOrLumenRoute
+                      class: Knuckles\Scribe\Extracting\Strategies\Responses\ResponseCalls
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\Extracting\Strategies\Responses\ResponseCalls.php'
+                      line: 91
+                      function: makeApiCall
+                      class: Knuckles\Scribe\Extracting\Strategies\Responses\ResponseCalls
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\Extracting\Strategies\Responses\ResponseCalls.php'
+                      line: 44
+                      function: makeResponseCall
+                      class: Knuckles\Scribe\Extracting\Strategies\Responses\ResponseCalls
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\Extracting\Strategies\Responses\ResponseCalls.php'
+                      line: 35
+                      function: makeResponseCallIfConditionsPass
+                      class: Knuckles\Scribe\Extracting\Strategies\Responses\ResponseCalls
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\Extracting\Extractor.php'
+                      line: 236
+                      function: __invoke
+                      class: Knuckles\Scribe\Extracting\Strategies\Responses\ResponseCalls
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\Extracting\Extractor.php'
+                      line: 166
+                      function: iterateThroughStrategies
+                      class: Knuckles\Scribe\Extracting\Extractor
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\Extracting\Extractor.php'
+                      line: 95
+                      function: fetchResponses
+                      class: Knuckles\Scribe\Extracting\Extractor
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\GroupedEndpoints\GroupedEndpointsFromApp.php'
+                      line: 125
+                      function: processRoute
+                      class: Knuckles\Scribe\Extracting\Extractor
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\GroupedEndpoints\GroupedEndpointsFromApp.php'
+                      line: 72
+                      function: extractEndpointsInfoFromLaravelApp
+                      class: Knuckles\Scribe\GroupedEndpoints\GroupedEndpointsFromApp
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\GroupedEndpoints\GroupedEndpointsFromApp.php'
+                      line: 50
+                      function: extractEndpointsInfoAndWriteToDisk
+                      class: Knuckles\Scribe\GroupedEndpoints\GroupedEndpointsFromApp
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\Commands\GenerateDocumentation.php'
+                      line: 53
+                      function: get
+                      class: Knuckles\Scribe\GroupedEndpoints\GroupedEndpointsFromApp
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Container\BoundMethod.php'
+                      line: 36
+                      function: handle
+                      class: Knuckles\Scribe\Commands\GenerateDocumentation
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Container\Util.php'
+                      line: 41
+                      function: 'Illuminate\Container\{closure}'
+                      class: Illuminate\Container\BoundMethod
+                      type: '::'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Container\BoundMethod.php'
+                      line: 93
+                      function: unwrapIfClosure
+                      class: Illuminate\Container\Util
+                      type: '::'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Container\BoundMethod.php'
+                      line: 37
+                      function: callBoundMethod
+                      class: Illuminate\Container\BoundMethod
+                      type: '::'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Container\Container.php'
+                      line: 662
+                      function: call
+                      class: Illuminate\Container\BoundMethod
+                      type: '::'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Console\Command.php'
+                      line: 211
+                      function: call
+                      class: Illuminate\Container\Container
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\symfony\console\Command\Command.php'
+                      line: 326
+                      function: execute
+                      class: Illuminate\Console\Command
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Console\Command.php'
+                      line: 181
+                      function: run
+                      class: Symfony\Component\Console\Command\Command
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\symfony\console\Application.php'
+                      line: 1096
+                      function: run
+                      class: Illuminate\Console\Command
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\symfony\console\Application.php'
+                      line: 324
+                      function: doRunCommand
+                      class: Symfony\Component\Console\Application
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\symfony\console\Application.php'
+                      line: 175
+                      function: doRun
+                      class: Symfony\Component\Console\Application
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php'
+                      line: 201
+                      function: run
+                      class: Symfony\Component\Console\Application
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\artisan'
+                      line: 37
+                      function: handle
+                      class: Illuminate\Foundation\Console\Kernel
+                      type: '->'
+                properties:
+                  message:
+                    type: string
+                    example: 'The route super-app/public/api/bukti could not be found.'
+                  exception:
+                    type: string
+                    example: Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+                  file:
+                    type: string
+                    example: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Routing\AbstractRouteCollection.php'
+                  line:
+                    type: integer
+                    example: 44
+                  trace:
+                    type: array
+                    example:
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Routing\RouteCollection.php'
+                        line: 162
+                        function: handleMatchedRoute
+                        class: Illuminate\Routing\AbstractRouteCollection
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Routing\Router.php'
+                        line: 761
+                        function: match
+                        class: Illuminate\Routing\RouteCollection
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Routing\Router.php'
+                        line: 748
+                        function: findRoute
+                        class: Illuminate\Routing\Router
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Routing\Router.php'
+                        line: 737
+                        function: dispatchToRoute
+                        class: Illuminate\Routing\Router
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Foundation\Http\Kernel.php'
+                        line: 200
+                        function: dispatch
+                        class: Illuminate\Routing\Router
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Pipeline\Pipeline.php'
+                        line: 144
+                        function: 'Illuminate\Foundation\Http\{closure}'
+                        class: Illuminate\Foundation\Http\Kernel
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Foundation\Http\Middleware\TransformsRequest.php'
+                        line: 21
+                        function: 'Illuminate\Pipeline\{closure}'
+                        class: Illuminate\Pipeline\Pipeline
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Foundation\Http\Middleware\TrimStrings.php'
+                        line: 40
+                        function: handle
+                        class: Illuminate\Foundation\Http\Middleware\TransformsRequest
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Pipeline\Pipeline.php'
+                        line: 183
+                        function: handle
+                        class: Illuminate\Foundation\Http\Middleware\TrimStrings
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Foundation\Http\Middleware\ValidatePostSize.php'
+                        line: 27
+                        function: 'Illuminate\Pipeline\{closure}'
+                        class: Illuminate\Pipeline\Pipeline
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Pipeline\Pipeline.php'
+                        line: 183
+                        function: handle
+                        class: Illuminate\Foundation\Http\Middleware\ValidatePostSize
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Foundation\Http\Middleware\PreventRequestsDuringMaintenance.php'
+                        line: 99
+                        function: 'Illuminate\Pipeline\{closure}'
+                        class: Illuminate\Pipeline\Pipeline
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Pipeline\Pipeline.php'
+                        line: 183
+                        function: handle
+                        class: Illuminate\Foundation\Http\Middleware\PreventRequestsDuringMaintenance
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Http\Middleware\HandleCors.php'
+                        line: 49
+                        function: 'Illuminate\Pipeline\{closure}'
+                        class: Illuminate\Pipeline\Pipeline
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Pipeline\Pipeline.php'
+                        line: 183
+                        function: handle
+                        class: Illuminate\Http\Middleware\HandleCors
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Http\Middleware\TrustProxies.php'
+                        line: 39
+                        function: 'Illuminate\Pipeline\{closure}'
+                        class: Illuminate\Pipeline\Pipeline
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Pipeline\Pipeline.php'
+                        line: 183
+                        function: handle
+                        class: Illuminate\Http\Middleware\TrustProxies
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Pipeline\Pipeline.php'
+                        line: 119
+                        function: 'Illuminate\Pipeline\{closure}'
+                        class: Illuminate\Pipeline\Pipeline
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Foundation\Http\Kernel.php'
+                        line: 175
+                        function: then
+                        class: Illuminate\Pipeline\Pipeline
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Foundation\Http\Kernel.php'
+                        line: 144
+                        function: sendRequestThroughRouter
+                        class: Illuminate\Foundation\Http\Kernel
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\Extracting\Strategies\Responses\ResponseCalls.php'
+                        line: 310
+                        function: handle
+                        class: Illuminate\Foundation\Http\Kernel
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\Extracting\Strategies\Responses\ResponseCalls.php'
+                        line: 298
+                        function: callLaravelOrLumenRoute
+                        class: Knuckles\Scribe\Extracting\Strategies\Responses\ResponseCalls
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\Extracting\Strategies\Responses\ResponseCalls.php'
+                        line: 91
+                        function: makeApiCall
+                        class: Knuckles\Scribe\Extracting\Strategies\Responses\ResponseCalls
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\Extracting\Strategies\Responses\ResponseCalls.php'
+                        line: 44
+                        function: makeResponseCall
+                        class: Knuckles\Scribe\Extracting\Strategies\Responses\ResponseCalls
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\Extracting\Strategies\Responses\ResponseCalls.php'
+                        line: 35
+                        function: makeResponseCallIfConditionsPass
+                        class: Knuckles\Scribe\Extracting\Strategies\Responses\ResponseCalls
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\Extracting\Extractor.php'
+                        line: 236
+                        function: __invoke
+                        class: Knuckles\Scribe\Extracting\Strategies\Responses\ResponseCalls
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\Extracting\Extractor.php'
+                        line: 166
+                        function: iterateThroughStrategies
+                        class: Knuckles\Scribe\Extracting\Extractor
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\Extracting\Extractor.php'
+                        line: 95
+                        function: fetchResponses
+                        class: Knuckles\Scribe\Extracting\Extractor
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\GroupedEndpoints\GroupedEndpointsFromApp.php'
+                        line: 125
+                        function: processRoute
+                        class: Knuckles\Scribe\Extracting\Extractor
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\GroupedEndpoints\GroupedEndpointsFromApp.php'
+                        line: 72
+                        function: extractEndpointsInfoFromLaravelApp
+                        class: Knuckles\Scribe\GroupedEndpoints\GroupedEndpointsFromApp
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\GroupedEndpoints\GroupedEndpointsFromApp.php'
+                        line: 50
+                        function: extractEndpointsInfoAndWriteToDisk
+                        class: Knuckles\Scribe\GroupedEndpoints\GroupedEndpointsFromApp
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\Commands\GenerateDocumentation.php'
+                        line: 53
+                        function: get
+                        class: Knuckles\Scribe\GroupedEndpoints\GroupedEndpointsFromApp
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Container\BoundMethod.php'
+                        line: 36
+                        function: handle
+                        class: Knuckles\Scribe\Commands\GenerateDocumentation
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Container\Util.php'
+                        line: 41
+                        function: 'Illuminate\Container\{closure}'
+                        class: Illuminate\Container\BoundMethod
+                        type: '::'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Container\BoundMethod.php'
+                        line: 93
+                        function: unwrapIfClosure
+                        class: Illuminate\Container\Util
+                        type: '::'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Container\BoundMethod.php'
+                        line: 37
+                        function: callBoundMethod
+                        class: Illuminate\Container\BoundMethod
+                        type: '::'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Container\Container.php'
+                        line: 662
+                        function: call
+                        class: Illuminate\Container\BoundMethod
+                        type: '::'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Console\Command.php'
+                        line: 211
+                        function: call
+                        class: Illuminate\Container\Container
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\symfony\console\Command\Command.php'
+                        line: 326
+                        function: execute
+                        class: Illuminate\Console\Command
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Console\Command.php'
+                        line: 181
+                        function: run
+                        class: Symfony\Component\Console\Command\Command
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\symfony\console\Application.php'
+                        line: 1096
+                        function: run
+                        class: Illuminate\Console\Command
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\symfony\console\Application.php'
+                        line: 324
+                        function: doRunCommand
+                        class: Symfony\Component\Console\Application
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\symfony\console\Application.php'
+                        line: 175
+                        function: doRun
+                        class: Symfony\Component\Console\Application
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php'
+                        line: 201
+                        function: run
+                        class: Symfony\Component\Console\Application
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\artisan'
+                        line: 37
+                        function: handle
+                        class: Illuminate\Foundation\Console\Kernel
+                        type: '->'
+                    items:
+                      type: object
+                      properties:
+                        file:
+                          type: string
+                          example: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Routing\RouteCollection.php'
+                        line:
+                          type: integer
+                          example: 162
+                        function:
+                          type: string
+                          example: handleMatchedRoute
+                        class:
+                          type: string
+                          example: Illuminate\Routing\AbstractRouteCollection
+                        type:
+                          type: string
+                          example: '->'
+      tags:
+        - Bukti
+  '/api/bukti/{id}':
+    put:
+      summary: 'update bukti'
+      operationId: updateBukti
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Bukti
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id_bukti:
+                  type: diambil
+                  description: 'dari id(abaikan ini).'
+                  example: null
+                deskripsi:
+                  type: string
+                  description: ''
+                  example: null
+    delete:
+      summary: 'hapus bukti'
+      operationId: hapusBukti
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Bukti
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id_bukti:
+                  type: diambil
+                  description: 'dari id(abaikan ini).'
+                  example: null
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the bukti.'
+        example: molestias
+        required: true
+        schema:
+          type: string
   /api/file/upload:
     post:
       summary: 'upload dokumen'
@@ -1454,6 +2201,1422 @@ paths:
                   description: 'Must be a file. Must not be greater than 10240 kilobytes.'
               required:
                 - image
+  /api/kontak:
+    post:
+      summary: 'tambah kontak'
+      operationId: tambahKontak
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Kontak
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                no_hp:
+                  type: number
+                  description: ''
+                  example: 348986707.42467
+                nama_lengkap:
+                  type: string
+                  description: ''
+                  example: null
+              required:
+                - no_hp
+    get:
+      summary: 'list kontak'
+      operationId: listKontak
+      description: ''
+      parameters:
+        -
+          in: query
+          name: per_page
+          description: 'Must be at least 1.'
+          example: 12
+          required: false
+          schema:
+            type: integer
+            description: 'Must be at least 1.'
+            example: 12
+        -
+          in: query
+          name: q
+          description: ''
+          example: null
+          required: false
+          schema:
+            type: string
+            description: ''
+            example: null
+      responses:
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'The route super-app/public/api/kontak could not be found.'
+                  exception: Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+                  file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Routing\AbstractRouteCollection.php'
+                  line: 44
+                  trace:
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Routing\RouteCollection.php'
+                      line: 162
+                      function: handleMatchedRoute
+                      class: Illuminate\Routing\AbstractRouteCollection
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Routing\Router.php'
+                      line: 761
+                      function: match
+                      class: Illuminate\Routing\RouteCollection
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Routing\Router.php'
+                      line: 748
+                      function: findRoute
+                      class: Illuminate\Routing\Router
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Routing\Router.php'
+                      line: 737
+                      function: dispatchToRoute
+                      class: Illuminate\Routing\Router
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Foundation\Http\Kernel.php'
+                      line: 200
+                      function: dispatch
+                      class: Illuminate\Routing\Router
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Pipeline\Pipeline.php'
+                      line: 144
+                      function: 'Illuminate\Foundation\Http\{closure}'
+                      class: Illuminate\Foundation\Http\Kernel
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Foundation\Http\Middleware\TransformsRequest.php'
+                      line: 21
+                      function: 'Illuminate\Pipeline\{closure}'
+                      class: Illuminate\Pipeline\Pipeline
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Foundation\Http\Middleware\TrimStrings.php'
+                      line: 40
+                      function: handle
+                      class: Illuminate\Foundation\Http\Middleware\TransformsRequest
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Pipeline\Pipeline.php'
+                      line: 183
+                      function: handle
+                      class: Illuminate\Foundation\Http\Middleware\TrimStrings
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Foundation\Http\Middleware\ValidatePostSize.php'
+                      line: 27
+                      function: 'Illuminate\Pipeline\{closure}'
+                      class: Illuminate\Pipeline\Pipeline
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Pipeline\Pipeline.php'
+                      line: 183
+                      function: handle
+                      class: Illuminate\Foundation\Http\Middleware\ValidatePostSize
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Foundation\Http\Middleware\PreventRequestsDuringMaintenance.php'
+                      line: 99
+                      function: 'Illuminate\Pipeline\{closure}'
+                      class: Illuminate\Pipeline\Pipeline
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Pipeline\Pipeline.php'
+                      line: 183
+                      function: handle
+                      class: Illuminate\Foundation\Http\Middleware\PreventRequestsDuringMaintenance
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Http\Middleware\HandleCors.php'
+                      line: 49
+                      function: 'Illuminate\Pipeline\{closure}'
+                      class: Illuminate\Pipeline\Pipeline
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Pipeline\Pipeline.php'
+                      line: 183
+                      function: handle
+                      class: Illuminate\Http\Middleware\HandleCors
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Http\Middleware\TrustProxies.php'
+                      line: 39
+                      function: 'Illuminate\Pipeline\{closure}'
+                      class: Illuminate\Pipeline\Pipeline
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Pipeline\Pipeline.php'
+                      line: 183
+                      function: handle
+                      class: Illuminate\Http\Middleware\TrustProxies
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Pipeline\Pipeline.php'
+                      line: 119
+                      function: 'Illuminate\Pipeline\{closure}'
+                      class: Illuminate\Pipeline\Pipeline
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Foundation\Http\Kernel.php'
+                      line: 175
+                      function: then
+                      class: Illuminate\Pipeline\Pipeline
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Foundation\Http\Kernel.php'
+                      line: 144
+                      function: sendRequestThroughRouter
+                      class: Illuminate\Foundation\Http\Kernel
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\Extracting\Strategies\Responses\ResponseCalls.php'
+                      line: 310
+                      function: handle
+                      class: Illuminate\Foundation\Http\Kernel
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\Extracting\Strategies\Responses\ResponseCalls.php'
+                      line: 298
+                      function: callLaravelOrLumenRoute
+                      class: Knuckles\Scribe\Extracting\Strategies\Responses\ResponseCalls
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\Extracting\Strategies\Responses\ResponseCalls.php'
+                      line: 91
+                      function: makeApiCall
+                      class: Knuckles\Scribe\Extracting\Strategies\Responses\ResponseCalls
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\Extracting\Strategies\Responses\ResponseCalls.php'
+                      line: 44
+                      function: makeResponseCall
+                      class: Knuckles\Scribe\Extracting\Strategies\Responses\ResponseCalls
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\Extracting\Strategies\Responses\ResponseCalls.php'
+                      line: 35
+                      function: makeResponseCallIfConditionsPass
+                      class: Knuckles\Scribe\Extracting\Strategies\Responses\ResponseCalls
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\Extracting\Extractor.php'
+                      line: 236
+                      function: __invoke
+                      class: Knuckles\Scribe\Extracting\Strategies\Responses\ResponseCalls
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\Extracting\Extractor.php'
+                      line: 166
+                      function: iterateThroughStrategies
+                      class: Knuckles\Scribe\Extracting\Extractor
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\Extracting\Extractor.php'
+                      line: 95
+                      function: fetchResponses
+                      class: Knuckles\Scribe\Extracting\Extractor
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\GroupedEndpoints\GroupedEndpointsFromApp.php'
+                      line: 125
+                      function: processRoute
+                      class: Knuckles\Scribe\Extracting\Extractor
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\GroupedEndpoints\GroupedEndpointsFromApp.php'
+                      line: 72
+                      function: extractEndpointsInfoFromLaravelApp
+                      class: Knuckles\Scribe\GroupedEndpoints\GroupedEndpointsFromApp
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\GroupedEndpoints\GroupedEndpointsFromApp.php'
+                      line: 50
+                      function: extractEndpointsInfoAndWriteToDisk
+                      class: Knuckles\Scribe\GroupedEndpoints\GroupedEndpointsFromApp
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\Commands\GenerateDocumentation.php'
+                      line: 53
+                      function: get
+                      class: Knuckles\Scribe\GroupedEndpoints\GroupedEndpointsFromApp
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Container\BoundMethod.php'
+                      line: 36
+                      function: handle
+                      class: Knuckles\Scribe\Commands\GenerateDocumentation
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Container\Util.php'
+                      line: 41
+                      function: 'Illuminate\Container\{closure}'
+                      class: Illuminate\Container\BoundMethod
+                      type: '::'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Container\BoundMethod.php'
+                      line: 93
+                      function: unwrapIfClosure
+                      class: Illuminate\Container\Util
+                      type: '::'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Container\BoundMethod.php'
+                      line: 37
+                      function: callBoundMethod
+                      class: Illuminate\Container\BoundMethod
+                      type: '::'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Container\Container.php'
+                      line: 662
+                      function: call
+                      class: Illuminate\Container\BoundMethod
+                      type: '::'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Console\Command.php'
+                      line: 211
+                      function: call
+                      class: Illuminate\Container\Container
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\symfony\console\Command\Command.php'
+                      line: 326
+                      function: execute
+                      class: Illuminate\Console\Command
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Console\Command.php'
+                      line: 181
+                      function: run
+                      class: Symfony\Component\Console\Command\Command
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\symfony\console\Application.php'
+                      line: 1096
+                      function: run
+                      class: Illuminate\Console\Command
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\symfony\console\Application.php'
+                      line: 324
+                      function: doRunCommand
+                      class: Symfony\Component\Console\Application
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\symfony\console\Application.php'
+                      line: 175
+                      function: doRun
+                      class: Symfony\Component\Console\Application
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php'
+                      line: 201
+                      function: run
+                      class: Symfony\Component\Console\Application
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\artisan'
+                      line: 37
+                      function: handle
+                      class: Illuminate\Foundation\Console\Kernel
+                      type: '->'
+                properties:
+                  message:
+                    type: string
+                    example: 'The route super-app/public/api/kontak could not be found.'
+                  exception:
+                    type: string
+                    example: Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+                  file:
+                    type: string
+                    example: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Routing\AbstractRouteCollection.php'
+                  line:
+                    type: integer
+                    example: 44
+                  trace:
+                    type: array
+                    example:
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Routing\RouteCollection.php'
+                        line: 162
+                        function: handleMatchedRoute
+                        class: Illuminate\Routing\AbstractRouteCollection
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Routing\Router.php'
+                        line: 761
+                        function: match
+                        class: Illuminate\Routing\RouteCollection
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Routing\Router.php'
+                        line: 748
+                        function: findRoute
+                        class: Illuminate\Routing\Router
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Routing\Router.php'
+                        line: 737
+                        function: dispatchToRoute
+                        class: Illuminate\Routing\Router
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Foundation\Http\Kernel.php'
+                        line: 200
+                        function: dispatch
+                        class: Illuminate\Routing\Router
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Pipeline\Pipeline.php'
+                        line: 144
+                        function: 'Illuminate\Foundation\Http\{closure}'
+                        class: Illuminate\Foundation\Http\Kernel
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Foundation\Http\Middleware\TransformsRequest.php'
+                        line: 21
+                        function: 'Illuminate\Pipeline\{closure}'
+                        class: Illuminate\Pipeline\Pipeline
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Foundation\Http\Middleware\TrimStrings.php'
+                        line: 40
+                        function: handle
+                        class: Illuminate\Foundation\Http\Middleware\TransformsRequest
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Pipeline\Pipeline.php'
+                        line: 183
+                        function: handle
+                        class: Illuminate\Foundation\Http\Middleware\TrimStrings
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Foundation\Http\Middleware\ValidatePostSize.php'
+                        line: 27
+                        function: 'Illuminate\Pipeline\{closure}'
+                        class: Illuminate\Pipeline\Pipeline
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Pipeline\Pipeline.php'
+                        line: 183
+                        function: handle
+                        class: Illuminate\Foundation\Http\Middleware\ValidatePostSize
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Foundation\Http\Middleware\PreventRequestsDuringMaintenance.php'
+                        line: 99
+                        function: 'Illuminate\Pipeline\{closure}'
+                        class: Illuminate\Pipeline\Pipeline
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Pipeline\Pipeline.php'
+                        line: 183
+                        function: handle
+                        class: Illuminate\Foundation\Http\Middleware\PreventRequestsDuringMaintenance
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Http\Middleware\HandleCors.php'
+                        line: 49
+                        function: 'Illuminate\Pipeline\{closure}'
+                        class: Illuminate\Pipeline\Pipeline
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Pipeline\Pipeline.php'
+                        line: 183
+                        function: handle
+                        class: Illuminate\Http\Middleware\HandleCors
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Http\Middleware\TrustProxies.php'
+                        line: 39
+                        function: 'Illuminate\Pipeline\{closure}'
+                        class: Illuminate\Pipeline\Pipeline
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Pipeline\Pipeline.php'
+                        line: 183
+                        function: handle
+                        class: Illuminate\Http\Middleware\TrustProxies
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Pipeline\Pipeline.php'
+                        line: 119
+                        function: 'Illuminate\Pipeline\{closure}'
+                        class: Illuminate\Pipeline\Pipeline
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Foundation\Http\Kernel.php'
+                        line: 175
+                        function: then
+                        class: Illuminate\Pipeline\Pipeline
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Foundation\Http\Kernel.php'
+                        line: 144
+                        function: sendRequestThroughRouter
+                        class: Illuminate\Foundation\Http\Kernel
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\Extracting\Strategies\Responses\ResponseCalls.php'
+                        line: 310
+                        function: handle
+                        class: Illuminate\Foundation\Http\Kernel
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\Extracting\Strategies\Responses\ResponseCalls.php'
+                        line: 298
+                        function: callLaravelOrLumenRoute
+                        class: Knuckles\Scribe\Extracting\Strategies\Responses\ResponseCalls
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\Extracting\Strategies\Responses\ResponseCalls.php'
+                        line: 91
+                        function: makeApiCall
+                        class: Knuckles\Scribe\Extracting\Strategies\Responses\ResponseCalls
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\Extracting\Strategies\Responses\ResponseCalls.php'
+                        line: 44
+                        function: makeResponseCall
+                        class: Knuckles\Scribe\Extracting\Strategies\Responses\ResponseCalls
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\Extracting\Strategies\Responses\ResponseCalls.php'
+                        line: 35
+                        function: makeResponseCallIfConditionsPass
+                        class: Knuckles\Scribe\Extracting\Strategies\Responses\ResponseCalls
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\Extracting\Extractor.php'
+                        line: 236
+                        function: __invoke
+                        class: Knuckles\Scribe\Extracting\Strategies\Responses\ResponseCalls
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\Extracting\Extractor.php'
+                        line: 166
+                        function: iterateThroughStrategies
+                        class: Knuckles\Scribe\Extracting\Extractor
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\Extracting\Extractor.php'
+                        line: 95
+                        function: fetchResponses
+                        class: Knuckles\Scribe\Extracting\Extractor
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\GroupedEndpoints\GroupedEndpointsFromApp.php'
+                        line: 125
+                        function: processRoute
+                        class: Knuckles\Scribe\Extracting\Extractor
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\GroupedEndpoints\GroupedEndpointsFromApp.php'
+                        line: 72
+                        function: extractEndpointsInfoFromLaravelApp
+                        class: Knuckles\Scribe\GroupedEndpoints\GroupedEndpointsFromApp
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\GroupedEndpoints\GroupedEndpointsFromApp.php'
+                        line: 50
+                        function: extractEndpointsInfoAndWriteToDisk
+                        class: Knuckles\Scribe\GroupedEndpoints\GroupedEndpointsFromApp
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\Commands\GenerateDocumentation.php'
+                        line: 53
+                        function: get
+                        class: Knuckles\Scribe\GroupedEndpoints\GroupedEndpointsFromApp
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Container\BoundMethod.php'
+                        line: 36
+                        function: handle
+                        class: Knuckles\Scribe\Commands\GenerateDocumentation
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Container\Util.php'
+                        line: 41
+                        function: 'Illuminate\Container\{closure}'
+                        class: Illuminate\Container\BoundMethod
+                        type: '::'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Container\BoundMethod.php'
+                        line: 93
+                        function: unwrapIfClosure
+                        class: Illuminate\Container\Util
+                        type: '::'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Container\BoundMethod.php'
+                        line: 37
+                        function: callBoundMethod
+                        class: Illuminate\Container\BoundMethod
+                        type: '::'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Container\Container.php'
+                        line: 662
+                        function: call
+                        class: Illuminate\Container\BoundMethod
+                        type: '::'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Console\Command.php'
+                        line: 211
+                        function: call
+                        class: Illuminate\Container\Container
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\symfony\console\Command\Command.php'
+                        line: 326
+                        function: execute
+                        class: Illuminate\Console\Command
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Console\Command.php'
+                        line: 181
+                        function: run
+                        class: Symfony\Component\Console\Command\Command
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\symfony\console\Application.php'
+                        line: 1096
+                        function: run
+                        class: Illuminate\Console\Command
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\symfony\console\Application.php'
+                        line: 324
+                        function: doRunCommand
+                        class: Symfony\Component\Console\Application
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\symfony\console\Application.php'
+                        line: 175
+                        function: doRun
+                        class: Symfony\Component\Console\Application
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php'
+                        line: 201
+                        function: run
+                        class: Symfony\Component\Console\Application
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\artisan'
+                        line: 37
+                        function: handle
+                        class: Illuminate\Foundation\Console\Kernel
+                        type: '->'
+                    items:
+                      type: object
+                      properties:
+                        file:
+                          type: string
+                          example: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Routing\RouteCollection.php'
+                        line:
+                          type: integer
+                          example: 162
+                        function:
+                          type: string
+                          example: handleMatchedRoute
+                        class:
+                          type: string
+                          example: Illuminate\Routing\AbstractRouteCollection
+                        type:
+                          type: string
+                          example: '->'
+      tags:
+        - Kontak
+  '/api/kontak/{id}':
+    put:
+      summary: 'update kontak'
+      operationId: updateKontak
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Kontak
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id_kontak:
+                  type: diambil
+                  description: 'dari id(abaikan ini).'
+                  example: null
+                nama_lengkap:
+                  type: string
+                  description: ''
+                  example: null
+    delete:
+      summary: 'hapus kontak'
+      operationId: hapusKontak
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - Kontak
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id_kontak:
+                  type: diambil
+                  description: 'dari id(abaikan ini).'
+                  example: null
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the kontak.'
+        example: qui
+        required: true
+        schema:
+          type: string
+  /api/kontak_group:
+    post:
+      summary: 'tambah kontak group'
+      operationId: tambahKontakGroup
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - 'Kontak Group'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nama_group:
+                  type: string
+                  description: ''
+                  example: dolores
+                kontak:
+                  type: array
+                  description: 'Must have at least 0 items.'
+                  example: null
+                  items:
+                    type: object
+                    properties:
+                      no_hp:
+                        type: number
+                        description: ''
+                        example: 686.325981328
+                      nama_lengkap:
+                        type: string
+                        description: ''
+                        example: null
+                    required:
+                      - no_hp
+              required:
+                - nama_group
+    get:
+      summary: 'list kontak group'
+      operationId: listKontakGroup
+      description: ''
+      parameters:
+        -
+          in: query
+          name: per_page
+          description: 'Must be at least 1.'
+          example: 76
+          required: false
+          schema:
+            type: integer
+            description: 'Must be at least 1.'
+            example: 76
+        -
+          in: query
+          name: q
+          description: ''
+          example: null
+          required: false
+          schema:
+            type: string
+            description: ''
+            example: null
+      responses:
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'The route super-app/public/api/kontak_group could not be found.'
+                  exception: Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+                  file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Routing\AbstractRouteCollection.php'
+                  line: 44
+                  trace:
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Routing\RouteCollection.php'
+                      line: 162
+                      function: handleMatchedRoute
+                      class: Illuminate\Routing\AbstractRouteCollection
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Routing\Router.php'
+                      line: 761
+                      function: match
+                      class: Illuminate\Routing\RouteCollection
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Routing\Router.php'
+                      line: 748
+                      function: findRoute
+                      class: Illuminate\Routing\Router
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Routing\Router.php'
+                      line: 737
+                      function: dispatchToRoute
+                      class: Illuminate\Routing\Router
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Foundation\Http\Kernel.php'
+                      line: 200
+                      function: dispatch
+                      class: Illuminate\Routing\Router
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Pipeline\Pipeline.php'
+                      line: 144
+                      function: 'Illuminate\Foundation\Http\{closure}'
+                      class: Illuminate\Foundation\Http\Kernel
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Foundation\Http\Middleware\TransformsRequest.php'
+                      line: 21
+                      function: 'Illuminate\Pipeline\{closure}'
+                      class: Illuminate\Pipeline\Pipeline
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Foundation\Http\Middleware\TrimStrings.php'
+                      line: 40
+                      function: handle
+                      class: Illuminate\Foundation\Http\Middleware\TransformsRequest
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Pipeline\Pipeline.php'
+                      line: 183
+                      function: handle
+                      class: Illuminate\Foundation\Http\Middleware\TrimStrings
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Foundation\Http\Middleware\ValidatePostSize.php'
+                      line: 27
+                      function: 'Illuminate\Pipeline\{closure}'
+                      class: Illuminate\Pipeline\Pipeline
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Pipeline\Pipeline.php'
+                      line: 183
+                      function: handle
+                      class: Illuminate\Foundation\Http\Middleware\ValidatePostSize
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Foundation\Http\Middleware\PreventRequestsDuringMaintenance.php'
+                      line: 99
+                      function: 'Illuminate\Pipeline\{closure}'
+                      class: Illuminate\Pipeline\Pipeline
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Pipeline\Pipeline.php'
+                      line: 183
+                      function: handle
+                      class: Illuminate\Foundation\Http\Middleware\PreventRequestsDuringMaintenance
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Http\Middleware\HandleCors.php'
+                      line: 49
+                      function: 'Illuminate\Pipeline\{closure}'
+                      class: Illuminate\Pipeline\Pipeline
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Pipeline\Pipeline.php'
+                      line: 183
+                      function: handle
+                      class: Illuminate\Http\Middleware\HandleCors
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Http\Middleware\TrustProxies.php'
+                      line: 39
+                      function: 'Illuminate\Pipeline\{closure}'
+                      class: Illuminate\Pipeline\Pipeline
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Pipeline\Pipeline.php'
+                      line: 183
+                      function: handle
+                      class: Illuminate\Http\Middleware\TrustProxies
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Pipeline\Pipeline.php'
+                      line: 119
+                      function: 'Illuminate\Pipeline\{closure}'
+                      class: Illuminate\Pipeline\Pipeline
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Foundation\Http\Kernel.php'
+                      line: 175
+                      function: then
+                      class: Illuminate\Pipeline\Pipeline
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Foundation\Http\Kernel.php'
+                      line: 144
+                      function: sendRequestThroughRouter
+                      class: Illuminate\Foundation\Http\Kernel
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\Extracting\Strategies\Responses\ResponseCalls.php'
+                      line: 310
+                      function: handle
+                      class: Illuminate\Foundation\Http\Kernel
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\Extracting\Strategies\Responses\ResponseCalls.php'
+                      line: 298
+                      function: callLaravelOrLumenRoute
+                      class: Knuckles\Scribe\Extracting\Strategies\Responses\ResponseCalls
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\Extracting\Strategies\Responses\ResponseCalls.php'
+                      line: 91
+                      function: makeApiCall
+                      class: Knuckles\Scribe\Extracting\Strategies\Responses\ResponseCalls
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\Extracting\Strategies\Responses\ResponseCalls.php'
+                      line: 44
+                      function: makeResponseCall
+                      class: Knuckles\Scribe\Extracting\Strategies\Responses\ResponseCalls
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\Extracting\Strategies\Responses\ResponseCalls.php'
+                      line: 35
+                      function: makeResponseCallIfConditionsPass
+                      class: Knuckles\Scribe\Extracting\Strategies\Responses\ResponseCalls
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\Extracting\Extractor.php'
+                      line: 236
+                      function: __invoke
+                      class: Knuckles\Scribe\Extracting\Strategies\Responses\ResponseCalls
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\Extracting\Extractor.php'
+                      line: 166
+                      function: iterateThroughStrategies
+                      class: Knuckles\Scribe\Extracting\Extractor
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\Extracting\Extractor.php'
+                      line: 95
+                      function: fetchResponses
+                      class: Knuckles\Scribe\Extracting\Extractor
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\GroupedEndpoints\GroupedEndpointsFromApp.php'
+                      line: 125
+                      function: processRoute
+                      class: Knuckles\Scribe\Extracting\Extractor
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\GroupedEndpoints\GroupedEndpointsFromApp.php'
+                      line: 72
+                      function: extractEndpointsInfoFromLaravelApp
+                      class: Knuckles\Scribe\GroupedEndpoints\GroupedEndpointsFromApp
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\GroupedEndpoints\GroupedEndpointsFromApp.php'
+                      line: 50
+                      function: extractEndpointsInfoAndWriteToDisk
+                      class: Knuckles\Scribe\GroupedEndpoints\GroupedEndpointsFromApp
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\Commands\GenerateDocumentation.php'
+                      line: 53
+                      function: get
+                      class: Knuckles\Scribe\GroupedEndpoints\GroupedEndpointsFromApp
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Container\BoundMethod.php'
+                      line: 36
+                      function: handle
+                      class: Knuckles\Scribe\Commands\GenerateDocumentation
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Container\Util.php'
+                      line: 41
+                      function: 'Illuminate\Container\{closure}'
+                      class: Illuminate\Container\BoundMethod
+                      type: '::'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Container\BoundMethod.php'
+                      line: 93
+                      function: unwrapIfClosure
+                      class: Illuminate\Container\Util
+                      type: '::'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Container\BoundMethod.php'
+                      line: 37
+                      function: callBoundMethod
+                      class: Illuminate\Container\BoundMethod
+                      type: '::'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Container\Container.php'
+                      line: 662
+                      function: call
+                      class: Illuminate\Container\BoundMethod
+                      type: '::'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Console\Command.php'
+                      line: 211
+                      function: call
+                      class: Illuminate\Container\Container
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\symfony\console\Command\Command.php'
+                      line: 326
+                      function: execute
+                      class: Illuminate\Console\Command
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Console\Command.php'
+                      line: 181
+                      function: run
+                      class: Symfony\Component\Console\Command\Command
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\symfony\console\Application.php'
+                      line: 1096
+                      function: run
+                      class: Illuminate\Console\Command
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\symfony\console\Application.php'
+                      line: 324
+                      function: doRunCommand
+                      class: Symfony\Component\Console\Application
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\symfony\console\Application.php'
+                      line: 175
+                      function: doRun
+                      class: Symfony\Component\Console\Application
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php'
+                      line: 201
+                      function: run
+                      class: Symfony\Component\Console\Application
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\artisan'
+                      line: 37
+                      function: handle
+                      class: Illuminate\Foundation\Console\Kernel
+                      type: '->'
+                properties:
+                  message:
+                    type: string
+                    example: 'The route super-app/public/api/kontak_group could not be found.'
+                  exception:
+                    type: string
+                    example: Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+                  file:
+                    type: string
+                    example: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Routing\AbstractRouteCollection.php'
+                  line:
+                    type: integer
+                    example: 44
+                  trace:
+                    type: array
+                    example:
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Routing\RouteCollection.php'
+                        line: 162
+                        function: handleMatchedRoute
+                        class: Illuminate\Routing\AbstractRouteCollection
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Routing\Router.php'
+                        line: 761
+                        function: match
+                        class: Illuminate\Routing\RouteCollection
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Routing\Router.php'
+                        line: 748
+                        function: findRoute
+                        class: Illuminate\Routing\Router
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Routing\Router.php'
+                        line: 737
+                        function: dispatchToRoute
+                        class: Illuminate\Routing\Router
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Foundation\Http\Kernel.php'
+                        line: 200
+                        function: dispatch
+                        class: Illuminate\Routing\Router
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Pipeline\Pipeline.php'
+                        line: 144
+                        function: 'Illuminate\Foundation\Http\{closure}'
+                        class: Illuminate\Foundation\Http\Kernel
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Foundation\Http\Middleware\TransformsRequest.php'
+                        line: 21
+                        function: 'Illuminate\Pipeline\{closure}'
+                        class: Illuminate\Pipeline\Pipeline
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Foundation\Http\Middleware\TrimStrings.php'
+                        line: 40
+                        function: handle
+                        class: Illuminate\Foundation\Http\Middleware\TransformsRequest
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Pipeline\Pipeline.php'
+                        line: 183
+                        function: handle
+                        class: Illuminate\Foundation\Http\Middleware\TrimStrings
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Foundation\Http\Middleware\ValidatePostSize.php'
+                        line: 27
+                        function: 'Illuminate\Pipeline\{closure}'
+                        class: Illuminate\Pipeline\Pipeline
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Pipeline\Pipeline.php'
+                        line: 183
+                        function: handle
+                        class: Illuminate\Foundation\Http\Middleware\ValidatePostSize
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Foundation\Http\Middleware\PreventRequestsDuringMaintenance.php'
+                        line: 99
+                        function: 'Illuminate\Pipeline\{closure}'
+                        class: Illuminate\Pipeline\Pipeline
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Pipeline\Pipeline.php'
+                        line: 183
+                        function: handle
+                        class: Illuminate\Foundation\Http\Middleware\PreventRequestsDuringMaintenance
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Http\Middleware\HandleCors.php'
+                        line: 49
+                        function: 'Illuminate\Pipeline\{closure}'
+                        class: Illuminate\Pipeline\Pipeline
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Pipeline\Pipeline.php'
+                        line: 183
+                        function: handle
+                        class: Illuminate\Http\Middleware\HandleCors
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Http\Middleware\TrustProxies.php'
+                        line: 39
+                        function: 'Illuminate\Pipeline\{closure}'
+                        class: Illuminate\Pipeline\Pipeline
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Pipeline\Pipeline.php'
+                        line: 183
+                        function: handle
+                        class: Illuminate\Http\Middleware\TrustProxies
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Pipeline\Pipeline.php'
+                        line: 119
+                        function: 'Illuminate\Pipeline\{closure}'
+                        class: Illuminate\Pipeline\Pipeline
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Foundation\Http\Kernel.php'
+                        line: 175
+                        function: then
+                        class: Illuminate\Pipeline\Pipeline
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Foundation\Http\Kernel.php'
+                        line: 144
+                        function: sendRequestThroughRouter
+                        class: Illuminate\Foundation\Http\Kernel
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\Extracting\Strategies\Responses\ResponseCalls.php'
+                        line: 310
+                        function: handle
+                        class: Illuminate\Foundation\Http\Kernel
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\Extracting\Strategies\Responses\ResponseCalls.php'
+                        line: 298
+                        function: callLaravelOrLumenRoute
+                        class: Knuckles\Scribe\Extracting\Strategies\Responses\ResponseCalls
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\Extracting\Strategies\Responses\ResponseCalls.php'
+                        line: 91
+                        function: makeApiCall
+                        class: Knuckles\Scribe\Extracting\Strategies\Responses\ResponseCalls
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\Extracting\Strategies\Responses\ResponseCalls.php'
+                        line: 44
+                        function: makeResponseCall
+                        class: Knuckles\Scribe\Extracting\Strategies\Responses\ResponseCalls
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\Extracting\Strategies\Responses\ResponseCalls.php'
+                        line: 35
+                        function: makeResponseCallIfConditionsPass
+                        class: Knuckles\Scribe\Extracting\Strategies\Responses\ResponseCalls
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\Extracting\Extractor.php'
+                        line: 236
+                        function: __invoke
+                        class: Knuckles\Scribe\Extracting\Strategies\Responses\ResponseCalls
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\Extracting\Extractor.php'
+                        line: 166
+                        function: iterateThroughStrategies
+                        class: Knuckles\Scribe\Extracting\Extractor
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\Extracting\Extractor.php'
+                        line: 95
+                        function: fetchResponses
+                        class: Knuckles\Scribe\Extracting\Extractor
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\GroupedEndpoints\GroupedEndpointsFromApp.php'
+                        line: 125
+                        function: processRoute
+                        class: Knuckles\Scribe\Extracting\Extractor
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\GroupedEndpoints\GroupedEndpointsFromApp.php'
+                        line: 72
+                        function: extractEndpointsInfoFromLaravelApp
+                        class: Knuckles\Scribe\GroupedEndpoints\GroupedEndpointsFromApp
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\GroupedEndpoints\GroupedEndpointsFromApp.php'
+                        line: 50
+                        function: extractEndpointsInfoAndWriteToDisk
+                        class: Knuckles\Scribe\GroupedEndpoints\GroupedEndpointsFromApp
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\Commands\GenerateDocumentation.php'
+                        line: 53
+                        function: get
+                        class: Knuckles\Scribe\GroupedEndpoints\GroupedEndpointsFromApp
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Container\BoundMethod.php'
+                        line: 36
+                        function: handle
+                        class: Knuckles\Scribe\Commands\GenerateDocumentation
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Container\Util.php'
+                        line: 41
+                        function: 'Illuminate\Container\{closure}'
+                        class: Illuminate\Container\BoundMethod
+                        type: '::'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Container\BoundMethod.php'
+                        line: 93
+                        function: unwrapIfClosure
+                        class: Illuminate\Container\Util
+                        type: '::'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Container\BoundMethod.php'
+                        line: 37
+                        function: callBoundMethod
+                        class: Illuminate\Container\BoundMethod
+                        type: '::'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Container\Container.php'
+                        line: 662
+                        function: call
+                        class: Illuminate\Container\BoundMethod
+                        type: '::'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Console\Command.php'
+                        line: 211
+                        function: call
+                        class: Illuminate\Container\Container
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\symfony\console\Command\Command.php'
+                        line: 326
+                        function: execute
+                        class: Illuminate\Console\Command
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Console\Command.php'
+                        line: 181
+                        function: run
+                        class: Symfony\Component\Console\Command\Command
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\symfony\console\Application.php'
+                        line: 1096
+                        function: run
+                        class: Illuminate\Console\Command
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\symfony\console\Application.php'
+                        line: 324
+                        function: doRunCommand
+                        class: Symfony\Component\Console\Application
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\symfony\console\Application.php'
+                        line: 175
+                        function: doRun
+                        class: Symfony\Component\Console\Application
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php'
+                        line: 201
+                        function: run
+                        class: Symfony\Component\Console\Application
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\artisan'
+                        line: 37
+                        function: handle
+                        class: Illuminate\Foundation\Console\Kernel
+                        type: '->'
+                    items:
+                      type: object
+                      properties:
+                        file:
+                          type: string
+                          example: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Routing\RouteCollection.php'
+                        line:
+                          type: integer
+                          example: 162
+                        function:
+                          type: string
+                          example: handleMatchedRoute
+                        class:
+                          type: string
+                          example: Illuminate\Routing\AbstractRouteCollection
+                        type:
+                          type: string
+                          example: '->'
+      tags:
+        - 'Kontak Group'
+  '/api/kontak_group/{id}':
+    put:
+      summary: 'update kontak group'
+      operationId: updateKontakGroup
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - 'Kontak Group'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id_group:
+                  type: diambil
+                  description: 'dari id(abaikan ini).'
+                  example: null
+                nama_group:
+                  type: string
+                  description: ''
+                  example: inventore
+                kontak:
+                  type: array
+                  description: 'Must have at least 0 items.'
+                  example: null
+                  items:
+                    type: object
+                    properties:
+                      no_hp:
+                        type: number
+                        description: ''
+                        example: 842.64606
+                      nama_lengkap:
+                        type: string
+                        description: ''
+                        example: null
+                    required:
+                      - no_hp
+              required:
+                - nama_group
+    delete:
+      summary: 'hapus kontak group'
+      operationId: hapusKontakGroup
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - 'Kontak Group'
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id_group:
+                  type: diambil
+                  description: 'dari id(abaikan ini).'
+                  example: null
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the kontak group.'
+        example: sint
+        required: true
+        schema:
+          type: string
   /api/ppepp:
     post:
       summary: 'tambah ppepp'
@@ -1488,11 +3651,19 @@ paths:
                 nama_ppepp:
                   type: string
                   description: ''
-                  example: officia
+                  example: earum
                 deskripsi:
                   type: string
                   description: ''
                   example: null
+                standar_minimum:
+                  type: string
+                  description: ''
+                  example: null
+                skor:
+                  type: integer
+                  description: 'Must be at least 0.'
+                  example: 3
               required:
                 - type
                 - nama_ppepp
@@ -1505,12 +3676,12 @@ paths:
           in: query
           name: per_page
           description: 'Must be at least 1.'
-          example: 56
+          example: 44
           required: false
           schema:
             type: integer
             description: 'Must be at least 1.'
-            example: 56
+            example: 44
         -
           in: query
           name: q
@@ -2166,11 +4337,19 @@ paths:
                 nama_ppepp:
                   type: string
                   description: ''
-                  example: ut
+                  example: et
                 deskripsi:
                   type: string
                   description: ''
                   example: null
+                standar_minimum:
+                  type: string
+                  description: ''
+                  example: null
+                skor:
+                  type: integer
+                  description: 'Must be at least 0.'
+                  example: 14
               required:
                 - nama_ppepp
     delete:
@@ -2197,7 +4376,7 @@ paths:
         in: path
         name: id
         description: 'The ID of the ppepp.'
-        example: et
+        example: doloremque
         required: true
         schema:
           type: string
@@ -2220,7 +4399,7 @@ paths:
                 nama_kriteria:
                   type: string
                   description: ''
-                  example: sequi
+                  example: alias
               required:
                 - nama_kriteria
     get:
@@ -2232,12 +4411,12 @@ paths:
           in: query
           name: per_page
           description: 'Must be at least 1.'
-          example: 90
+          example: 35
           required: false
           schema:
             type: integer
             description: 'Must be at least 1.'
-            example: 90
+            example: 35
         -
           in: query
           name: q
@@ -2860,7 +5039,7 @@ paths:
                 nama_kriteria:
                   type: string
                   description: ''
-                  example: ducimus
+                  example: ut
               required:
                 - nama_kriteria
     delete:
@@ -2887,7 +5066,822 @@ paths:
         in: path
         name: id
         description: 'The ID of the ppepp kriterium.'
-        example: et
+        example: laborum
+        required: true
+        schema:
+          type: string
+  /api/pesan_whatsapp:
+    post:
+      summary: 'tambah pesan whatsapp'
+      operationId: tambahPesanWhatsapp
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - 'Pesan Whatsapp'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                penerima:
+                  type: object
+                  description: 'Must have at least 1 items.'
+                  example: []
+                  properties: {  }
+                pesan:
+                  type: string
+                  description: ''
+                  example: provident
+                file:
+                  type: object
+                  description: ''
+                  example: null
+                  properties: {  }
+                status:
+                  type: string
+                  description: ''
+                  example: draft
+                  enum:
+                    - draft
+                    - sent
+                jadwal_kirim:
+                  type: string
+                  description: 'Must be a valid date in the format <code>Y-m-d H:i:s</code>.'
+                  example: '2024-06-30 15:55:40'
+                data:
+                  type: object
+                  description: ''
+                  example: null
+                  properties: {  }
+              required:
+                - penerima
+                - pesan
+                - status
+    get:
+      summary: 'list pesan whatsapp'
+      operationId: listPesanWhatsapp
+      description: ''
+      parameters:
+        -
+          in: query
+          name: per_page
+          description: 'Must be at least 1.'
+          example: 59
+          required: false
+          schema:
+            type: integer
+            description: 'Must be at least 1.'
+            example: 59
+        -
+          in: query
+          name: q
+          description: ''
+          example: null
+          required: false
+          schema:
+            type: string
+            description: ''
+            example: null
+      responses:
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'The route super-app/public/api/pesan_whatsapp could not be found.'
+                  exception: Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+                  file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Routing\AbstractRouteCollection.php'
+                  line: 44
+                  trace:
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Routing\RouteCollection.php'
+                      line: 162
+                      function: handleMatchedRoute
+                      class: Illuminate\Routing\AbstractRouteCollection
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Routing\Router.php'
+                      line: 761
+                      function: match
+                      class: Illuminate\Routing\RouteCollection
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Routing\Router.php'
+                      line: 748
+                      function: findRoute
+                      class: Illuminate\Routing\Router
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Routing\Router.php'
+                      line: 737
+                      function: dispatchToRoute
+                      class: Illuminate\Routing\Router
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Foundation\Http\Kernel.php'
+                      line: 200
+                      function: dispatch
+                      class: Illuminate\Routing\Router
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Pipeline\Pipeline.php'
+                      line: 144
+                      function: 'Illuminate\Foundation\Http\{closure}'
+                      class: Illuminate\Foundation\Http\Kernel
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Foundation\Http\Middleware\TransformsRequest.php'
+                      line: 21
+                      function: 'Illuminate\Pipeline\{closure}'
+                      class: Illuminate\Pipeline\Pipeline
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Foundation\Http\Middleware\TrimStrings.php'
+                      line: 40
+                      function: handle
+                      class: Illuminate\Foundation\Http\Middleware\TransformsRequest
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Pipeline\Pipeline.php'
+                      line: 183
+                      function: handle
+                      class: Illuminate\Foundation\Http\Middleware\TrimStrings
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Foundation\Http\Middleware\ValidatePostSize.php'
+                      line: 27
+                      function: 'Illuminate\Pipeline\{closure}'
+                      class: Illuminate\Pipeline\Pipeline
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Pipeline\Pipeline.php'
+                      line: 183
+                      function: handle
+                      class: Illuminate\Foundation\Http\Middleware\ValidatePostSize
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Foundation\Http\Middleware\PreventRequestsDuringMaintenance.php'
+                      line: 99
+                      function: 'Illuminate\Pipeline\{closure}'
+                      class: Illuminate\Pipeline\Pipeline
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Pipeline\Pipeline.php'
+                      line: 183
+                      function: handle
+                      class: Illuminate\Foundation\Http\Middleware\PreventRequestsDuringMaintenance
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Http\Middleware\HandleCors.php'
+                      line: 49
+                      function: 'Illuminate\Pipeline\{closure}'
+                      class: Illuminate\Pipeline\Pipeline
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Pipeline\Pipeline.php'
+                      line: 183
+                      function: handle
+                      class: Illuminate\Http\Middleware\HandleCors
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Http\Middleware\TrustProxies.php'
+                      line: 39
+                      function: 'Illuminate\Pipeline\{closure}'
+                      class: Illuminate\Pipeline\Pipeline
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Pipeline\Pipeline.php'
+                      line: 183
+                      function: handle
+                      class: Illuminate\Http\Middleware\TrustProxies
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Pipeline\Pipeline.php'
+                      line: 119
+                      function: 'Illuminate\Pipeline\{closure}'
+                      class: Illuminate\Pipeline\Pipeline
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Foundation\Http\Kernel.php'
+                      line: 175
+                      function: then
+                      class: Illuminate\Pipeline\Pipeline
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Foundation\Http\Kernel.php'
+                      line: 144
+                      function: sendRequestThroughRouter
+                      class: Illuminate\Foundation\Http\Kernel
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\Extracting\Strategies\Responses\ResponseCalls.php'
+                      line: 310
+                      function: handle
+                      class: Illuminate\Foundation\Http\Kernel
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\Extracting\Strategies\Responses\ResponseCalls.php'
+                      line: 298
+                      function: callLaravelOrLumenRoute
+                      class: Knuckles\Scribe\Extracting\Strategies\Responses\ResponseCalls
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\Extracting\Strategies\Responses\ResponseCalls.php'
+                      line: 91
+                      function: makeApiCall
+                      class: Knuckles\Scribe\Extracting\Strategies\Responses\ResponseCalls
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\Extracting\Strategies\Responses\ResponseCalls.php'
+                      line: 44
+                      function: makeResponseCall
+                      class: Knuckles\Scribe\Extracting\Strategies\Responses\ResponseCalls
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\Extracting\Strategies\Responses\ResponseCalls.php'
+                      line: 35
+                      function: makeResponseCallIfConditionsPass
+                      class: Knuckles\Scribe\Extracting\Strategies\Responses\ResponseCalls
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\Extracting\Extractor.php'
+                      line: 236
+                      function: __invoke
+                      class: Knuckles\Scribe\Extracting\Strategies\Responses\ResponseCalls
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\Extracting\Extractor.php'
+                      line: 166
+                      function: iterateThroughStrategies
+                      class: Knuckles\Scribe\Extracting\Extractor
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\Extracting\Extractor.php'
+                      line: 95
+                      function: fetchResponses
+                      class: Knuckles\Scribe\Extracting\Extractor
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\GroupedEndpoints\GroupedEndpointsFromApp.php'
+                      line: 125
+                      function: processRoute
+                      class: Knuckles\Scribe\Extracting\Extractor
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\GroupedEndpoints\GroupedEndpointsFromApp.php'
+                      line: 72
+                      function: extractEndpointsInfoFromLaravelApp
+                      class: Knuckles\Scribe\GroupedEndpoints\GroupedEndpointsFromApp
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\GroupedEndpoints\GroupedEndpointsFromApp.php'
+                      line: 50
+                      function: extractEndpointsInfoAndWriteToDisk
+                      class: Knuckles\Scribe\GroupedEndpoints\GroupedEndpointsFromApp
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\Commands\GenerateDocumentation.php'
+                      line: 53
+                      function: get
+                      class: Knuckles\Scribe\GroupedEndpoints\GroupedEndpointsFromApp
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Container\BoundMethod.php'
+                      line: 36
+                      function: handle
+                      class: Knuckles\Scribe\Commands\GenerateDocumentation
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Container\Util.php'
+                      line: 41
+                      function: 'Illuminate\Container\{closure}'
+                      class: Illuminate\Container\BoundMethod
+                      type: '::'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Container\BoundMethod.php'
+                      line: 93
+                      function: unwrapIfClosure
+                      class: Illuminate\Container\Util
+                      type: '::'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Container\BoundMethod.php'
+                      line: 37
+                      function: callBoundMethod
+                      class: Illuminate\Container\BoundMethod
+                      type: '::'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Container\Container.php'
+                      line: 662
+                      function: call
+                      class: Illuminate\Container\BoundMethod
+                      type: '::'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Console\Command.php'
+                      line: 211
+                      function: call
+                      class: Illuminate\Container\Container
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\symfony\console\Command\Command.php'
+                      line: 326
+                      function: execute
+                      class: Illuminate\Console\Command
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Console\Command.php'
+                      line: 181
+                      function: run
+                      class: Symfony\Component\Console\Command\Command
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\symfony\console\Application.php'
+                      line: 1096
+                      function: run
+                      class: Illuminate\Console\Command
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\symfony\console\Application.php'
+                      line: 324
+                      function: doRunCommand
+                      class: Symfony\Component\Console\Application
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\symfony\console\Application.php'
+                      line: 175
+                      function: doRun
+                      class: Symfony\Component\Console\Application
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php'
+                      line: 201
+                      function: run
+                      class: Symfony\Component\Console\Application
+                      type: '->'
+                    -
+                      file: 'C:\xampp\htdocs\super-app\artisan'
+                      line: 37
+                      function: handle
+                      class: Illuminate\Foundation\Console\Kernel
+                      type: '->'
+                properties:
+                  message:
+                    type: string
+                    example: 'The route super-app/public/api/pesan_whatsapp could not be found.'
+                  exception:
+                    type: string
+                    example: Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+                  file:
+                    type: string
+                    example: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Routing\AbstractRouteCollection.php'
+                  line:
+                    type: integer
+                    example: 44
+                  trace:
+                    type: array
+                    example:
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Routing\RouteCollection.php'
+                        line: 162
+                        function: handleMatchedRoute
+                        class: Illuminate\Routing\AbstractRouteCollection
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Routing\Router.php'
+                        line: 761
+                        function: match
+                        class: Illuminate\Routing\RouteCollection
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Routing\Router.php'
+                        line: 748
+                        function: findRoute
+                        class: Illuminate\Routing\Router
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Routing\Router.php'
+                        line: 737
+                        function: dispatchToRoute
+                        class: Illuminate\Routing\Router
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Foundation\Http\Kernel.php'
+                        line: 200
+                        function: dispatch
+                        class: Illuminate\Routing\Router
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Pipeline\Pipeline.php'
+                        line: 144
+                        function: 'Illuminate\Foundation\Http\{closure}'
+                        class: Illuminate\Foundation\Http\Kernel
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Foundation\Http\Middleware\TransformsRequest.php'
+                        line: 21
+                        function: 'Illuminate\Pipeline\{closure}'
+                        class: Illuminate\Pipeline\Pipeline
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Foundation\Http\Middleware\TrimStrings.php'
+                        line: 40
+                        function: handle
+                        class: Illuminate\Foundation\Http\Middleware\TransformsRequest
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Pipeline\Pipeline.php'
+                        line: 183
+                        function: handle
+                        class: Illuminate\Foundation\Http\Middleware\TrimStrings
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Foundation\Http\Middleware\ValidatePostSize.php'
+                        line: 27
+                        function: 'Illuminate\Pipeline\{closure}'
+                        class: Illuminate\Pipeline\Pipeline
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Pipeline\Pipeline.php'
+                        line: 183
+                        function: handle
+                        class: Illuminate\Foundation\Http\Middleware\ValidatePostSize
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Foundation\Http\Middleware\PreventRequestsDuringMaintenance.php'
+                        line: 99
+                        function: 'Illuminate\Pipeline\{closure}'
+                        class: Illuminate\Pipeline\Pipeline
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Pipeline\Pipeline.php'
+                        line: 183
+                        function: handle
+                        class: Illuminate\Foundation\Http\Middleware\PreventRequestsDuringMaintenance
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Http\Middleware\HandleCors.php'
+                        line: 49
+                        function: 'Illuminate\Pipeline\{closure}'
+                        class: Illuminate\Pipeline\Pipeline
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Pipeline\Pipeline.php'
+                        line: 183
+                        function: handle
+                        class: Illuminate\Http\Middleware\HandleCors
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Http\Middleware\TrustProxies.php'
+                        line: 39
+                        function: 'Illuminate\Pipeline\{closure}'
+                        class: Illuminate\Pipeline\Pipeline
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Pipeline\Pipeline.php'
+                        line: 183
+                        function: handle
+                        class: Illuminate\Http\Middleware\TrustProxies
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Pipeline\Pipeline.php'
+                        line: 119
+                        function: 'Illuminate\Pipeline\{closure}'
+                        class: Illuminate\Pipeline\Pipeline
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Foundation\Http\Kernel.php'
+                        line: 175
+                        function: then
+                        class: Illuminate\Pipeline\Pipeline
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Foundation\Http\Kernel.php'
+                        line: 144
+                        function: sendRequestThroughRouter
+                        class: Illuminate\Foundation\Http\Kernel
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\Extracting\Strategies\Responses\ResponseCalls.php'
+                        line: 310
+                        function: handle
+                        class: Illuminate\Foundation\Http\Kernel
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\Extracting\Strategies\Responses\ResponseCalls.php'
+                        line: 298
+                        function: callLaravelOrLumenRoute
+                        class: Knuckles\Scribe\Extracting\Strategies\Responses\ResponseCalls
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\Extracting\Strategies\Responses\ResponseCalls.php'
+                        line: 91
+                        function: makeApiCall
+                        class: Knuckles\Scribe\Extracting\Strategies\Responses\ResponseCalls
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\Extracting\Strategies\Responses\ResponseCalls.php'
+                        line: 44
+                        function: makeResponseCall
+                        class: Knuckles\Scribe\Extracting\Strategies\Responses\ResponseCalls
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\Extracting\Strategies\Responses\ResponseCalls.php'
+                        line: 35
+                        function: makeResponseCallIfConditionsPass
+                        class: Knuckles\Scribe\Extracting\Strategies\Responses\ResponseCalls
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\Extracting\Extractor.php'
+                        line: 236
+                        function: __invoke
+                        class: Knuckles\Scribe\Extracting\Strategies\Responses\ResponseCalls
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\Extracting\Extractor.php'
+                        line: 166
+                        function: iterateThroughStrategies
+                        class: Knuckles\Scribe\Extracting\Extractor
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\Extracting\Extractor.php'
+                        line: 95
+                        function: fetchResponses
+                        class: Knuckles\Scribe\Extracting\Extractor
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\GroupedEndpoints\GroupedEndpointsFromApp.php'
+                        line: 125
+                        function: processRoute
+                        class: Knuckles\Scribe\Extracting\Extractor
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\GroupedEndpoints\GroupedEndpointsFromApp.php'
+                        line: 72
+                        function: extractEndpointsInfoFromLaravelApp
+                        class: Knuckles\Scribe\GroupedEndpoints\GroupedEndpointsFromApp
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\GroupedEndpoints\GroupedEndpointsFromApp.php'
+                        line: 50
+                        function: extractEndpointsInfoAndWriteToDisk
+                        class: Knuckles\Scribe\GroupedEndpoints\GroupedEndpointsFromApp
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\knuckleswtf\scribe\src\Commands\GenerateDocumentation.php'
+                        line: 53
+                        function: get
+                        class: Knuckles\Scribe\GroupedEndpoints\GroupedEndpointsFromApp
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Container\BoundMethod.php'
+                        line: 36
+                        function: handle
+                        class: Knuckles\Scribe\Commands\GenerateDocumentation
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Container\Util.php'
+                        line: 41
+                        function: 'Illuminate\Container\{closure}'
+                        class: Illuminate\Container\BoundMethod
+                        type: '::'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Container\BoundMethod.php'
+                        line: 93
+                        function: unwrapIfClosure
+                        class: Illuminate\Container\Util
+                        type: '::'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Container\BoundMethod.php'
+                        line: 37
+                        function: callBoundMethod
+                        class: Illuminate\Container\BoundMethod
+                        type: '::'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Container\Container.php'
+                        line: 662
+                        function: call
+                        class: Illuminate\Container\BoundMethod
+                        type: '::'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Console\Command.php'
+                        line: 211
+                        function: call
+                        class: Illuminate\Container\Container
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\symfony\console\Command\Command.php'
+                        line: 326
+                        function: execute
+                        class: Illuminate\Console\Command
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Console\Command.php'
+                        line: 181
+                        function: run
+                        class: Symfony\Component\Console\Command\Command
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\symfony\console\Application.php'
+                        line: 1096
+                        function: run
+                        class: Illuminate\Console\Command
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\symfony\console\Application.php'
+                        line: 324
+                        function: doRunCommand
+                        class: Symfony\Component\Console\Application
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\symfony\console\Application.php'
+                        line: 175
+                        function: doRun
+                        class: Symfony\Component\Console\Application
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Foundation\Console\Kernel.php'
+                        line: 201
+                        function: run
+                        class: Symfony\Component\Console\Application
+                        type: '->'
+                      -
+                        file: 'C:\xampp\htdocs\super-app\artisan'
+                        line: 37
+                        function: handle
+                        class: Illuminate\Foundation\Console\Kernel
+                        type: '->'
+                    items:
+                      type: object
+                      properties:
+                        file:
+                          type: string
+                          example: 'C:\xampp\htdocs\super-app\vendor\laravel\framework\src\Illuminate\Routing\RouteCollection.php'
+                        line:
+                          type: integer
+                          example: 162
+                        function:
+                          type: string
+                          example: handleMatchedRoute
+                        class:
+                          type: string
+                          example: Illuminate\Routing\AbstractRouteCollection
+                        type:
+                          type: string
+                          example: '->'
+      tags:
+        - 'Pesan Whatsapp'
+  /api/pesan_whatsapp/action/send_message:
+    post:
+      summary: 'kirim pesan whatsapp'
+      operationId: kirimPesanWhatsapp
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - 'Pesan Whatsapp'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                penerima:
+                  type: array
+                  description: ''
+                  example:
+                    - omnis
+                  items:
+                    type: string
+                pesan:
+                  type: string
+                  description: ''
+                  example: temporibus
+                file:
+                  type: array
+                  description: ''
+                  example:
+                    - cum
+                  items:
+                    type: string
+              required:
+                - pesan
+  /api/pesan_whatsapp/action/send_message_schedule:
+    post:
+      summary: 'kirim pesan whatsapp(schedule)'
+      operationId: kirimPesanWhatsappschedule
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - 'Pesan Whatsapp'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                penerima:
+                  type: array
+                  description: ''
+                  example:
+                    - et
+                  items:
+                    type: string
+                pesan:
+                  type: string
+                  description: ''
+                  example: hic
+                file:
+                  type: array
+                  description: ''
+                  example:
+                    - perferendis
+                  items:
+                    type: string
+                jadwal_kirim:
+                  type: string
+                  description: 'Must be a valid date in the format <code>Y-m-d H:i:s</code>.'
+                  example: '2024-06-30 15:55:40'
+              required:
+                - pesan
+                - jadwal_kirim
+  '/api/pesan_whatsapp/{id}':
+    delete:
+      summary: 'hapus pesan whatsapp'
+      operationId: hapusPesanWhatsapp
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - 'Pesan Whatsapp'
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id_pesan_whatsapp:
+                  type: diambil
+                  description: 'dari id(abaikan ini).'
+                  example: null
+    put:
+      summary: 'update pesan whatsapp'
+      operationId: updatePesanWhatsapp
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - 'Pesan Whatsapp'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id_pesan_whatsapp:
+                  type: diambil
+                  description: 'dari id(abaikan ini).'
+                  example: null
+                penerima:
+                  type: object
+                  description: 'Must have at least 1 items.'
+                  example: []
+                  properties: {  }
+                pesan:
+                  type: string
+                  description: ''
+                  example: qui
+                file:
+                  type: object
+                  description: ''
+                  example: null
+                  properties: {  }
+                status:
+                  type: string
+                  description: ''
+                  example: null
+                data:
+                  type: object
+                  description: ''
+                  example: null
+                  properties: {  }
+              required:
+                - penerima
+                - pesan
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the pesan whatsapp.'
+        example: libero
         required: true
         schema:
           type: string
@@ -2910,15 +5904,15 @@ paths:
                 username:
                   type: string
                   description: ''
-                  example: amet
+                  example: voluptate
                 email:
                   type: string
                   description: 'Must be a valid email address.'
-                  example: edyth.stracke@example.com
+                  example: lmills@example.com
                 password:
                   type: string
                   description: ''
-                  example: sequi
+                  example: exercitationem
                 role:
                   type: string
                   description: ''
@@ -2928,7 +5922,7 @@ paths:
                 nama_lengkap:
                   type: string
                   description: ''
-                  example: ut
+                  example: animi
                 avatar_url:
                   type: string
                   description: ''
@@ -2956,12 +5950,12 @@ paths:
           in: query
           name: per_page
           description: 'Must be at least 1.'
-          example: 51
+          example: 23
           required: false
           schema:
             type: integer
             description: 'Must be at least 1.'
-            example: 51
+            example: 23
         -
           in: query
           name: q
@@ -3607,11 +6601,11 @@ paths:
                 username:
                   type: string
                   description: ''
-                  example: odio
+                  example: sequi
                 email:
                   type: string
                   description: 'Must be a valid email address.'
-                  example: vgreenholt@example.com
+                  example: ariel.volkman@example.net
                 password:
                   type: string
                   description: ''
@@ -3619,7 +6613,7 @@ paths:
                 nama_lengkap:
                   type: string
                   description: ''
-                  example: magnam
+                  example: autem
                 avatar_url:
                   type: string
                   description: ''
@@ -3660,7 +6654,7 @@ paths:
         in: path
         name: id
         description: 'The ID of the user.'
-        example: tempore
+        example: non
         required: true
         schema:
           type: string
@@ -3672,13 +6666,25 @@ tags:
     name: Authentikasi
     description: ''
   -
+    name: Bukti
+    description: ''
+  -
     name: 'File Manager'
+    description: ''
+  -
+    name: Kontak
+    description: ''
+  -
+    name: 'Kontak Group'
     description: ''
   -
     name: PPEPP
     description: ''
   -
     name: 'PPEPP Kriteria'
+    description: ''
+  -
+    name: 'Pesan Whatsapp'
     description: ''
   -
     name: Users

@@ -2,16 +2,22 @@ import { side_type, useThemeStore } from '@/Stores/theme'
 import clsx from 'clsx'
 import React, { useEffect, useState } from 'react'
 import Avatar from './ui/avatar'
-import { FiBookmark, FiChevronRight, FiHome, FiLayers, FiLock, FiLogOut, FiMapPin, FiMenu, FiMonitor, FiPackage, FiSettings, FiTruck, FiUser, FiUsers } from "react-icons/fi"
+import { FiBookOpen, FiBookmark, FiChevronRight, FiHome, FiLayers, FiLock, FiLogOut, FiMapPin, FiMenu, FiMessageSquare, FiMonitor, FiPackage, FiSettings, FiTruck, FiUser, FiUsers } from "react-icons/fi"
 import { Collapse, Dropdown, Offcanvas } from 'react-bootstrap'
 import { Link, router, usePage } from '@inertiajs/react'
 import { Map } from 'immutable'
+import { useQuery } from '@tanstack/react-query'
+import { ppepp_kriteria_request } from '@/Config/request'
+import * as _ from "underscore"
 
 export default function Layout({children}){
     const page=usePage()
     const theme=useThemeStore()
 
     const login_data=page.props.auth.user
+    const kriteria=page.props.kriteria
+    const id_kriteria=!_.isUndefined(page.props.id_kriteria)?page.props.id_kriteria.toString():""
+
     const [active_page, setActivePage]=useState("")
     const [collapse, setCollapse]=useState("")
     const [setting, setSetting]=useState(false)
@@ -21,9 +27,15 @@ export default function Layout({children}){
         setActivePage(page.component)
 
         //collapse
-        // if([].includes(page.component)){
-        //     setCollapse("")
-        // }
+        if(["Admin/Ppepp/Index", "Admin/Ppepp/SubPpepp", "Admin/PpeppKriteria/Index"].includes(page.component)){
+            setCollapse("ppepp")
+        }
+        if(["Admin/Bukti/Index"].includes(page.component)){
+            setCollapse("bukti")
+        }
+        if(["Admin/Kontak/Index", "Admin/KontakGroup/Index", "Admin/PesanWhatsapp/Index"].includes(page.component)){
+            setCollapse("pesan_wa")
+        }
         
         //theme
         const handleWindowResize=()=>{
@@ -38,6 +50,8 @@ export default function Layout({children}){
             window.removeEventListener('resize', handleWindowResize);
         }
     }, [])
+
+    //DATA
 
     //ACTIONS
     const logout=async()=>{
@@ -54,7 +68,7 @@ export default function Layout({children}){
                             <div className="logo-topbar">
                                 <a href="index.html" className="logo-light">
                                     <span className="logo-lg">
-                                        <img src="/images/logo.png" alt="logo"/>
+                                        <img src="/images/logo2.png" alt="logo" style={{height:"50px"}}/>
                                     </span>
                                     <span className="logo-sm">
                                         <img src="/images/logo-sm.png" alt="small logo"/>
@@ -62,7 +76,7 @@ export default function Layout({children}){
                                 </a>
                                 <a href="index.html" className="logo-dark">
                                     <span className="logo-lg">
-                                        <img src="/images/logo-dark.png" alt="dark logo"/>
+                                        <img src="/images/logo2.png" alt="logo" style={{height:"50px"}}/>
                                     </span>
                                     <span className="logo-sm">
                                         <img src="/images/logo-sm.png" alt="small logo"/>
@@ -128,7 +142,7 @@ export default function Layout({children}){
                 <div className="leftside-menu menuitem-active">
                     <a href="index.html" className="logo logo-light">
                         <span className="logo-lg">
-                            <img src="/images/logo.png" alt="logo"/>
+                            <img src="/images/logo2.png" alt="logo" style={{height:"50px"}}/>
                         </span>
                         <span className="logo-sm">
                             <img src="/images/logo-sm.png" alt="small logo"/>
@@ -136,7 +150,7 @@ export default function Layout({children}){
                     </a>
                     <a href="index.html" className="logo logo-dark">
                         <span className="logo-lg">
-                            <img src="/images/logo-dark.png" alt="dark logo"/>
+                            <img src="/images/logo2.png" alt="logo" style={{height:"50px"}}/>
                         </span>
                         <span className="logo-sm">
                             <img src="/images/logo-sm.png" alt="small logo"/>
@@ -175,6 +189,174 @@ export default function Layout({children}){
                                     <span> Activity Prodi </span>
                                 </Link>
                             </li>
+                            
+                            <li
+                                className={clsx(
+                                    "side-nav-item", {
+                                    "menuitem-active":["Admin/Ppepp/Index", "Admin/Ppepp/SubPpepp", "Admin/PpeppKriteria/Index"].includes(active_page)
+                                })}
+                            >
+                                <a 
+                                    className="side-nav-link d-flex align-items-center cursor-pointer"
+                                    onClick={e=>setCollapse(collapse!="ppepp"?"ppepp":"")}
+                                    aria-expanded={collapse=="ppepp"}
+                                >
+                                    <FiBookOpen/>
+                                    <span> PPEPP </span>
+                                    <span className='menu-arrow'><FiChevronRight className='ms-auto'/></span>
+                                </a>
+                                <Collapse in={collapse=="ppepp"}>
+                                    <div>
+                                        <ul className="side-nav-second-level">
+                                            <li
+                                                className={clsx({
+                                                    "active":["Admin/PpeppKriteria/Index"].includes(active_page)
+                                                })}
+                                            >
+                                                <Link
+                                                    href="/admin/ppepp_kriteria"
+                                                    className={clsx({
+                                                        "active":["Admin/PpeppKriteria/Index"].includes(active_page)
+                                                    })}
+                                                >
+                                                    Kriteria
+                                                </Link>
+                                            </li>
+                                            <li
+                                                className={clsx({
+                                                    "active":["Admin/Ppepp/Index"].includes(active_page)
+                                                })}
+                                            >
+                                                <Link
+                                                    href="/admin/ppepp"
+                                                    className={clsx({
+                                                        "active":["Admin/Ppepp/Index"].includes(active_page)
+                                                    })}
+                                                >
+                                                    PPEPP
+                                                </Link>
+                                            </li>
+                                            <li
+                                                className={clsx({
+                                                    "active":["Admin/Ppepp/SubPpepp"].includes(active_page)
+                                                })}
+                                            >
+                                                <Link
+                                                    href="/admin/ppepp/sub"
+                                                    className={clsx({
+                                                        "active":["Admin/Ppepp/SubPpepp"].includes(active_page)
+                                                    })}
+                                                >
+                                                    Sub PPEPP
+                                                </Link>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </Collapse>
+                            </li>
+
+                            <li
+                                className={clsx(
+                                    "side-nav-item", {
+                                    "menuitem-active":["Admin/Bukti/Index"].includes(active_page)
+                                })}
+                            >
+                                <a 
+                                    className="side-nav-link d-flex align-items-center cursor-pointer"
+                                    onClick={e=>setCollapse(collapse!="bukti"?"bukti":"")}
+                                    aria-expanded={collapse=="bukti"}
+                                >
+                                    <FiBookOpen/>
+                                    <span> Bukti PPEPP </span>
+                                    <span className='menu-arrow'><FiChevronRight className='ms-auto'/></span>
+                                </a>
+                                <Collapse in={collapse=="bukti"}>
+                                    <div>
+                                        <ul className="side-nav-second-level">
+                                            {kriteria.map(sub=>(
+                                                <li
+                                                    className={clsx({
+                                                        "active":(active_page=="Admin/Bukti/Index" && id_kriteria==sub.id_kriteria.toString())
+                                                    })}
+                                                >
+                                                    <Link
+                                                        href={`/admin/bukti/${sub.id_kriteria}`}
+                                                        className={clsx({
+                                                            "active":(active_page=="Admin/Bukti/Index" && id_kriteria==sub.id_kriteria.toString())
+                                                        })}
+                                                    >
+                                                        {sub.nama_kriteria}
+                                                    </Link>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                </Collapse>
+                            </li>
+                            <li
+                                className={clsx(
+                                    "side-nav-item", {
+                                    "menuitem-active":["Admin/Kontak/Index", "Admin/KontakGroup/Index", "Admin/PesanWhatsapp/Index"].includes(active_page)
+                                })}
+                            >
+                                <a 
+                                    className="side-nav-link d-flex align-items-center cursor-pointer"
+                                    onClick={e=>setCollapse(collapse!="pesan_wa"?"pesan_wa":"")}
+                                    aria-expanded={collapse=="pesan_wa"}
+                                >
+                                    <FiMessageSquare/>
+                                    <span> Pesan Whatsapp </span>
+                                    <span className='menu-arrow'><FiChevronRight className='ms-auto'/></span>
+                                </a>
+                                <Collapse in={collapse=="pesan_wa"}>
+                                    <div>
+                                        <ul className="side-nav-second-level">
+                                            <li
+                                                className={clsx({
+                                                    "active":(active_page=="Admin/Kontak/Index")
+                                                })}
+                                            >
+                                                <Link
+                                                    href={`/admin/kontak`}
+                                                    className={clsx({
+                                                        "active":(active_page=="Admin/Kontak/Index")
+                                                    })}
+                                                >
+                                                    Kontak
+                                                </Link>
+                                            </li>
+                                            <li
+                                                className={clsx({
+                                                    "active":(active_page=="Admin/KontakGroup/Index")
+                                                })}
+                                            >
+                                                <Link
+                                                    href={`/admin/kontak_group`}
+                                                    className={clsx({
+                                                        "active":(active_page=="Admin/KontakGroup/Index")
+                                                    })}
+                                                >
+                                                    Group Kontak
+                                                </Link>
+                                            </li>
+                                            <li
+                                                className={clsx({
+                                                    "active":(active_page=="Admin/PesanWhatsapp/Index")
+                                                })}
+                                            >
+                                                <Link
+                                                    href={`/admin/pesan_whatsapp`}
+                                                    className={clsx({
+                                                        "active":(active_page=="Admin/PesanWhatsapp/Index")
+                                                    })}
+                                                >
+                                                    Pesan Whatsapp
+                                                </Link>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </Collapse>
+                            </li>
                             <li
                                 className={clsx(
                                     "side-nav-item", 
@@ -199,7 +381,6 @@ export default function Layout({children}){
                         <div className="container-fluid">
                             {children}
                         </div>
-
                     </div>
 
                     <footer className="footer">

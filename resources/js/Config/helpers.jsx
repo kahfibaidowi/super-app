@@ -14,3 +14,12 @@ export const getURLParam=(param)=>{
 
     return params[param]
 }
+export function readFile(fileRes){
+    return new Promise((resolve, reject)=>{
+        const reader=new FileReader()
+        reader.readAsArrayBuffer(fileRes)
+        reader.onload=()=>{
+            resolve(reader.result)
+        }
+    })
+}

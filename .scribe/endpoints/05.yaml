@@ -56,7 +56,7 @@ endpoints:
         name: nama_ppepp
         description: ''
         required: true
-        example: officia
+        example: earum
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -70,9 +70,28 @@ endpoints:
         enumValues: []
         exampleWasSpecified: false
         custom: []
+      standar_minimum:
+        name: standar_minimum
+        description: ''
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      skor:
+        name: skor
+        description: 'Must be at least 0.'
+        required: false
+        example: 3
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
     cleanBodyParameters:
       type: ppepp
-      nama_ppepp: officia
+      nama_ppepp: earum
+      skor: 3
     fileParameters: []
     responses: []
     responseFields: []
@@ -106,13 +125,13 @@ endpoints:
         name: id
         description: 'The ID of the ppepp.'
         required: true
-        example: et
+        example: doloremque
         type: string
         enumValues: []
         exampleWasSpecified: false
         custom: []
     cleanUrlParameters:
-      id: et
+      id: doloremque
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -129,7 +148,7 @@ endpoints:
         name: nama_ppepp
         description: ''
         required: true
-        example: ut
+        example: et
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -143,8 +162,27 @@ endpoints:
         enumValues: []
         exampleWasSpecified: false
         custom: []
+      standar_minimum:
+        name: standar_minimum
+        description: ''
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
+      skor:
+        name: skor
+        description: 'Must be at least 0.'
+        required: false
+        example: 14
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        custom: []
     cleanBodyParameters:
-      nama_ppepp: ut
+      nama_ppepp: et
+      skor: 14
     fileParameters: []
     responses: []
     responseFields: []
@@ -178,13 +216,13 @@ endpoints:
         name: id
         description: 'The ID of the ppepp.'
         required: true
-        example: consequatur
+        example: et
         type: string
         enumValues: []
         exampleWasSpecified: false
         custom: []
     cleanUrlParameters:
-      id: consequatur
+      id: et
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -233,7 +271,7 @@ endpoints:
         name: per_page
         description: 'Must be at least 1.'
         required: false
-        example: 56
+        example: 44
         type: integer
         enumValues: []
         exampleWasSpecified: false
@@ -277,7 +315,7 @@ endpoints:
         exampleWasSpecified: false
         custom: []
     cleanQueryParameters:
-      per_page: 56
+      per_page: 44
       type: sub_ppepp
     bodyParameters: []
     cleanBodyParameters: []
