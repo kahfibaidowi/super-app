@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from "react"
 import Layout from "@/Components/layout"
 import { queryClient } from "@/Config/api"
 import { toast } from "react-toastify"
-import { FiArrowLeft, FiChevronLeft, FiChevronRight, FiCircle, FiEdit, FiPlus, FiRefreshCw, FiTrash, FiTrash2, FiUpload } from "react-icons/fi"
+import { FiArrowLeft, FiCheckSquare, FiChevronLeft, FiChevronRight, FiCircle, FiEdit, FiPlus, FiRefreshCw, FiTrash, FiTrash2, FiUpload } from "react-icons/fi"
 import Avatar from "@/Components/ui/avatar"
 import { Dropdown, DropdownMenu, DropdownToggle, Modal, Offcanvas, Spinner } from "react-bootstrap"
 import swal from "sweetalert2"
@@ -308,8 +308,8 @@ const Table=(props)=>{
                             </div>
                             <div className="d-flex align-items-center me-auto ms-3">
                                 <select className="form-select" name="per_page" value={props.data.data.per_page} onChange={setPerPage}>
-                                    <option value="1">15 Data</option>
-                                    <option value="2">25 Data</option>
+                                    <option value="15">15 Data</option>
+                                    <option value="25">25 Data</option>
                                     <option value="50">50 Data</option>
                                     <option value="100">100 Data</option>
                                 </select>
@@ -378,8 +378,14 @@ const ModalTambah=(props)=>{
                     value:d.no_hp
                 }
             })
-
-        return data
+        
+        const semua_kontak=[
+            {
+                label:`Semua Kontak (${props.options_kontak.data.data.length} data)`,
+                value:"__all"
+            }
+        ]
+        return semua_kontak.concat(data)
     }
     const searchKontak=(q)=>{
         return new Promise((resolve)=>{
@@ -450,13 +456,26 @@ const ModalTambah=(props)=>{
                                                 defaultOptions={options_kontak()}
                                                 loadOptions={searchKontak}
                                                 onChange={e=>{
-                                                    const penerima=e.map(l=>({nama_lengkap:l.label, no_hp:l.value}))
-                                                    formik.setFieldValue("kontak", penerima)
+                                                    const penerima=e.slice(0, e.length-1)
+                                                    let penerima_new=[]
+
+                                                    if(e.length>0){
+                                                        const last_input=e[e.length-1]
+                                                        if(last_input.value=="__all"){
+                                                            penerima_new=props.options_kontak.data.data.map(l=>({label:l.nama_lengkap, value:l.no_hp}))
+                                                        }
+                                                        else{
+                                                            penerima_new=[last_input]
+                                                        }
+                                                    }
+
+                                                    const data_penerima=penerima.concat(penerima_new).map(l=>({nama_lengkap:l.label, no_hp:l.value}))
+                                                    formik.setFieldValue("kontak", _.uniq(data_penerima, true, x=>x))
                                                 }}
                                                 onCreateOption={e=>{
                                                     if(!_.isNaN(Number(e))){
                                                         const penerima=formik.values.kontak.concat([{nama_lengkap:e, no_hp:e}])
-                                                        formik.setFieldValue("kontak", penerima)
+                                                        formik.setFieldValue("kontak", _.uniq(penerima, true, x=>x))
                                                     }
                                                 }}
                                                 placeholder="Cari Kontak"
@@ -517,8 +536,14 @@ const ModalEdit=(props)=>{
                     value:d.no_hp
                 }
             })
-
-        return data
+        
+        const semua_kontak=[
+            {
+                label:`Semua Kontak (${props.options_kontak.data.data.length} data)`,
+                value:"__all"
+            }
+        ]
+        return semua_kontak.concat(data)
     }
     const searchKontak=(q)=>{
         return new Promise((resolve)=>{
@@ -584,13 +609,26 @@ const ModalEdit=(props)=>{
                                             defaultOptions={options_kontak()}
                                             loadOptions={searchKontak}
                                             onChange={e=>{
-                                                const penerima=e.map(l=>({nama_lengkap:l.label, no_hp:l.value}))
-                                                formik.setFieldValue("kontak", penerima)
+                                                const penerima=e.slice(0, e.length-1)
+                                                let penerima_new=[]
+
+                                                if(e.length>0){
+                                                    const last_input=e[e.length-1]
+                                                    if(last_input.value=="__all"){
+                                                        penerima_new=props.options_kontak.data.data.map(l=>({label:l.nama_lengkap, value:l.no_hp}))
+                                                    }
+                                                    else{
+                                                        penerima_new=[last_input]
+                                                    }
+                                                }
+
+                                                const data_penerima=penerima.concat(penerima_new).map(l=>({nama_lengkap:l.label, no_hp:l.value}))
+                                                formik.setFieldValue("kontak", _.uniq(data_penerima, true, x=>x))
                                             }}
                                             onCreateOption={e=>{
                                                 if(!_.isNaN(Number(e))){
                                                     const penerima=formik.values.kontak.concat([{nama_lengkap:e, no_hp:e}])
-                                                    formik.setFieldValue("kontak", penerima)
+                                                    formik.setFieldValue("kontak", _.uniq(penerima, true, x=>x))
                                                 }
                                             }}
                                             placeholder="Cari Kontak"

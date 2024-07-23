@@ -281,8 +281,8 @@ const Table=(props)=>{
                             </div>
                             <div className="d-flex align-items-center me-auto ms-3">
                                 <select className="form-select" name="per_page" value={props.data.data.per_page} onChange={setPerPage}>
-                                    <option value="1">15 Data</option>
-                                    <option value="2">25 Data</option>
+                                    <option value="15">15 Data</option>
+                                    <option value="25">25 Data</option>
                                     <option value="50">50 Data</option>
                                     <option value="100">100 Data</option>
                                 </select>

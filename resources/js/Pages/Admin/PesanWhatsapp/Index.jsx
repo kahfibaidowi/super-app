@@ -419,8 +419,8 @@ const Table=(props)=>{
                             </div>
                             <div className="d-flex align-items-center me-auto ms-3">
                                 <select className="form-select" name="per_page" value={props.data.data.per_page} onChange={setPerPage}>
-                                    <option value="1">15 Data</option>
-                                    <option value="2">25 Data</option>
+                                    <option value="15">15 Data</option>
+                                    <option value="25">25 Data</option>
                                     <option value="50">50 Data</option>
                                     <option value="100">100 Data</option>
                                 </select>
@@ -598,12 +598,14 @@ const ModalTambah=(props)=>{
                                                 let penerima_new=[]
                                                 
                                                 //check type(kontak/group)
-                                                const last_input=e[e.length-1]
-                                                if(!_.isUndefined(last_input.kontak)){
-                                                    penerima_new=last_input.kontak.map(k=>({label:k.no_hp, value:k.no_hp}))
-                                                }
-                                                else{
-                                                    penerima_new=[last_input]
+                                                if(e.length>0){
+                                                    const last_input=e[e.length-1]
+                                                    if(!_.isUndefined(last_input.kontak)){
+                                                        penerima_new=last_input.kontak.map(k=>({label:k.no_hp, value:k.no_hp}))
+                                                    }
+                                                    else{
+                                                        penerima_new=[last_input]
+                                                    }
                                                 }
 
                                                 const data_penerima=penerima.concat(penerima_new).map(p=>p.value)
@@ -924,12 +926,14 @@ const ModalEdit=(props)=>{
                                                 let penerima_new=[]
                                                 
                                                 //check type(kontak/group)
-                                                const last_input=e[e.length-1]
-                                                if(!_.isUndefined(last_input.kontak)){
-                                                    penerima_new=last_input.kontak.map(k=>({label:k.no_hp, value:k.no_hp}))
-                                                }
-                                                else{
-                                                    penerima_new=[last_input]
+                                                if(e.length>0){
+                                                    const last_input=e[e.length-1]
+                                                    if(!_.isUndefined(last_input.kontak)){
+                                                        penerima_new=last_input.kontak.map(k=>({label:k.no_hp, value:k.no_hp}))
+                                                    }
+                                                    else{
+                                                        penerima_new=[last_input]
+                                                    }
                                                 }
 
                                                 const data_penerima=penerima.concat(penerima_new).map(p=>p.value)

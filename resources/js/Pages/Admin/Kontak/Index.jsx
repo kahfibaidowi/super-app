@@ -229,8 +229,8 @@ const Table=(props)=>{
                     imported=imported.concat([
                         {
                             idx:row_num-2,
-                            no_hp:row.getCell(1).value,
-                            nama_lengkap:!_.isNull(row.getCell(2).value)?row.getCell(2).value:row.getCell(1).value
+                            no_hp:row.getCell(1).value.toString(),
+                            nama_lengkap:!_.isNull(row.getCell(2).value)?row.getCell(2).value:row.getCell(1).value.toString()
                         }
                     ])
                 }
@@ -363,8 +363,8 @@ const Table=(props)=>{
                             </div>
                             <div className="d-flex align-items-center me-auto ms-3">
                                 <select className="form-select" name="per_page" value={props.data.data.per_page} onChange={setPerPage}>
-                                    <option value="1">15 Data</option>
-                                    <option value="2">25 Data</option>
+                                    <option value="15">15 Data</option>
+                                    <option value="25">25 Data</option>
                                     <option value="50">50 Data</option>
                                     <option value="100">100 Data</option>
                                 </select>
