@@ -62,6 +62,7 @@ Route::controller(PpeppController::class)->prefix("/ppepp")->middleware("auth:sa
     Route::put("/{id}", "update");
     Route::delete("/{id}", "delete");
     Route::get("/", "gets");
+    Route::get("/type/rekap_sub_ppepp", "gets_rekap_sub_ppepp");
 });
 
 Route::controller(BuktiController::class)->prefix("/bukti")->middleware("auth:sanctum")->group(function(){
@@ -69,6 +70,7 @@ Route::controller(BuktiController::class)->prefix("/bukti")->middleware("auth:sa
     Route::put("/{id}", "update");
     Route::delete("/{id}", "delete");
     Route::get("/", "gets");
+    Route::get("/type/rekap_bukti", "gets_rekap");
 });
 
 Route::controller(PesanWhatsappController::class)->prefix("/pesan_whatsapp")->middleware("auth:sanctum")->group(function(){

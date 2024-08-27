@@ -18,4 +18,9 @@ class PpeppController extends Controller
     {
         return Inertia::render("Admin/Ppepp/SubPpepp");
     }
+
+    public function rekap_sub(Request $request)
+    {
+        return Inertia::render("Admin/Ppepp/RekapSubPpepp");
+    }
 }

@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('tbl_bukti', function (Blueprint $table) {
             $table->id("id_bukti");
             $table->unsignedBigInteger("id_ppepp")->comment("sub ppepp");
-            $table->string("type");
             $table->text("deskripsi");
             $table->text("file");
             $table->text("link");
+            $table->text("link_external");
             $table->timestamps();
             
             //fk

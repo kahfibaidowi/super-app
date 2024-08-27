@@ -15,4 +15,9 @@ class BuktiController extends Controller
             'id_kriteria'   =>$id
         ]);
     }
+
+    public function rekap_bukti(Request $request)
+    {
+        return Inertia::render("Admin/Bukti/RekapBukti");
+    }
 }

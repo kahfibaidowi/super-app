@@ -16,7 +16,7 @@ import { Map } from "immutable"
 import { router } from "@inertiajs/react"
 import clsx from "clsx"
 import axios from "axios"
-import { file_request,  user_request, } from "@/Config/request"
+import { file_request,  user_request, ppepp_kriteria_request } from "@/Config/request"
 import { SwitchInput } from "@/Components/ui/input_form"
 
 
@@ -41,7 +41,8 @@ const Page=(props)=>{
             password:"",
             role:"",
             avatar_url:"",
-            status:"active"
+            status:"active",
+            id_kriteria:""
         }
     })
     const [edit_user, setEditUser]=useState({
@@ -63,6 +64,18 @@ const Page=(props)=>{
         refetchOnWindowFocus:false,
         refetchOnReconnect:false
     })
+    const options_kriteria=useQuery({
+        queryKey:["options_kriteria"],
+        queryFn:async()=>ppepp_kriteria_request.gets({}),
+        initialData:{
+            data:[],
+            last_page:0,
+            first_page:1,
+            current_page:1
+        },
+        refetchOnWindowFocus:false,
+        refetchOnReconnect:false
+    })
 
     //ACTIONS
     const toggleTambah=()=>{
@@ -75,7 +88,8 @@ const Page=(props)=>{
                 password:"",
                 role:"",
                 avatar_url:"",
-                status:"active"
+                status:"active",
+                id_kriteria:""
             }
         })
     }
@@ -83,7 +97,8 @@ const Page=(props)=>{
         setEditUser({
             is_open:show,
             user:Object.assign({}, list, {
-                password:""
+                password:"",
+                id_kriteria:!_.isNull(list.id_kriteria)?list.id_kriteria:""
             })
         })
     }
@@ -112,11 +127,13 @@ const Page=(props)=>{
 
             <ModalTambah
                 data={tambah_user}
+                options_kriteria={options_kriteria}
                 toggleTambah={toggleTambah}
             />
 
             <ModalEdit
                 data={edit_user}
+                options_kriteria={options_kriteria}
                 toggleEdit={toggleEdit}
             />
         </>
@@ -151,7 +168,8 @@ const Table=(props)=>{
     //FILTER
     const role_options=()=>{
         const data=[
-            {label:"Admin", value:"admin"}
+            {label:"Admin", value:"admin"},
+            {label:"Pengawal", value:"pengawal"}
         ]
 
         return [{label:"Semua Role/Group", value:""}].concat(data)
@@ -300,7 +318,20 @@ const Table=(props)=>{
                                                     </td>
                                                     <td>{list.username}</td>
                                                     <td><a className="link-primary" href={`mailto:${list.email}`}>{list.email}</a></td>
-                                                    <td>{list.role}</td>
+                                                    <td>
+                                                        <div className="d-flex flex-column">
+                                                            {list.role}
+                                                            {list.role=="pengawal"&&
+                                                                <>
+                                                                    {!_.isNull(list.kriteria)?
+                                                                        <span className="text-success">{list.kriteria?.nama_kriteria}</span>
+                                                                    :
+                                                                        <span className="text-danger">-</span>
+                                                                    }
+                                                                </>
+                                                            }
+                                                        </div>
+                                                    </td>
                                                     <td>{userStatus(list.status)}</td>
                                                     <td className="text-nowrap py-0">
                                                         <div style={{padding:"5px 0"}}>
@@ -418,9 +449,20 @@ const ModalTambah=(props)=>{
     })
 
     //FILTER
+    const options_kriteria=()=>{
+        const data=props.options_kriteria.data.data.map(d=>{
+            return {
+                label:d.nama_kriteria,
+                value:d.id_kriteria
+            }
+        })
+
+        return [{label:"Pilih kriteria", value:""}].concat(data)
+    }
     const role_options=()=>{
         const data=[
-            {label:"Admin", value:"admin"}
+            {label:"Admin", value:"admin"},
+            {label:"Pengawal", value:"pengawal"}
         ]
 
         return [{label:"Pilih Role/Group", value:""}].concat(data)
@@ -445,7 +487,11 @@ const ModalTambah=(props)=>{
                         password:yup.string().min(5).required(),
                         role:yup.string().required(),
                         status:yup.string().required(),
-                        avatar_url:yup.string().optional()
+                        avatar_url:yup.string().optional(),
+                        id_kriteria:yup.string().when("role", {
+                            is:"pengawal",
+                            then:schema=>schema.required()
+                        })
                     })
                 }
             >
@@ -463,12 +509,32 @@ const ModalTambah=(props)=>{
                                             options={role_options()}
                                             value={role_options().find(f=>f.value==formik.values.role)}
                                             onChange={e=>{
-                                                formik.setFieldValue("role", e.value)
+                                                formik.setValues(
+                                                    Object.assign({}, formik.values, {
+                                                        role:e.value,
+                                                        id_kriteria:""
+                                                    })
+                                                )
                                             }}
                                             placeholder="Pilih Role/Group"
                                         />
                                     </div>
                                 </div>
+                                {formik.values.role=="pengawal"&&
+                                    <div className="col-12">
+                                        <div className="mb-2">
+                                            <label className="my-1 me-2" for="country">Kriteria <span className="text-danger">*</span></label>
+                                            <Select
+                                                options={options_kriteria()}
+                                                value={options_kriteria().find(f=>f.value==formik.values.id_kriteria)}
+                                                onChange={e=>{
+                                                    formik.setFieldValue("id_kriteria", e.value)
+                                                }}
+                                                placeholder="Pilih Kriteria"
+                                            />
+                                        </div>
+                                    </div>
+                                }
                             </div>
                             <hr className="mb-1 mt-5"/>
                             <div className="row">
@@ -620,9 +686,20 @@ const ModalEdit=(props)=>{
     })
 
     //FILTER
+    const options_kriteria=()=>{
+        const data=props.options_kriteria.data.data.map(d=>{
+            return {
+                label:d.nama_kriteria,
+                value:d.id_kriteria
+            }
+        })
+
+        return [{label:"Pilih kriteria", value:""}].concat(data)
+    }
     const role_options=()=>{
         const data=[
-            {label:"Admin", value:"admin"}
+            {label:"Admin", value:"admin"},
+            {label:"Pengawal", value:"pengawal"}
         ]
 
         return [{label:"Pilih Role/Group", value:""}].concat(data)
@@ -646,7 +723,11 @@ const ModalEdit=(props)=>{
                         nama_lengkap:yup.string().required(),
                         password:yup.string().optional(),
                         status:yup.string().required(),
-                        avatar_url:yup.string().optional()
+                        avatar_url:yup.string().optional(),
+                        id_kriteria:yup.string().when("role", {
+                            is:"pengawal",
+                            then:schema=>schema.required()
+                        })
                     })
                 }
             >
@@ -671,6 +752,22 @@ const ModalEdit=(props)=>{
                                         />
                                     </div>
                                 </div>
+                                {formik.values.role=="pengawal"&&
+                                    <div className="col-12">
+                                        <div className="mb-2">
+                                            <label className="my-1 me-2" for="country">Kriteria <span className="text-danger">*</span></label>
+                                            <Select
+                                                options={options_kriteria()}
+                                                value={options_kriteria().find(f=>f.value==formik.values.id_kriteria)}
+                                                onChange={e=>{
+                                                    formik.setFieldValue("id_kriteria", e.value)
+                                                }}
+                                                placeholder="Pilih Kriteria"
+                                                disabled={formik.values.id_kriteria!=""}
+                                            />
+                                        </div>
+                                    </div>
+                                }
                             </div>
                             <hr className="mb-1 mt-5"/>
                             <div className="row">

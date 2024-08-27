@@ -16,6 +16,7 @@ class UserModel extends Authenticatable
     protected $primaryKey="id_user";
 
     protected $fillable = [
+        'id_kriteria',
         'role',
         'nama_lengkap',
         'username',
@@ -36,5 +37,8 @@ class UserModel extends Authenticatable
     ];
 
 
-    //RELATIONSHIP
+    //relationship
+    public function kriteria(){
+        return $this->belongsTo(PpeppKriteriaModel::class, "id_kriteria", "id_kriteria");
+    }
 }

@@ -33,6 +33,7 @@ const Page=(props)=>{
         q:"",
         type:"",
         id_ppepp:"",
+        id_sub_ppepp:"",
         id_kriteria:props.id_kriteria
     })
     const [tambah_bukti, setTambahBukti]=useState({
@@ -42,12 +43,17 @@ const Page=(props)=>{
             id_ppepp:"",
             deskripsi:"",
             file:"",
-            link:""
+            link:"",
+            link_external:""
         }
     })
     const [edit_bukti, setEditBukti]=useState({
         is_open:false,
         bukti:{}
+    })
+    const [file_preview, setFilePreview]=useState({
+        is_open:false,
+        file:{}
     })
 
     //DATA/MUTATION
@@ -60,6 +66,18 @@ const Page=(props)=>{
             first_page:1,
             current_page:1,
             total:0
+        },
+        refetchOnWindowFocus:false,
+        refetchOnReconnect:false
+    })
+    const options_ppepp=useQuery({
+        queryKey:["options_ppepp"],
+        queryFn:async()=>ppepp_request.gets({type:"ppepp", id_kriteria:props.id_kriteria}),
+        initialData:{
+            data:[],
+            last_page:0,
+            first_page:1,
+            current_page:1
         },
         refetchOnWindowFocus:false,
         refetchOnReconnect:false
@@ -82,11 +100,12 @@ const Page=(props)=>{
         setTambahBukti({
             is_open:!tambah_bukti.is_open,
             bukti:{
-                type:filter.type,
-                id_ppepp:"",
+                type:filter.id_ppepp,
+                id_ppepp:filter.id_sub_ppepp,
                 deskripsi:"",
                 file:"",
-                link:""
+                link:"",
+                link_external:""
             }
         })
     }
@@ -94,6 +113,12 @@ const Page=(props)=>{
         setEditBukti({
             is_open:show,
             bukti:list
+        })
+    }
+    const togglePreview=(list={}, show=false)=>{
+        setFilePreview({
+            is_open:show,
+            file:list
         })
     }
 
@@ -113,15 +138,18 @@ const Page=(props)=>{
 
                 <Table 
                     data={gets_bukti} 
+                    options_ppepp={options_ppepp}
                     options_sub_ppepp={options_sub_ppepp}
                     filter={filter} 
                     setFilter={setFilter}
                     toggleEdit={toggleEdit}
+                    togglePreview={togglePreview}
                 />
             </Layout>
 
             <ModalTambah
                 data={tambah_bukti}
+                options_ppepp={options_ppepp}
                 options_sub_ppepp={options_sub_ppepp}
                 toggleTambah={toggleTambah}
             />
@@ -129,6 +157,11 @@ const Page=(props)=>{
             <ModalEdit
                 data={edit_bukti}
                 toggleEdit={toggleEdit}
+            />
+
+            <ModalFilePreview
+                data={file_preview}
+                togglePreview={togglePreview}
             />
         </>
     )
@@ -150,17 +183,19 @@ const Table=(props)=>{
     //VALUES
 
     //FILTER
-    const options_type=()=>{
-        return [
-            {label:"Semua type", value:""},
-            {label:"Penetapan", value:"penetapan"},
-            {label:"Pelaksanaan", value:"pelaksanaan"},
-            {label:"Evaluasi", value:"evaluasi"},
-            {label:"Pengendalian", value:"pengendalian"}
-        ]
+    
+    const options_ppepp=()=>{
+        const data=props.options_ppepp.data.data.map(d=>{
+            return {
+                label:d.nama_ppepp,
+                value:d.id_ppepp
+            }
+        })
+
+        return [{label:"Semua ppepp", value:""}].concat(data)
     }
     const options_sub_ppepp=()=>{
-        const data=props.options_sub_ppepp.data.data.map(d=>{
+        const data=props.options_sub_ppepp.data.data.filter(f=>f.nested==props.filter.id_ppepp).map(d=>{
             return {
                 label:d.nama_ppepp,
                 value:d.id_ppepp
@@ -199,6 +234,15 @@ const Table=(props)=>{
                     .toJS()
                 )
             }, 500)
+        }
+        else if(target.name=="id_ppepp"){
+            props.setFilter(
+                Map(props.filter)
+                .set(target.name, target.value)
+                .set("id_sub_ppepp", "")
+                .set("page", 1)
+                .toJS()
+            )
         }
         else{
             props.setFilter(
@@ -243,20 +287,20 @@ const Table=(props)=>{
                         <div className="d-flex my-1">
                             <div style={{width:"200px"}} className="me-2">
                                 <Select
-                                    options={options_type()}
-                                    value={options_type().find(f=>f.value==props.filter.type)}
+                                    options={options_ppepp()}
+                                    value={options_ppepp().find(f=>f.value==props.filter.id_ppepp)}
                                     onChange={e=>{
-                                        typeFilter({target:{name:"type", value:e.value}})
+                                        typeFilter({target:{name:"id_ppepp", value:e.value}})
                                     }}
-                                    placeholder="Pilih type"
+                                    placeholder="Pilih ppepp"
                                 />
                             </div>
                             <div style={{width:"200px"}} className="me-2">
                                 <Select
                                     options={options_sub_ppepp()}
-                                    value={options_sub_ppepp().find(f=>f.value==props.filter.id_ppepp)}
+                                    value={options_sub_ppepp().find(f=>f.value==props.filter.id_sub_ppepp)}
                                     onChange={e=>{
-                                        typeFilter({target:{name:"id_ppepp", value:e.value}})
+                                        typeFilter({target:{name:"id_sub_ppepp", value:e.value}})
                                     }}
                                     placeholder="Pilih sub ppepp"
                                 />
@@ -282,14 +326,13 @@ const Table=(props)=>{
                                         <th className="" rowSpan="2">PPEPP</th>
                                         <th className="" rowSpan="2">Deskripsi</th>
                                         <th className="" rowSpan="2">Sub PPEPP</th>
-                                        <th className="" colSpan="5">Bukti Sahih</th>
+                                        <th className="" colSpan="4">Bukti Sahih</th>
                                         <th className="" rowSpan="2" width="50"></th>
                                     </tr>
                                     <tr>
-                                        <th className="" width="100">Type</th>
                                         <th className="">Justifikasi</th>
-                                        <th className="">Dokumen</th>
-                                        <th className="">Link</th>
+                                        <th className="" width="150">Dokumen</th>
+                                        <th className="" width="150">Link External</th>
                                         <th className="" width="100">Skor</th>
                                     </tr>
                                 </thead>
@@ -302,21 +345,32 @@ const Table=(props)=>{
                                                     <td>{list.sub_ppepp.parent.nama_ppepp}</td>
                                                     <td className="text-prewrap">{list.sub_ppepp.parent.deskripsi}</td>
                                                     <td>{list.sub_ppepp.nama_ppepp}</td>
-                                                    <td>{list.type}</td>
                                                     <td className="text-prewrap">{list.deskripsi}</td>
                                                     <td>
                                                         <a 
-                                                            href={`/storage/${list.link}`} 
-                                                            className="text-dark text-truncate"
+                                                            href={`${list.link}`} 
+                                                            className="d-inline-block text-dark text-truncate"
+                                                            style={{maxWidth:"150px"}}
                                                             onClick={e=>{
                                                                 e.preventDefault()
-                                                                window.open(`/storage/${list.link}`, 'dokumen', 'width=800,height=700')
+                                                                props.togglePreview(list, true)
                                                             }}
+                                                            title={list.file}
                                                         >
                                                             {list.file}
                                                         </a>
                                                     </td>
-                                                    <td className="text-nowrap">{`/storage/${list.link}`}</td>
+                                                    <td className="text-nowrap">
+                                                        <a 
+                                                            href={`${list.link_external}`} 
+                                                            className="d-inline-block text-dark text-truncate"
+                                                            style={{maxWidth:"150px"}}
+                                                            target="_blank"
+                                                            title={list.link_external}
+                                                        >
+                                                            {list.link_external}
+                                                        </a>
+                                                    </td>
                                                     <td>{list.sub_ppepp.skor}</td>
                                                     <td className="text-nowrap py-0">
                                                         <div style={{padding:"5px 0"}}>
@@ -332,12 +386,12 @@ const Table=(props)=>{
                                             ))}
                                             {(props.data.data.data.length==0&&_.isNull(props.data.error))&&
                                                 <tr>
-                                                    <td colSpan={10} className="text-center">Data tidak ditemukan!</td>
+                                                    <td colSpan={9} className="text-center">Data tidak ditemukan!</td>
                                                 </tr>
                                             }
                                             {!_.isNull(props.data.error)&&
                                                 <tr>
-                                                    <td colSpan={10} className="text-center cursor-pointer" onClick={()=>queryClient.refetchQueries("gets_bukti")}>
+                                                    <td colSpan={9} className="text-center cursor-pointer" onClick={()=>queryClient.refetchQueries("gets_bukti")}>
                                                         <span className="text-muted">Gagal Memuat Data! &nbsp;<FiRefreshCw/></span>
                                                     </td>
                                                 </tr>
@@ -346,7 +400,7 @@ const Table=(props)=>{
                                     :
                                         <>
                                             <tr>
-                                                <td colSpan={10} className="text-center">
+                                                <td colSpan={9} className="text-center">
                                                     <div className="d-flex align-items-center justify-content-center">
                                                         <Spinner
                                                             as="span"
@@ -432,17 +486,18 @@ const ModalTambah=(props)=>{
     })
 
     //FILTER
-    const options_type=()=>{
-        return [
-            {label:"Pilih type", value:""},
-            {label:"Penetapan", value:"penetapan"},
-            {label:"Pelaksanaan", value:"pelaksanaan"},
-            {label:"Evaluasi", value:"evaluasi"},
-            {label:"Pengendalian", value:"pengendalian"}
-        ]
+    const options_ppepp=()=>{
+        const data=props.options_ppepp.data.data.map(d=>{
+            return {
+                label:d.nama_ppepp,
+                value:d.id_ppepp
+            }
+        })
+
+        return [{label:"Pilih ppepp", value:""}].concat(data)
     }
-    const options_sub_ppepp=()=>{
-        const data=props.options_sub_ppepp.data.data.map(d=>{
+    const options_sub_ppepp=(ppepp)=>{
+        const data=props.options_sub_ppepp.data.data.filter(f=>f.nested==ppepp).map(d=>{
             return {
                 label:d.nama_ppepp,
                 value:d.id_ppepp
@@ -484,14 +539,19 @@ const ModalTambah=(props)=>{
                             <div className="row">
                                 <div className="col-12">
                                     <div className="mb-2">
-                                        <label className="my-1 me-2">Type <span className="text-danger">*</span></label>
+                                        <label className="my-1 me-2">PPEPP <span className="text-danger">*</span></label>
                                         <Select
-                                            options={options_type()}
-                                            value={options_type().find(f=>f.value==formik.values.type)}
+                                            options={options_ppepp()}
+                                            value={options_ppepp().find(f=>f.value==formik.values.type)}
                                             onChange={e=>{
-                                                formik.setFieldValue("type", e.value)
+                                                formik.setValues(
+                                                    Object.assign({}, formik.values, {
+                                                        type:e.value,
+                                                        id_ppepp:""
+                                                    })
+                                                )
                                             }}
-                                            placeholder="Pilih type"
+                                            placeholder="Pilih ppepp"
                                         />
                                     </div>
                                 </div>
@@ -499,8 +559,8 @@ const ModalTambah=(props)=>{
                                     <div className="mb-2">
                                         <label className="my-1 me-2">Sub PPEPP <span className="text-danger">*</span></label>
                                         <Select
-                                            options={options_sub_ppepp()}
-                                            value={options_sub_ppepp().find(f=>f.value==formik.values.id_ppepp)}
+                                            options={options_sub_ppepp(formik.values.type)}
+                                            value={options_sub_ppepp(formik.values.type).find(f=>f.value==formik.values.id_ppepp)}
                                             onChange={e=>{
                                                 formik.setFieldValue("id_ppepp", e.value)
                                             }}
@@ -522,7 +582,7 @@ const ModalTambah=(props)=>{
                                 </div>
                                 <div className="col-12">
                                     <div className="mb-2">
-                                        <label className="my-1 me-2" for="country">File</label>
+                                        <label className="my-1 me-2" for="country">File/Dokumen</label>
                                         <div className="d-flex flex-column">
                                             <div>
                                                 <label>
@@ -539,7 +599,7 @@ const ModalTambah=(props)=>{
                                                                 formik.setValues(
                                                                     Object.assign({}, formik.values, {
                                                                         file:data.data.file_name,
-                                                                        link:data.data.file
+                                                                        link:"/storage/"+data.data.file
                                                                     }),
                                                                     true
                                                                 )
@@ -567,7 +627,7 @@ const ModalTambah=(props)=>{
                                             <div className="mt-1">
                                                 {formik.values.file!=""?
                                                     <a 
-                                                        href={`/storage/${formik.values.link}`} 
+                                                        href={`${formik.values.link}`} 
                                                         target="_blank" 
                                                         className="text-dark text-truncate"
                                                     >
@@ -578,6 +638,19 @@ const ModalTambah=(props)=>{
                                                 }
                                             </div>
                                         </div>
+                                    </div>
+                                </div>
+                                <div className="col-12">
+                                    <div className="mb-2">
+                                        <label className="my-1 me-2" for="country">Link External</label>
+                                        <input 
+                                            type="text" 
+                                            className="form-control"
+                                            name="link_external"
+                                            onChange={formik.handleChange}
+                                            value={formik.values.link_external}
+                                            placeholder="https://"
+                                        />
                                     </div>
                                 </div>
                             </div>
@@ -683,6 +756,33 @@ const ModalEdit=(props)=>{
                     </form>
                 )}
             </Formik>
+        </Modal>
+    )
+}
+
+const ModalFilePreview=(props)=>{
+    
+    return (
+        <Modal show={props.data.is_open} onHide={props.togglePreview} backdrop="static" size="lg" scrollable>
+            <Modal.Header closeButton>
+                <h4 className="modal-title">File Preview</h4>
+            </Modal.Header>
+            <Modal.Body className="p-0" style={{height:"100vh", overflow:"hidden"}}>
+                <div className="row h-100">
+                    <div className="col-12">
+                        <iframe src={props.data.file.link} style={{width:"100%", height:"100%"}}/>
+                    </div>
+                </div>
+            </Modal.Body>
+            <Modal.Footer className="border-top pt-2">
+                <button 
+                    type="button" 
+                    className="btn btn-link link-dark me-auto" 
+                    onClick={props.togglePreview}
+                >
+                    Tutup
+                </button>
+            </Modal.Footer>
         </Modal>
     )
 }

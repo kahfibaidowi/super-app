@@ -14,10 +14,10 @@ class BuktiModel extends Model
 
     protected $fillable = [
         'id_ppepp',
-        'type',
         'deskripsi',
         'file',
-        'link'
+        'link',
+        'link_external'
     ];
     protected $perPage=99999999999999999999;
 

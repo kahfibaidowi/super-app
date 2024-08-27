@@ -26,7 +26,7 @@ class PpeppController extends Controller
         $req=$request->all();
 
         //ROLE AUTHENTICATION
-        if(!in_array($login_data['role'], ['admin'])){
+        if(!in_array($login_data['role'], ['admin', 'pengawal'])){
             return response('Not Allowed.', 403);
         }
 
@@ -53,13 +53,22 @@ class PpeppController extends Controller
             'nama_ppepp'    =>"required",
             'deskripsi'     =>"present",
             'standar_minimum'=>"present",
+            'bobot'         =>[
+                Rule::requiredIf(function()use($req){
+                    if(!isset($req['bobot'])) return true;
+                    if($req['type']=="sub_ppepp") return true;
+                    return false;
+                }),
+                "numeric",
+                "min:0"
+            ],
             'skor'          =>[
                 Rule::requiredIf(function()use($req){
                     if(!isset($req['skor'])) return true;
                     if($req['type']=="sub_ppepp") return true;
                     return false;
                 }),
-                "integer",
+                "numeric",
                 "min:0"
             ]
         ]);
@@ -78,6 +87,7 @@ class PpeppController extends Controller
                 'nama_ppepp'    =>$req['nama_ppepp'],
                 'deskripsi'     =>$req['deskripsi'],
                 'standar_minimum'=>$req['standar_minimum'],
+                'bobot'         =>trim($req['bobot'])!=""?$req['bobot']:null,
                 'skor'          =>trim($req['skor'])!=""?$req['skor']:null
             ]);
         });
@@ -100,7 +110,7 @@ class PpeppController extends Controller
         $req=$request->all();
 
         //ROLE AUTHENTICATION
-        if(!in_array($login_data['role'], ['admin'])){
+        if(!in_array($login_data['role'], ['admin', 'pengawal'])){
             return response('Not Allowed.', 403);
         }
 
@@ -114,6 +124,19 @@ class PpeppController extends Controller
             'nama_ppepp'    =>"required",
             'deskripsi'     =>"present",
             'standar_minimum'=>"present",
+            'bobot'         =>[
+                Rule::requiredIf(function()use($req){
+                    if(!isset($req['bobot'])) return true;
+                    
+                    $q=PpeppModel::where("id_ppepp", $req['id_ppepp'])->first();
+                    if(!isset($q)) return true;
+                    if(!is_null($q['nested'])) return true;
+
+                    return false;
+                }),
+                "numeric",
+                "min:0"
+            ],
             'skor'          =>[
                 Rule::requiredIf(function()use($req){
                     if(!isset($req['skor'])) return true;
@@ -124,7 +147,7 @@ class PpeppController extends Controller
 
                     return false;
                 }),
-                "integer",
+                "numeric",
                 "min:0"
             ]
         ]);
@@ -141,6 +164,7 @@ class PpeppController extends Controller
                 'nama_ppepp'    =>$req['nama_ppepp'],
                 'deskripsi'     =>$req['deskripsi'],
                 'standar_minimum'=>$req['standar_minimum'],
+                'bobot'         =>trim($req['bobot'])!=""?$req['bobot']:null,
                 'skor'          =>trim($req['skor'])!=""?$req['skor']:null
             ];
 
@@ -166,7 +190,7 @@ class PpeppController extends Controller
         $req=$request->all();
 
         //ROLE AUTHENTICATION
-        if(!in_array($login_data['role'], ['admin'])){
+        if(!in_array($login_data['role'], ['admin', 'pengawal'])){
             return response('Not Allowed.', 403);
         }
 
@@ -207,7 +231,7 @@ class PpeppController extends Controller
         $req=$request->all();
 
         //ROLE AUTHENTICATION
-        // if(!in_array($login_data['role'], ['admin'])){
+        // if(!in_array($login_data['role'], ['admin', 'pengawal'])){
         //     return response('Not Allowed.', 403);
         // }
 
@@ -236,6 +260,33 @@ class PpeppController extends Controller
             'last_page'     =>$ppepp['last_page'],
             'total'         =>$ppepp['total'],
             'data'          =>$ppepp['data']
+        ]);
+    }
+
+    /**
+     * rekap sub ppepp
+     *
+     * @authenticated
+     * @group PPEPP
+     */
+    public function gets_rekap_sub_ppepp(Request $request)
+    {
+        $login_data=$request['__data_user'];
+        $req=$request->all();
+
+        //ROLE AUTHENTICATION
+        if(!in_array($login_data['role'], ['admin'])){
+            return response('Not Allowed.', 403);
+        }
+
+        //VALIDATION
+        //Query parameters
+
+        //SUCCESS
+        $rekap=PpeppRepo::gets_rekap_sub_ppepp();
+
+        return response()->json([
+            'data'          =>$rekap
         ]);
     }
 }

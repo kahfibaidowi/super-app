@@ -18,6 +18,7 @@ class PpeppModel extends Model
         'nama_ppepp',
         'deskripsi',
         'standar_minimum',
+        'bobot',
         'skor'
     ];
     protected $perPage=99999999999999999999;
@@ -35,5 +36,8 @@ class PpeppModel extends Model
     }
     public function kriteria(){
         return $this->belongsTo(PpeppKriteriaModel::class, "id_kriteria", "id_kriteria");
+    }
+    public function bukti(){
+        return $this->hasMany(BuktiModel::class, "id_ppepp", "id_ppepp");
     }
 }

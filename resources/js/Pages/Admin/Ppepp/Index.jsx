@@ -13,7 +13,7 @@ import * as yup from "yup"
 import { QueryClient, QueryClientProvider, useMutation, useQuery } from "@tanstack/react-query"
 import _, { object } from "underscore"
 import { Map } from "immutable"
-import { router } from "@inertiajs/react"
+import { router, usePage } from "@inertiajs/react"
 import clsx from "clsx"
 import axios from "axios"
 import { file_request, user_request, activity_prodi_request, ppepp_kriteria_request, ppepp_request } from "@/Config/request"
@@ -33,7 +33,7 @@ const Page=(props)=>{
         q:"",
         type:"ppepp",
         nested:"",
-        id_kriteria:""
+        id_kriteria:!_.isNull(props.auth.user.id_kriteria)?props.auth.user.id_kriteria:""
     })
     const [tambah_ppepp, setTambahPpepp]=useState({
         is_open:false,
@@ -44,6 +44,7 @@ const Page=(props)=>{
             nama_ppepp:"",
             deskripsi:"",
             standar_minimum:"",
+            bobot:"",
             skor:""
         }
     })
@@ -85,11 +86,12 @@ const Page=(props)=>{
             is_open:!tambah_ppepp.is_open,
             ppepp:{
                 type:"ppepp",
-                id_kriteria:"",
+                id_kriteria:filter.id_kriteria,
                 nested:"",
                 nama_ppepp:"",
                 deskripsi:"",
                 standar_minimum:"",
+                bobot:"",
                 skor:""
             }
         })
@@ -118,6 +120,7 @@ const Page=(props)=>{
                 <Table 
                     data={gets_ppepp} 
                     options_kriteria={options_kriteria}
+                    auth={props.auth}
                     filter={filter} 
                     setFilter={setFilter}
                     toggleEdit={toggleEdit}
@@ -126,6 +129,7 @@ const Page=(props)=>{
 
             <ModalTambah
                 data={tambah_ppepp}
+                auth={props.auth}
                 options_kriteria={options_kriteria}
                 toggleTambah={toggleTambah}
             />
@@ -244,6 +248,7 @@ const Table=(props)=>{
                                         typeFilter({target:{name:"id_kriteria", value:e.value}})
                                     }}
                                     placeholder="Pilih kriteria"
+                                    disabled={props.auth.user.role!="admin"}
                                 />
                             </div>
                             <div style={{width:"200px"}} className="me-2">
@@ -443,6 +448,7 @@ const ModalTambah=(props)=>{
                                                 formik.setFieldValue("id_kriteria", e.value)
                                             }}
                                             placeholder="Pilih kriteria"
+                                            disabled={props.auth.user.role!="admin"}
                                         />
                                     </div>
                                 </div>

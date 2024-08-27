@@ -26,17 +26,17 @@ class BuktiController extends Controller
         $req=$request->all();
 
         //ROLE AUTHENTICATION
-        if(!in_array($login_data['role'], ['admin'])){
+        if(!in_array($login_data['role'], ['admin', 'pengawal'])){
             return response('Not Allowed.', 403);
         }
 
         //VALIDATION
         $validation=Validator::make($req, [
-            'type'          =>"required|in:penetapan,pelaksanaan,evaluasi,pengendalian",
             'id_ppepp'      =>"required|exists:App\Models\PpeppModel",
             'deskripsi'     =>"present",
             'file'          =>"required",
-            'link'          =>"required"
+            'link'          =>"required",
+            'link_external' =>"present"
         ]);
         if($validation->fails()){
             return response()->json([
@@ -48,11 +48,11 @@ class BuktiController extends Controller
         //SUCCESS
         DB::transaction(function()use($req){
             BuktiModel::create([
-                'type'      =>$req['type'],
                 'id_ppepp'  =>$req['id_ppepp'],
                 'deskripsi' =>$req['deskripsi'],
                 'file'      =>$req['file'],
-                'link'      =>$req['link']
+                'link'      =>$req['link'],
+                'link_external' =>$req['link_external']
             ]);
         });
 
@@ -74,7 +74,7 @@ class BuktiController extends Controller
         $req=$request->all();
 
         //ROLE AUTHENTICATION
-        if(!in_array($login_data['role'], ['admin'])){
+        if(!in_array($login_data['role'], ['admin', 'pengawal'])){
             return response('Not Allowed.', 403);
         }
 
@@ -122,7 +122,7 @@ class BuktiController extends Controller
         $req=$request->all();
 
         //ROLE AUTHENTICATION
-        if(!in_array($login_data['role'], ['admin'])){
+        if(!in_array($login_data['role'], ['admin', 'pengawal'])){
             return response('Not Allowed.', 403);
         }
 
@@ -163,7 +163,7 @@ class BuktiController extends Controller
         $req=$request->all();
 
         //ROLE AUTHENTICATION
-        // if(!in_array($login_data['role'], ['admin'])){
+        // if(!in_array($login_data['role'], ['admin', 'pengawal'])){
         //     return response('Not Allowed.', 403);
         // }
 
@@ -172,8 +172,8 @@ class BuktiController extends Controller
         $validation=Validator::make($req, [
             'per_page'      =>"nullable|integer|min:1",
             'q'             =>"nullable",
-            'type'          =>"nullable|in:penetapan,pelaksanaan,evaluasi,pengendalian",
             'id_ppepp'      =>"nullable",
+            'id_sub_ppepp'  =>"nullable",
             'id_kriteria'   =>"nullable"
         ]);
         if($validation->fails()){
@@ -192,6 +192,33 @@ class BuktiController extends Controller
             'last_page'     =>$bukti['last_page'],
             'total'         =>$bukti['total'],
             'data'          =>$bukti['data']
+        ]);
+    }
+
+    /**
+     * rekap bukti
+     *
+     * @authenticated
+     * @group Bukti
+     */
+    public function gets_rekap(Request $request)
+    {
+        $login_data=$request['__data_user'];
+        $req=$request->all();
+
+        //ROLE AUTHENTICATION
+        if(!in_array($login_data['role'], ['admin'])){
+            return response('Not Allowed.', 403);
+        }
+
+        //VALIDATION
+        //Query parameters
+
+        //SUCCESS
+        $bukti=BuktiRepo::gets_rekap();
+
+        return response()->json([
+            'data'          =>$bukti
         ]);
     }
 }

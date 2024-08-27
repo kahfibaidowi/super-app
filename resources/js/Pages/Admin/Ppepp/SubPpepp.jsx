@@ -34,7 +34,7 @@ const Page=(props)=>{
         q:"",
         type:"sub_ppepp",
         nested:"",
-        id_kriteria:""
+        id_kriteria:!_.isNull(props.auth.user.id_kriteria)?props.auth.user.id_kriteria:""
     })
     const [tambah_ppepp, setTambahPpepp]=useState({
         is_open:false,
@@ -45,6 +45,7 @@ const Page=(props)=>{
             nama_ppepp:"",
             deskripsi:"",
             standar_minimum:"",
+            bobot:"",
             skor:""
         }
     })
@@ -98,11 +99,12 @@ const Page=(props)=>{
             is_open:!tambah_ppepp.is_open,
             ppepp:{
                 type:"sub_ppepp",
-                id_kriteria:"",
-                nested:"",
+                id_kriteria:filter.id_kriteria,
+                nested:filter.nested,
                 nama_ppepp:"",
                 deskripsi:"",
                 standar_minimum:"",
+                bobot:"",
                 skor:""
             }
         })
@@ -132,6 +134,7 @@ const Page=(props)=>{
                     data={gets_ppepp} 
                     options_kriteria={options_kriteria}
                     options_parent_ppepp={options_parent_ppepp}
+                    auth={props.auth}
                     filter={filter} 
                     setFilter={setFilter}
                     toggleEdit={toggleEdit}
@@ -142,6 +145,7 @@ const Page=(props)=>{
                 data={tambah_ppepp}
                 options_kriteria={options_kriteria}
                 options_parent_ppepp={options_parent_ppepp}
+                auth={props.auth}
                 toggleTambah={toggleTambah}
             />
 
@@ -281,6 +285,7 @@ const Table=(props)=>{
                                         typeFilter({target:{name:"id_kriteria", value:e.value}})
                                     }}
                                     placeholder="Pilih kriteria"
+                                    disabled={props.auth.user.role!="admin"}
                                 />
                             </div>
                             <div style={{width:"200px"}} className="me-2">
@@ -316,6 +321,7 @@ const Table=(props)=>{
                                         <th className="">Deskripsi</th>
                                         <th className="">Sub PPEPP</th>
                                         <th className="">Standar Minimum</th>
+                                        <th className="" width="100">Bobot</th>
                                         <th className="" width="100">Skor</th>
                                         <th className="" width="50"></th>
                                     </tr>
@@ -331,6 +337,7 @@ const Table=(props)=>{
                                                     <td className="text-prewrap">{list.parent.deskripsi}</td>
                                                     <td>{list.nama_ppepp}</td>
                                                     <td className="text-prewrap">{list.standar_minimum}</td>
+                                                    <td>{list.bobot}</td>
                                                     <td>{list.skor}</td>
                                                     <td className="text-nowrap py-0">
                                                         <div style={{padding:"5px 0"}}>
@@ -346,12 +353,12 @@ const Table=(props)=>{
                                             ))}
                                             {(props.data.data.data.length==0&&_.isNull(props.data.error))&&
                                                 <tr>
-                                                    <td colSpan={8} className="text-center">Data tidak ditemukan!</td>
+                                                    <td colSpan={9} className="text-center">Data tidak ditemukan!</td>
                                                 </tr>
                                             }
                                             {!_.isNull(props.data.error)&&
                                                 <tr>
-                                                    <td colSpan={8} className="text-center cursor-pointer" onClick={()=>queryClient.refetchQueries("gets_ppepp")}>
+                                                    <td colSpan={9} className="text-center cursor-pointer" onClick={()=>queryClient.refetchQueries("gets_ppepp")}>
                                                         <span className="text-muted">Gagal Memuat Data! &nbsp;<FiRefreshCw/></span>
                                                     </td>
                                                 </tr>
@@ -360,7 +367,7 @@ const Table=(props)=>{
                                     :
                                         <>
                                             <tr>
-                                                <td colSpan={8} className="text-center">
+                                                <td colSpan={9} className="text-center">
                                                     <div className="d-flex align-items-center justify-content-center">
                                                         <Spinner
                                                             as="span"
@@ -491,6 +498,7 @@ const ModalTambah=(props)=>{
                         nested:yup.string().required(),
                         nama_ppepp:yup.string().required(),
                         standar_minimum:yup.string().optional(),
+                        bobot:yup.string().required(),
                         skor:yup.string().required()
                     })
                 }
@@ -517,6 +525,7 @@ const ModalTambah=(props)=>{
                                                 )
                                             }}
                                             placeholder="Pilih kriteria"
+                                            disabled={props.auth.user.role!="admin"}
                                         />
                                     </div>
                                 </div>
@@ -559,6 +568,22 @@ const ModalTambah=(props)=>{
                                 </div>
                                 <div className="col-12">
                                     <div className="mb-2">
+                                        <label className="my-1 me-2" for="country">Bobot <span className="text-danger">*</span></label>
+                                        <NumericFormat
+                                            className="form-control"
+                                            value={formik.values.bobot}
+                                            onValueChange={values=>{
+                                                const {value}=values
+
+                                                formik.setFieldValue("bobot", value)
+                                            }}
+                                            allowNegative={false}
+                                            decimalScale={2}
+                                        />
+                                    </div>
+                                </div>
+                                <div className="col-12">
+                                    <div className="mb-2">
                                         <label className="my-1 me-2" for="country">Skor <span className="text-danger">*</span></label>
                                         <NumericFormat
                                             className="form-control"
@@ -569,7 +594,7 @@ const ModalTambah=(props)=>{
                                                 formik.setFieldValue("skor", value)
                                             }}
                                             allowNegative={false}
-                                            decimalScale={0}
+                                            decimalScale={2}
                                         />
                                     </div>
                                 </div>
@@ -634,6 +659,7 @@ const ModalEdit=(props)=>{
                     yup.object().shape({
                         nama_ppepp:yup.string().required(),
                         standar_minimum:yup.string().optional(),
+                        bobot:yup.string().required(),
                         skor:yup.string().required()
                     })
                 }
@@ -671,6 +697,22 @@ const ModalEdit=(props)=>{
                                 </div>
                                 <div className="col-12">
                                     <div className="mb-2">
+                                        <label className="my-1 me-2" for="country">Bobot <span className="text-danger">*</span></label>
+                                        <NumericFormat
+                                            className="form-control"
+                                            value={formik.values.bobot}
+                                            onValueChange={values=>{
+                                                const {value}=values
+
+                                                formik.setFieldValue("bobot", value)
+                                            }}
+                                            allowNegative={false}
+                                            decimalScale={2}
+                                        />
+                                    </div>
+                                </div>
+                                <div className="col-12">
+                                    <div className="mb-2">
                                         <label className="my-1 me-2" for="country">Skor <span className="text-danger">*</span></label>
                                         <NumericFormat
                                             className="form-control"
@@ -681,7 +723,7 @@ const ModalEdit=(props)=>{
                                                 formik.setFieldValue("skor", value)
                                             }}
                                             allowNegative={false}
-                                            decimalScale={0}
+                                            decimalScale={2}
                                         />
                                     </div>
                                 </div>

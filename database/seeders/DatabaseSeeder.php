@@ -14,6 +14,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         \App\Models\UserModel::create([
+            'id_kriteria'   =>null,
             'role'          =>"admin",
             'username'      =>"admin",
             'email'         =>"admin@gmail.com",

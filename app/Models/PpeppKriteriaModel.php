@@ -19,4 +19,10 @@ class PpeppKriteriaModel extends Model
 
     protected $casts = [
     ];
+
+
+    //relationship
+    public function ppepp(){
+        return $this->hasMany(PpeppModel::class, "id_kriteria", "id_kriteria");
+    }
 }

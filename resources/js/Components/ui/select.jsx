@@ -17,6 +17,7 @@ export const Select=({options=[], value, onChange, placeholder="", disabled=fals
                 onChange={onChange}
                 placeholder={placeholder}
                 isDisabled={disabled}
+                menuPortalTarget={document.body}
                 styles={{
                     control:(baseStyles, state)=>{
                         return {
@@ -44,6 +45,12 @@ export const Select=({options=[], value, onChange, placeholder="", disabled=fals
                             ...baseStyles,
                             background:state.isFocused&&(!state.isSelected&&"#404954")
                         }
+                    },
+                    menuPortal:(baseStyles, state)=>{
+                        return {
+                            ...baseStyles,
+                            zIndex:99999
+                        }
                     }
                 }}
             />
@@ -57,12 +64,19 @@ export const Select=({options=[], value, onChange, placeholder="", disabled=fals
             onChange={onChange}
             placeholder={placeholder}
             isDisabled={disabled}
+            menuPortalTarget={document.body}
             styles={{
                 control:(baseStyles, state)=>{
                     return {
                         ...baseStyles,
                         background:"#fff",
                         borderColor:"#dee2e6"
+                    }
+                },
+                menuPortal:(baseStyles, state)=>{
+                    return {
+                        ...baseStyles,
+                        zIndex:99999
                     }
                 }
             }}
@@ -83,6 +97,7 @@ export const AsyncSelect=({cacheOptions=false, defaultOptions=[], loadOptions, o
                 onChange={onChange}
                 placeholder={placeholder}
                 isDisabled={disabled}
+                menuPortalTarget={document.body}
                 styles={{
                     control:(baseStyles, state)=>{
                         return {
@@ -110,6 +125,12 @@ export const AsyncSelect=({cacheOptions=false, defaultOptions=[], loadOptions, o
                             ...baseStyles,
                             background:state.isFocused&&(!state.isSelected&&"#404954")
                         }
+                    },
+                    menuPortal:(baseStyles, state)=>{
+                        return {
+                            ...baseStyles,
+                            zIndex:99999
+                        }
                     }
                 }}
             />
@@ -124,12 +145,19 @@ export const AsyncSelect=({cacheOptions=false, defaultOptions=[], loadOptions, o
             onChange={onChange}
             placeholder={placeholder}
             isDisabled={disabled}
+            menuPortalTarget={document.body}
             styles={{
                 control:(baseStyles, state)=>{
                     return {
                         ...baseStyles,
                         background:"#fff",
                         borderColor:"#dee2e6"
+                    }
+                },
+                menuPortal:(baseStyles, state)=>{
+                    return {
+                        ...baseStyles,
+                        zIndex:99999
                     }
                 }
             }}
@@ -151,6 +179,7 @@ export const CreateMultiSelect=({options=[], value, onChange, onKeyDown, placeho
                 onKeyDown={onKeyDown}
                 placeholder={placeholder}
                 isDisabled={disabled}
+                menuPortalTarget={document.body}
                 styles={{
                     control:(baseStyles, state)=>{
                         return {
@@ -178,6 +207,12 @@ export const CreateMultiSelect=({options=[], value, onChange, onKeyDown, placeho
                             ...baseStyles,
                             background:state.isFocused&&(!state.isSelected&&"#404954")
                         }
+                    },
+                    menuPortal:(baseStyles, state)=>{
+                        return {
+                            ...baseStyles,
+                            zIndex:99999
+                        }
                     }
                 }}
             />
@@ -193,12 +228,19 @@ export const CreateMultiSelect=({options=[], value, onChange, onKeyDown, placeho
             onKeyDown={onKeyDown}
             placeholder={placeholder}
             isDisabled={disabled}
+            menuPortalTarget={document.body}
             styles={{
                 control:(baseStyles, state)=>{
                     return {
                         ...baseStyles,
                         background:"#fff",
                         borderColor:"#dee2e6"
+                    }
+                },
+                menuPortal:(baseStyles, state)=>{
+                    return {
+                        ...baseStyles,
+                        zIndex:99999
                     }
                 }
             }}
@@ -252,7 +294,7 @@ export const CreateSelect=({options=[], value, onChange, onKeyDown, onInputChang
                     menuPortal:(baseStyles, state)=>{
                         return {
                             ...baseStyles,
-                            zIndex:9999
+                            zIndex:99999
                         }
                     }
                 }}
@@ -281,7 +323,7 @@ export const CreateSelect=({options=[], value, onChange, onKeyDown, onInputChang
                 menuPortal:(baseStyles, state)=>{
                     return {
                         ...baseStyles,
-                        zIndex:9999
+                        zIndex:99999
                     }
                 }
             }}
@@ -338,7 +380,7 @@ export const CreateAsyncMultiSelect=({cacheOptions=false, value, defaultOptions=
                     menuPortal:(baseStyles, state)=>{
                         return {
                             ...baseStyles,
-                            zIndex:9999
+                            zIndex:99999
                         }
                     }
                 }}
@@ -370,7 +412,7 @@ export const CreateAsyncMultiSelect=({cacheOptions=false, value, defaultOptions=
                 menuPortal:(baseStyles, state)=>{
                     return {
                         ...baseStyles,
-                        zIndex:9999
+                        zIndex:99999
                     }
                 }
             }}

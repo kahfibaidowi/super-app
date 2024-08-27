@@ -110,6 +110,12 @@ export const bukti_request={
         })
         .then(res=>res.data)
     },
+    gets_rekap_bukti:async(params={})=>{
+        return await axios.get("/api/bukti/type/rekap_bukti", {
+            params:params
+        })
+        .then(res=>res.data)
+    },
     add:async(params)=>{
         return await axios.post("/api/bukti", params).then(res=>res.data)
     },

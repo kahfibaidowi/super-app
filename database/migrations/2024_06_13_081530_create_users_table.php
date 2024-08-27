@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('tbl_users', function (Blueprint $table) {
             $table->id("id_user");
+            $table->unsignedBigInteger("id_kriteria")->nullable();
             $table->string("nama_lengkap");
             $table->string("username")->unique();
             $table->string("email")->unique();
@@ -24,6 +25,7 @@ return new class extends Migration
             $table->timestamps();
 
             //fk
+            $table->foreign("id_kriteria")->references("id_kriteria")->on("tbl_ppepp_kriteria")->onDelete("set null");
         });
     }
 

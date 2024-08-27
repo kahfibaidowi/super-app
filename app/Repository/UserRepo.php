@@ -14,7 +14,7 @@ class UserRepo{
         $params['status']=isset($params['status'])?trim($params['status']):"";
 
         //query
-        $query=UserModel::query();
+        $query=UserModel::with("kriteria");
         $query=$query->where("nama_lengkap", "like", "%".$params['q']."%");
         //--role
         if($params['role']!=""){

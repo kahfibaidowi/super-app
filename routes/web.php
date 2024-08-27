@@ -48,10 +48,12 @@ Route::controller(PpeppKriteriaController::class)->prefix("/admin/ppepp_kriteria
 Route::controller(PpeppController::class)->prefix("/admin/ppepp")->middleware("auth")->group(function(){
     Route::get("/", "index");
     Route::get("/sub", "sub");
+    Route::get("/type/rekap_sub", "rekap_sub");
 });
 
 Route::controller(BuktiController::class)->prefix("/admin/bukti")->middleware("auth")->group(function(){
     Route::get("/{id}", "index");
+    Route::get("/type/rekap_bukti", "rekap_bukti");
 });
 
 Route::controller(PesanWhatsappController::class)->prefix("/admin/pesan_whatsapp")->middleware("auth")->group(function(){

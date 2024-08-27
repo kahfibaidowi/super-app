@@ -35,10 +35,16 @@ class UserController extends Controller
             'username'  =>"required|unique:App\Models\UserModel,username",
             'email'     =>"required|email|unique:App\Models\UserModel,email",
             'password'  =>"required",
-            'role'      =>"required|in:admin",
+            'role'      =>"required|in:admin,pengawal",
             'nama_lengkap'  =>"required",
             'avatar_url'=>"present",
-            'status'    =>"required|in:active,suspend"
+            'status'    =>"required|in:active,suspend",
+            'id_kriteria'   =>[
+                Rule::requiredIf(function()use($req){
+                    if($req['role']=="pengawal") return true;
+                    return false;
+                })
+            ]
         ]);
         if($validation->fails()){
             return response()->json([
@@ -56,7 +62,8 @@ class UserController extends Controller
                 'nama_lengkap'  =>$req['nama_lengkap'],
                 'password'      =>Hash::make($req['password']),
                 'avatar_url'    =>$req['avatar_url'],
-                'status'        =>$req['status']
+                'status'        =>$req['status'],
+                'id_kriteria'   =>trim($req['id_kriteria'])!=""?$req['id_kriteria']:null
             ]);
         });
 
@@ -106,7 +113,18 @@ class UserController extends Controller
             'avatar_url'=>[
                 Rule::requiredIf(!isset($req['avatar_url']))
             ],
-            'status'    =>"required|in:active,suspend"
+            'status'    =>"required|in:active,suspend",
+            'id_kriteria'   =>[
+                Rule::requiredIf(function()use($req){
+                    $q=UserModel::where("id_user", $req['id_user'])->first();
+
+                    if(!isset($q)) return true;
+                    if($q['role']=="pengawal") return true;
+
+                    return false;
+                })
+            ]
+            
         ]);
         if($validation->fails()){
             return response()->json([
@@ -122,7 +140,8 @@ class UserController extends Controller
                 'email'         =>$req['email'],
                 'nama_lengkap'  =>$req['nama_lengkap'],
                 'avatar_url'    =>$req['avatar_url'],
-                'status'        =>$req['status']
+                'status'        =>$req['status'],
+                'id_kriteria'   =>trim($req['id_kriteria'])!=""?$req['id_kriteria']:null
             ];
             if(trim($req['password'])!=""){
                 $data_update['password']=Hash::make($req['password']);

@@ -18,7 +18,8 @@ return new class extends Migration
             $table->text("nama_ppepp");
             $table->text("deskripsi");
             $table->text("standar_minimum");
-            $table->integer("skor")->nullable();
+            $table->double("bobot")->nullable();
+            $table->double("skor")->nullable();
             $table->timestamps();
 
             //fk

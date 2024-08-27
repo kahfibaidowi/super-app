@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Models\PpeppModel;
+use App\Models\PpeppKriteriaModel;
 
 class PpeppRepo{
 
@@ -53,5 +54,14 @@ class PpeppRepo{
 
         //return
         return $query->paginate($params['per_page'])->toArray();
+    }
+
+    public static function gets_rekap_sub_ppepp()
+    {
+        //query
+        $query=PpeppKriteriaModel::with("ppepp", "ppepp.sub_ppepp");
+
+        //return
+        return $query->get()->toArray();
     }
 }
