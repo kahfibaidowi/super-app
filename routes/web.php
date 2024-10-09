@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\BuktiController;
 use App\Http\Controllers\Admin\PesanWhatsappController;
 use App\Http\Controllers\Admin\KontakController;
 use App\Http\Controllers\Admin\KontakGroupController;
+use App\Http\Controllers\Admin\LakinController;
 
 /*
 |--------------------------------------------------------------------------
@@ -66,4 +67,20 @@ Route::controller(KontakController::class)->prefix("/admin/kontak")->middleware(
 
 Route::controller(KontakGroupController::class)->prefix("/admin/kontak_group")->middleware("auth")->group(function(){
     Route::get("/", "index");
+});
+
+Route::controller(LakinController::class)->prefix("/admin/lakin")->middleware("auth")->group(function(){
+    Route::get("/type/penyusunan", "penyusunan");
+    Route::get("/type/jumlah_camaba", "jumlah_camaba");
+    Route::get("/type/avg_dtpr", "avg_dtpr");
+    Route::get("/type/tenaga_kependidikan", "tenaga_kependidikan");
+    Route::get("/type/sumber_pendanaan_ps", "sumber_pendanaan_ps");
+    Route::get("/type/aksesibilitas_data_sistem_informasi", "aksesibilitas_data_sistem_informasi");
+    Route::get("/type/pendayagunaan_sarana_prasarana_utama", "pendayagunaan_sarana_prasarana_utama");
+    Route::get("/type/ipk_lulusan", "ipk_lulusan");
+    Route::get("/type/kelulusan_tepat_waktu", "kelulusan_tepat_waktu");
+    Route::get("/type/avg_masa_tunggu_lulusan_bekerja", "avg_masa_tunggu_lulusan_bekerja");
+    Route::get("/type/kesesuaian_bidang_kerja_lulusan", "kesesuaian_bidang_kerja_lulusan");
+    Route::get("/type/penelitian_kegiatan_pengabdian_masyarakat", "penelitian_kegiatan_pengabdian_masyarakat");
+    Route::get("/print", "print_lakin");
 });

@@ -192,3 +192,21 @@ export const kontak_group_request={
         return await axios.put(`/api/kontak_group/${params.id_group}`, params).then(res=>res.data)
     }
 }
+
+//KONTAK GROUP
+export const lakin_request={
+    get:async(type)=>{
+        return await axios.get("/api/lakin", {
+            params:{
+                type:type
+            }
+        })
+        .then(res=>res.data)
+    },
+    upsert:async(params)=>{
+        return await axios.post("/api/lakin", params).then(res=>res.data)
+    },
+    delete:async(id)=>{
+        return await axios.delete(`/api/lakin/${id}`).then(res=>res.data)
+    }
+}

@@ -2,7 +2,7 @@ import { side_type, useThemeStore } from '@/Stores/theme'
 import clsx from 'clsx'
 import React, { useEffect, useState } from 'react'
 import Avatar from './ui/avatar'
-import { FiBookOpen, FiBookmark, FiChevronRight, FiHome, FiLayers, FiLock, FiLogOut, FiMapPin, FiMenu, FiMessageSquare, FiMonitor, FiPackage, FiSettings, FiTruck, FiUser, FiUsers } from "react-icons/fi"
+import { FiBookOpen, FiBookmark, FiChevronRight, FiFilePlus, FiHome, FiLayers, FiLock, FiLogOut, FiMapPin, FiMenu, FiMessageSquare, FiMonitor, FiPackage, FiSettings, FiTruck, FiUser, FiUsers } from "react-icons/fi"
 import { Collapse, Dropdown, Offcanvas } from 'react-bootstrap'
 import { Link, router, usePage } from '@inertiajs/react'
 import { Map } from 'immutable'
@@ -36,6 +36,25 @@ export default function Layout({children}){
         }
         if(["Admin/Kontak/Index", "Admin/KontakGroup/Index", "Admin/PesanWhatsapp/Index"].includes(page.component)){
             setCollapse("pesan_wa")
+        }
+        //--lakin
+        if(["Admin/Lakin/JumlahCamaba",].includes(page.component)){
+            setCollapse("lakin_mahasiswa")
+        }
+        if(["Admin/Lakin/AvgDTPR", "Admin/Lakin/TenagaKependidikan"].includes(page.component)){
+            setCollapse("lakin_sdm")
+        }
+        if(["Admin/Lakin/SumberPendanaanPS", "Admin/Lakin/AksesibilitasDataSistemInformasi", "Admin/Lakin/PendayagunaanSaranaPrasaranaUtama"].includes(page.component)){
+            setCollapse("lakin_sarpras")
+        }
+        if([
+            "Admin/Lakin/IPKLulusan", 
+            "Admin/Lakin/KelulusanTepatWaktu", 
+            "Admin/Lakin/AvgMasaTungguLulusanBekerja",
+            "Admin/Lakin/KesesuaianBidangKerjaLulusan",
+            "Admin/Lakin/PenelitianKegiatanPengabdianMasyarakat"
+        ].includes(page.component)){
+            setCollapse("lakin_luaran")
         }
         
         //theme
@@ -159,7 +178,7 @@ export default function Layout({children}){
                     </a>
                     
                     <SimpleBar style={{maxHeight:"100vh"}}>
-                        <div className="h-100" id="leftside-menu-container">
+                        <div className="h-100 pb-5" id="leftside-menu-container">
                             <ul className="side-nav">
 
                                 <li className="side-nav-title">Main</li>
@@ -436,7 +455,272 @@ export default function Layout({children}){
                                         </Link>
                                     </li>
                                 }
+
                                 
+                                {/* LAKIN */}
+                                <li className="side-nav-title">LAKIN</li>
+                                <li
+                                    className={clsx(
+                                        "side-nav-item", 
+                                        {"menuitem-active":active_page=="Admin/Lakin/Penyusunan"
+                                    })}
+                                >
+                                    <Link
+                                        href="/admin/lakin/type/penyusunan"
+                                        className={clsx("side-nav-link", "d-flex align-items-center", {"active":active_page=="Admin/Lakin/Penyusunan"})}
+                                    >
+                                        <FiFilePlus/>
+                                        <span> Penyusunan </span>
+                                    </Link>
+                                </li>
+                                <li
+                                    className={clsx(
+                                        "side-nav-item", {
+                                        "menuitem-active":["Admin/Lakin/JumlahCamaba"].includes(active_page)
+                                    })}
+                                >
+                                    <a 
+                                        className="side-nav-link d-flex align-items-center cursor-pointer"
+                                        onClick={e=>setCollapse(collapse!="lakin_mahasiswa"?"lakin_mahasiswa":"")}
+                                        aria-expanded={collapse=="lakin_mahasiswa"}
+                                    >
+                                        <FiFilePlus/>
+                                        <span> Mahasiswa </span>
+                                        <span className='menu-arrow'><FiChevronRight className='ms-auto'/></span>
+                                    </a>
+                                    <Collapse in={collapse=="lakin_mahasiswa"}>
+                                        <div>
+                                            <ul className="side-nav-second-level">
+                                                <li
+                                                    className={clsx({
+                                                        "active":(active_page=="Admin/Lakin/JumlahCamaba")
+                                                    })}
+                                                >
+                                                    <Link
+                                                        href={`/admin/lakin/type/jumlah_camaba`}
+                                                        className={clsx({
+                                                            "active":(active_page=="Admin/Lakin/JumlahCamaba")
+                                                        })}
+                                                    >
+                                                        Jumlah Calon Mahasiswa Baru
+                                                    </Link>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </Collapse>
+                                </li>
+                                <li
+                                    className={clsx(
+                                        "side-nav-item", {
+                                        "menuitem-active":["Admin/Lakin/AvgDTPR", "Admin/Lakin/TenagaKependidikan"].includes(active_page)
+                                    })}
+                                >
+                                    <a 
+                                        className="side-nav-link d-flex align-items-center cursor-pointer"
+                                        onClick={e=>setCollapse(collapse!="lakin_sdm"?"lakin_sdm":"")}
+                                        aria-expanded={collapse=="lakin_sdm"}
+                                    >
+                                        <FiFilePlus/>
+                                        <span> Sumber Daya Manusia </span>
+                                        <span className='menu-arrow'><FiChevronRight className='ms-auto'/></span>
+                                    </a>
+                                    <Collapse in={collapse=="lakin_sdm"}>
+                                        <div>
+                                            <ul className="side-nav-second-level">
+                                                <li
+                                                    className={clsx({
+                                                        "active":(active_page=="Admin/Lakin/AvgDTPR")
+                                                    })}
+                                                >
+                                                    <Link
+                                                        href={`/admin/lakin/type/avg_dtpr`}
+                                                        className={clsx({
+                                                            "active":(active_page=="Admin/Lakin/AvgDTPR")
+                                                        })}
+                                                    >
+                                                        Rata-rata beban DTPR per semester, pada TS
+                                                    </Link>
+                                                </li>
+                                                <li
+                                                    className={clsx({
+                                                        "active":(active_page=="Admin/Lakin/TenagaKependidikan")
+                                                    })}
+                                                >
+                                                    <Link
+                                                        href={`/admin/lakin/type/tenaga_kependidikan`}
+                                                        className={clsx({
+                                                            "active":(active_page=="Admin/Lakin/TenagaKependidikan")
+                                                        })}
+                                                    >
+                                                        Kualifikasi Tenaga Kependidikan
+                                                    </Link>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </Collapse>
+                                </li>
+                                <li
+                                    className={clsx(
+                                        "side-nav-item", {
+                                        "menuitem-active":["Admin/Lakin/SumberPendanaanPS", "Admin/Lakin/AksesibilitasDataSistemInformasi", "Admin/Lakin/PendayagunaanSaranaPrasaranaUtama"].includes(active_page)
+                                    })}
+                                >
+                                    <a 
+                                        className="side-nav-link d-flex align-items-center cursor-pointer"
+                                        onClick={e=>setCollapse(collapse!="lakin_sarpras"?"lakin_sarpras":"")}
+                                        aria-expanded={collapse=="lakin_sarpras"}
+                                    >
+                                        <FiFilePlus/>
+                                        <span> Keuangan Sarana dan Prasarana </span>
+                                        <span className='menu-arrow'><FiChevronRight className='ms-auto'/></span>
+                                    </a>
+                                    <Collapse in={collapse=="lakin_sarpras"}>
+                                        <div>
+                                            <ul className="side-nav-second-level">
+                                                <li
+                                                    className={clsx({
+                                                        "active":(active_page=="Admin/Lakin/SumberPendanaanPS")
+                                                    })}
+                                                >
+                                                    <Link
+                                                        href={`/admin/lakin/type/sumber_pendanaan_ps`}
+                                                        className={clsx({
+                                                            "active":(active_page=="Admin/Lakin/SumberPendanaanPS")
+                                                        })}
+                                                    >
+                                                        Sumber Pendanaan PS
+                                                    </Link>
+                                                </li>
+                                                <li
+                                                    className={clsx({
+                                                        "active":(active_page=="Admin/Lakin/AksesibilitasDataSistemInformasi")
+                                                    })}
+                                                >
+                                                    <Link
+                                                        href={`/admin/lakin/type/aksesibilitas_data_sistem_informasi`}
+                                                        className={clsx({
+                                                            "active":(active_page=="Admin/Lakin/AksesibilitasDataSistemInformasi")
+                                                        })}
+                                                    >
+                                                        Aksesibilitas Data dan Sistem Informasi
+                                                    </Link>
+                                                </li>
+                                                <li
+                                                    className={clsx({
+                                                        "active":(active_page=="Admin/Lakin/PendayagunaanSaranaPrasaranaUtama")
+                                                    })}
+                                                >
+                                                    <Link
+                                                        href={`/admin/lakin/type/pendayagunaan_sarana_prasarana_utama`}
+                                                        className={clsx({
+                                                            "active":(active_page=="Admin/Lakin/PendayagunaanSaranaPrasaranaUtama")
+                                                        })}
+                                                    >
+                                                        Pendayagunaan Sarana dan Prasarana Utama
+                                                    </Link>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </Collapse>
+                                </li>
+                                <li
+                                    className={clsx(
+                                        "side-nav-item", {
+                                        "menuitem-active":[
+                                            "Admin/Lakin/IPKLulusan", 
+                                            "Admin/Lakin/KelulusanTepatWaktu", 
+                                            "Admin/Lakin/AvgMasaTungguLulusanBekerja",
+                                            "Admin/Lakin/KesesuaianBidangKerjaLulusan",
+                                            "Admin/Lakin/PenelitianKegiatanPengabdianMasyarakat"
+                                        ].includes(active_page)
+                                    })}
+                                >
+                                    <a 
+                                        className="side-nav-link d-flex align-items-center cursor-pointer"
+                                        onClick={e=>setCollapse(collapse!="lakin_luaran"?"lakin_luaran":"")}
+                                        aria-expanded={collapse=="lakin_luaran"}
+                                    >
+                                        <FiFilePlus/>
+                                        <span> Luaran dan Capaian Tri Dharma </span>
+                                        <span className='menu-arrow'><FiChevronRight className='ms-auto'/></span>
+                                    </a>
+                                    <Collapse in={collapse=="lakin_luaran"}>
+                                        <div>
+                                            <ul className="side-nav-second-level">
+                                                <li
+                                                    className={clsx({
+                                                        "active":(active_page=="Admin/Lakin/IPKLulusan")
+                                                    })}
+                                                >
+                                                    <Link
+                                                        href={`/admin/lakin/type/ipk_lulusan`}
+                                                        className={clsx({
+                                                            "active":(active_page=="Admin/Lakin/IPKLulusan")
+                                                        })}
+                                                    >
+                                                        IPK Lulusan
+                                                    </Link>
+                                                </li>
+                                                <li
+                                                    className={clsx({
+                                                        "active":(active_page=="Admin/Lakin/KelulusanTepatWaktu")
+                                                    })}
+                                                >
+                                                    <Link
+                                                        href={`/admin/lakin/type/kelulusan_tepat_waktu`}
+                                                        className={clsx({
+                                                            "active":(active_page=="Admin/Lakin/KelulusanTepatWaktu")
+                                                        })}
+                                                    >
+                                                        KelulusanTepatWaktu
+                                                    </Link>
+                                                </li>
+                                                <li
+                                                    className={clsx({
+                                                        "active":(active_page=="Admin/Lakin/AvgMasaTungguLulusanBekerja")
+                                                    })}
+                                                >
+                                                    <Link
+                                                        href={`/admin/lakin/type/avg_masa_tunggu_lulusan_bekerja`}
+                                                        className={clsx({
+                                                            "active":(active_page=="Admin/Lakin/AvgMasaTungguLulusanBekerja")
+                                                        })}
+                                                    >
+                                                        Rata-rata Masa tunggu Lulusan untuk bekerja pertama kali
+                                                    </Link>
+                                                </li>
+                                                <li
+                                                    className={clsx({
+                                                        "active":(active_page=="Admin/Lakin/KesesuaianBidangKerjaLulusan")
+                                                    })}
+                                                >
+                                                    <Link
+                                                        href={`/admin/lakin/type/kesesuaian_bidang_kerja_lulusan`}
+                                                        className={clsx({
+                                                            "active":(active_page=="Admin/Lakin/KesesuaianBidangKerjaLulusan")
+                                                        })}
+                                                    >
+                                                        Kesesuaian Bidang Kerja Lulusan
+                                                    </Link>
+                                                </li>
+                                                <li
+                                                    className={clsx({
+                                                        "active":(active_page=="Admin/Lakin/PenelitianKegiatanPengabdianMasyarakat")
+                                                    })}
+                                                >
+                                                    <Link
+                                                        href={`/admin/lakin/type/penelitian_kegiatan_pengabdian_masyarakat`}
+                                                        className={clsx({
+                                                            "active":(active_page=="Admin/Lakin/PenelitianKegiatanPengabdianMasyarakat")
+                                                        })}
+                                                    >
+                                                        Penelitian dan Kegiatan Pengabdian kepada Masyarakat dari DTPR
+                                                    </Link>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </Collapse>
+                                </li>
                             </ul>
                             <div className="clearfix"></div>
                         </div>

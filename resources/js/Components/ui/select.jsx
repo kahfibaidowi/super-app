@@ -248,7 +248,7 @@ export const CreateMultiSelect=({options=[], value, onChange, onKeyDown, placeho
     )
 }
 
-export const CreateSelect=({options=[], value, onChange, onKeyDown, onInputChange, placeholder="", disabled=false})=>{
+export const CreateSelect=({options=[], value, onChange, onCreateOption, closeMenuOnSelect=true, onKeyDown, onInputChange, placeholder="", disabled=false})=>{
 
     const theme=useThemeStore()
 
@@ -262,6 +262,8 @@ export const CreateSelect=({options=[], value, onChange, onKeyDown, onInputChang
                 placeholder={placeholder}
                 isDisabled={disabled}
                 onInputChange={onInputChange}
+                onCreateOption={onCreateOption}
+                closeMenuOnSelect={closeMenuOnSelect}
                 menuPortalTarget={document.body}
                 styles={{
                     control:(baseStyles, state)=>{
@@ -311,6 +313,8 @@ export const CreateSelect=({options=[], value, onChange, onKeyDown, onInputChang
             placeholder={placeholder}
             isDisabled={disabled}
             onInputChange={onInputChange}
+            onCreateOption={onCreateOption}
+            closeMenuOnSelect={closeMenuOnSelect}
             menuPortalTarget={document.body}
             styles={{
                 control:(baseStyles, state)=>{

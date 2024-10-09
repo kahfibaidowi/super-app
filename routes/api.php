@@ -13,6 +13,7 @@ use App\Http\Controllers\Api\BuktiController;
 use App\Http\Controllers\Api\PesanWhatsappController;
 use App\Http\Controllers\Api\KontakController;
 use App\Http\Controllers\Api\KontakGroupController;
+use App\Http\Controllers\Api\LakinController;
 
 /*
 |--------------------------------------------------------------------------
@@ -95,4 +96,10 @@ Route::controller(KontakGroupController::class)->prefix("/kontak_group")->middle
     Route::put("/{id}", "update");
     Route::delete("/{id}", "delete");
     Route::get("/", "gets");
+});
+
+Route::controller(LakinController::class)->prefix("/lakin")->middleware("auth:sanctum")->group(function(){
+    Route::post("/", "upsert");
+    Route::delete("/{id}", "delete");
+    Route::get("/", "get");
 });

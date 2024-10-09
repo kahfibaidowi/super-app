@@ -109,3 +109,6 @@
 .side-nav-second-level a{
     text-wrap: wrap !important;
 }
+.side-nav .side-nav-link{
+    text-wrap: wrap !important;
+}
