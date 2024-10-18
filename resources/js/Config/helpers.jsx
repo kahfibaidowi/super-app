@@ -1,3 +1,6 @@
+import uniqid from "uniqid"
+
+
 export const akronim=str=>{
     if(str.trim()===""){
         return ""
@@ -22,4 +25,18 @@ export function readFile(fileRes){
             resolve(reader.result)
         }
     })
+}
+export const generate_id=(data=[])=>{
+    let id=""
+
+    while(true){
+        const uniq_id=uniqid()
+
+        if(data.filter(f=>f.id==uniq_id).length==0){
+            id=uniq_id
+            break
+        }
+    }
+
+    return id
 }

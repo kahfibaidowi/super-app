@@ -21,6 +21,7 @@ import { SwitchInput } from "@/Components/ui/input_form"
 import { parse_image, parse_pdf } from "@/Config/ocr"
 import extract from "@/Config/xlsx_extract"
 import { NumericFormat } from "react-number-format"
+import { generate_id } from "@/Config/helpers"
 
 
 const MySwal=withReactContent(swal)
@@ -282,13 +283,12 @@ const Table=(props)=>{
         })
         .then(result=>{
             if(result.isConfirmed){
-                const sb=props.data.data.data.data.slice(0, idx);
-                const eb=props.data.data.data.data.slice(idx+1);
+                const new_data=props.data.data.data.data.filter(f=>f.id!=list.id)
 
                 const params={
                     type:props.filter.type,
                     content:{
-                        data:sb.concat(eb),
+                        data:new_data,
                         detail:props.data.data.data.detail
                     }
                 }
@@ -588,7 +588,10 @@ const ModalTambah=(props)=>{
             <Formik
                 initialValues={props.data.data}
                 onSubmit={(values, actions)=>{
-                    const new_values=values
+                    const id=generate_id()
+                    const new_values=Object.assign({}, values, {
+                        id
+                    })
 
                     const params={
                         type:props.filter.type,
@@ -827,9 +830,10 @@ const ModalEdit=(props)=>{
                 initialValues={props.data.data}
                 onSubmit={(values, actions)=>{
                     const new_values=values
-
-                    const sb=props.lakin.data.data.data.slice(0, props.data.index);
-                    const eb=props.lakin.data.data.data.slice(props.data.index+1);
+                    
+                    const index=props.lakin.data.data.data.findIndex(list=>list.id==new_values.id)
+                    const sb=props.lakin.data.data.data.slice(0, index);
+                    const eb=props.lakin.data.data.data.slice(index+1);
 
                     const params={
                         type:props.filter.type,
