@@ -46,7 +46,8 @@ const Page=(props)=>{
         return {
             tahun:props.tahun,
             jumlah_alumni_3_tahun_terakhir:"",
-            jumlah_perusahaan_responden:""
+            jumlah_perusahaan_responden:"",
+            deskripsi:""
         }
     }
     const jumlah_kelulusan_tepat_waktu=(type="")=>{
@@ -71,6 +72,29 @@ const Page=(props)=>{
             <div id="table-title" className="d-flex justify-content-center mt-3 mb-5">
                 <h2>Kelulusan Tepat Waktu</h2>
             </div>
+            {props.tahun!=""&&
+                <div className="d-flex flex-column align-items-start w-100 mb-4">
+                    <div>
+                        Jumlah Alumni/Lulusan dalam 3 tahun terakhir : 
+                        {filtered_detail().jumlah_alumni_3_tahun_terakhir!=""&&
+                            <span className="fw-bold text-dark ms-2">{filtered_detail().jumlah_alumni_3_tahun_terakhir} orang</span>
+                        }
+                    </div>
+                    <div>
+                        Jumlah Perusahaan sbg Responden : 
+                        {filtered_detail().jumlah_perusahaan_responden!=""&&
+                            <span className="fw-bold text-dark ms-2">{filtered_detail().jumlah_perusahaan_responden} orang</span>
+                        }
+                    </div>
+                    <div className="mt-2">
+                        {filtered_detail().deskripsi!=""?
+                            <div className="text-prewrap">{filtered_detail().deskripsi}</div>
+                        :
+                            <span className="text-muted">tidak ada deskripsi!</span>
+                        }
+                    </div>
+                </div>
+            }
             <div id="table-container">
                 <table id="table" className="table table-sm">
                     <thead>
@@ -119,23 +143,6 @@ const Page=(props)=>{
                         }
                     </tbody>
                 </table>
-
-                {props.tahun!=""&&
-                    <div className="d-flex flex-column align-items-start mt-3">
-                        <div>
-                            Jumlah Alumni/Lulusan dalam 3 tahun terakhir : 
-                            {filtered_detail().jumlah_alumni_3_tahun_terakhir!=""&&
-                                <span className="fw-bold text-dark ms-2">{filtered_detail().jumlah_alumni_3_tahun_terakhir} orang</span>
-                            }
-                        </div>
-                        <div>
-                            Jumlah Perusahaan sbg Responden : 
-                            {filtered_detail().jumlah_perusahaan_responden!=""&&
-                                <span className="fw-bold text-dark ms-2">{filtered_detail().jumlah_perusahaan_responden} orang</span>
-                            }
-                        </div>
-                    </div>
-                }
             </div>
         </>
     )

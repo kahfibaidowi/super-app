@@ -43,10 +43,11 @@ const Page=(props)=>{
         tahun:"",
         q:""
     })
-    const [edit_mahasiswa_aktif_tahun_ps, setEditMahasiswaAktifTahunPS]=useState({
+    const [edit_detail, setEditDetail]=useState({
         is_open:false,
         data:{
-            jumlah:""
+            jumlah:"",
+            deskripsi:""
         }
     })
     const [tambah_lakin, setTambahLakin]=useState({
@@ -67,7 +68,7 @@ const Page=(props)=>{
 
     //DATA/MUTATION
     const get_lakin=useQuery({
-        queryKey:["get_lakin", filter],
+        queryKey:["get_lakin_sumber_pendanaan_ps", filter],
         queryFn:async()=>lakin_request.get(filter.type),
         initialData:{
             data:{
@@ -80,16 +81,17 @@ const Page=(props)=>{
     })
 
     //ACTIONS
-    const toggleEditMahasiswaAktif=(list={}, show=false)=>{
+    const toggleEditDetail=(list={}, show=false)=>{
         let new_list=list
         if(_.isNull(list)){
             new_list={
                 tahun:filter.tahun,
-                jumlah:""
+                jumlah:"",
+                deskripsi:""
             }
         }
 
-        setEditMahasiswaAktifTahunPS({
+        setEditDetail({
             is_open:show,
             data:new_list
         })
@@ -129,17 +131,17 @@ const Page=(props)=>{
                     data={get_lakin}
                     filter={filter} 
                     setFilter={setFilter}
-                    toggleEditMahasiswaAktif={toggleEditMahasiswaAktif}
+                    toggleEditDetail={toggleEditDetail}
                     toggleTambah={toggleTambah}
                     toggleEdit={toggleEdit}
                 />
             </Layout>
 
-            <ModalEditMahasiswaAktif
+            <ModalEditDetail
                 filter={filter}
                 lakin={get_lakin}
-                data={edit_mahasiswa_aktif_tahun_ps}
-                toggleEdit={toggleEditMahasiswaAktif}
+                data={edit_detail}
+                toggleEdit={toggleEditDetail}
             />
 
             <ModalTambah
@@ -165,7 +167,7 @@ const Table=(props)=>{
     const upsert_lakin=useMutation({
         mutationFn:(params)=>lakin_request.upsert(params),
         onSuccess:data=>{
-            queryClient.refetchQueries("get_lakin")
+            queryClient.refetchQueries("get_lakin_sumber_pendanaan_ps")
         },
         onError:err=>{
             console.log(err)
@@ -186,7 +188,7 @@ const Table=(props)=>{
         if(detail_tahun.length>0){
             return detail_tahun[0]
         }
-        return {tahun:props.filter.tahun, jumlah:""}
+        return {tahun:props.filter.tahun, jumlah:"", deskripsi:""}
     }
 
     //FILTER
@@ -240,7 +242,7 @@ const Table=(props)=>{
                 const params={
                     type:props.filter.type,
                     content:{
-                        mahasiswa:props.data.data.data.mahasiswa,
+                        detail:props.data.data.data.detail,
                         data:sb.concat(eb)
                     }
                 }
@@ -293,7 +295,7 @@ const Table=(props)=>{
                                 <button 
                                     className="btn btn-secondary rounded-pill mb-1"
                                     type="button"
-                                    onClick={e=>props.toggleEditMahasiswaAktif(filtered_detail(), true)}
+                                    onClick={e=>props.toggleEditDetail(filtered_detail(), true)}
                                 >
                                     <FiEdit/> Edit
                                 </button>
@@ -301,6 +303,13 @@ const Table=(props)=>{
                                     Jumlah Mahasiswa Aktif Pada Tahun TS : 
                                     {filtered_detail().jumlah!=""&&
                                         <span className="fw-bold text-dark ms-2">{filtered_detail().jumlah} orang</span>
+                                    }
+                                </div>
+                                <div className="mt-2">
+                                    {filtered_detail().deskripsi!=""?
+                                        <div className="text-prewrap">{filtered_detail().deskripsi}</div>
+                                    :
+                                        <span className="text-muted">tidak ada deskripsi!</span>
                                     }
                                 </div>
                             </div>
@@ -360,7 +369,7 @@ const Table=(props)=>{
                                             }
                                             {!_.isNull(props.data.error)&&
                                                 <tr>
-                                                    <td colSpan={7} className="text-center cursor-pointer" onClick={()=>queryClient.refetchQueries("get_lakin")}>
+                                                    <td colSpan={7} className="text-center cursor-pointer" onClick={()=>queryClient.refetchQueries("get_lakin_sumber_pendanaan_ps")}>
                                                         <span className="text-muted">Gagal Memuat Data! &nbsp;<FiRefreshCw/></span>
                                                     </td>
                                                 </tr>
@@ -395,13 +404,13 @@ const Table=(props)=>{
     )
 }
 
-const ModalEditMahasiswaAktif=(props)=>{
+const ModalEditDetail=(props)=>{
 
     //MUTATION
     const upsert_lakin=useMutation({
         mutationFn:params=>lakin_request.upsert(params),
         onSuccess:data=>{
-            queryClient.refetchQueries("get_lakin")
+            queryClient.refetchQueries("get_lakin_sumber_pendanaan_ps")
             props.toggleEdit()
         },
         onError:err=>{
@@ -415,7 +424,7 @@ const ModalEditMahasiswaAktif=(props)=>{
     //FILTER
     
     return (
-        <Modal show={props.data.is_open} onHide={props.toggleTambah} backdrop="static" size="md" scrollable>
+        <Modal show={props.data.is_open} onHide={props.toggleEdit} backdrop="static" size="md" scrollable>
             <Formik
                 initialValues={props.data.data}
                 onSubmit={(values, actions)=>{
@@ -438,14 +447,15 @@ const ModalEditMahasiswaAktif=(props)=>{
                 validationSchema={
                     yup.object().shape({
                         tahun:yup.string().required(),
-                        jumlah:yup.string().required()
+                        jumlah:yup.string().required(),
+                        deskripsi:yup.string().optional()
                     })
                 }
             >
                 {formik=>(
                     <form onSubmit={formik.handleSubmit}>
                         <Modal.Header closeButton>
-                            <h4 className="modal-title">Edit Mahasiswa Aktif {formik.values.tahun}</h4>
+                            <h4 className="modal-title">Edit Detail {formik.values.tahun}</h4>
                         </Modal.Header>
                         <Modal.Body>
                             <div className="row">
@@ -464,6 +474,18 @@ const ModalEditMahasiswaAktif=(props)=>{
                                             decimalScale={0}
                                             thousandSeparator
                                         />
+                                    </div>
+                                </div>
+                                <div className="col-12">
+                                    <div className="mb-2">
+                                        <label className="my-1 me-2" for="country">Deskripsi</label>
+                                        <textarea
+                                            rows={5}
+                                            className="form-control"
+                                            name="deskripsi"
+                                            onChange={formik.handleChange}
+                                            value={formik.values.deskripsi}
+                                        ></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -497,7 +519,7 @@ const ModalTambah=(props)=>{
     const upsert_lakin=useMutation({
         mutationFn:params=>lakin_request.upsert(params),
         onSuccess:data=>{
-            queryClient.refetchQueries("get_lakin")
+            queryClient.refetchQueries("get_lakin_sumber_pendanaan_ps")
             props.toggleTambah()
         },
         onError:err=>{
@@ -520,7 +542,7 @@ const ModalTambah=(props)=>{
                     const params={
                         type:props.filter.type,
                         content:{
-                            mahasiswa:props.lakin.data.data.mahasiswa,
+                            detail:props.lakin.data.data.detail,
                             data:[new_values].concat(props.lakin.data.data.data)
                         }
                     }
@@ -653,7 +675,7 @@ const ModalEdit=(props)=>{
     const upsert_lakin=useMutation({
         mutationFn:params=>lakin_request.upsert(params),
         onSuccess:data=>{
-            queryClient.refetchQueries("get_lakin")
+            queryClient.refetchQueries("get_lakin_sumber_pendanaan_ps")
             props.toggleEdit()
         },
         onError:err=>{
@@ -679,7 +701,7 @@ const ModalEdit=(props)=>{
                     const params={
                         type:props.filter.type,
                         content:{
-                            mahasiswa:props.lakin.data.data.mahasiswa,
+                            detail:props.lakin.data.data.detail,
                             data:sb.concat([new_values]).concat(eb)
                         }
                     }

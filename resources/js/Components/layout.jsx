@@ -177,11 +177,12 @@ export default function Layout({children}){
                         </span>
                     </a>
                     
-                    <SimpleBar style={{maxHeight:"100vh"}}>
-                        <div className="h-100 pb-5" id="leftside-menu-container">
+                    <SimpleBar className='sidebar-scroll'>
+                        <div className="h-100" id="leftside-menu-container">
                             <ul className="side-nav">
 
-                                <li className="side-nav-title">Main</li>
+                                {/* INFOGRAFIS */}
+                                <li className="side-nav-title">INFO GRAFIS</li>
                                 <li
                                     className={clsx(
                                         "side-nav-item", 
@@ -196,269 +197,10 @@ export default function Layout({children}){
                                         <span> Dashboard </span>
                                     </Link>
                                 </li>
-                                {login_data.role=="admin"&&
-                                    <li
-                                        className={clsx(
-                                            "side-nav-item", 
-                                            {"menuitem-active":active_page=="Admin/ActivityProdi/Index"
-                                        })}
-                                    >
-                                        <Link
-                                            href="/admin/activity_prodi"
-                                            className={clsx("side-nav-link", "d-flex align-items-center", {"active":active_page=="Admin/ActivityProdi/Index"})}
-                                        >
-                                            <FiBookmark/>
-                                            <span> Activity Prodi </span>
-                                        </Link>
-                                    </li>
-                                }
-                                
-                                <li
-                                    className={clsx(
-                                        "side-nav-item", {
-                                        "menuitem-active":["Admin/Ppepp/Index", "Admin/Ppepp/SubPpepp", "Admin/PpeppKriteria/Index"].includes(active_page)
-                                    })}
-                                >
-                                    <a 
-                                        className="side-nav-link d-flex align-items-center cursor-pointer"
-                                        onClick={e=>setCollapse(collapse!="ppepp"?"ppepp":"")}
-                                        aria-expanded={collapse=="ppepp"}
-                                    >
-                                        <FiBookOpen/>
-                                        <span> PPEPP </span>
-                                        <span className='menu-arrow'><FiChevronRight className='ms-auto'/></span>
-                                    </a>
-                                    <Collapse in={collapse=="ppepp"}>
-                                        <div>
-                                            <ul className="side-nav-second-level">
-                                                {login_data.role=="admin"&&
-                                                    <li
-                                                        className={clsx({
-                                                            "active":["Admin/PpeppKriteria/Index"].includes(active_page)
-                                                        })}
-                                                    >
-                                                        <Link
-                                                            href="/admin/ppepp_kriteria"
-                                                            className={clsx({
-                                                                "active":["Admin/PpeppKriteria/Index"].includes(active_page)
-                                                            })}
-                                                        >
-                                                            Kriteria
-                                                        </Link>
-                                                    </li>
-                                                }
-                                                <li
-                                                    className={clsx({
-                                                        "active":["Admin/Ppepp/Index"].includes(active_page)
-                                                    })}
-                                                >
-                                                    <Link
-                                                        href="/admin/ppepp"
-                                                        className={clsx({
-                                                            "active":["Admin/Ppepp/Index"].includes(active_page)
-                                                        })}
-                                                    >
-                                                        PPEPP
-                                                    </Link>
-                                                </li>
-                                                <li
-                                                    className={clsx({
-                                                        "active":["Admin/Ppepp/SubPpepp"].includes(active_page)
-                                                    })}
-                                                >
-                                                    <Link
-                                                        href="/admin/ppepp/sub"
-                                                        className={clsx({
-                                                            "active":["Admin/Ppepp/SubPpepp"].includes(active_page)
-                                                        })}
-                                                    >
-                                                        Sub PPEPP
-                                                    </Link>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </Collapse>
-                                </li>
-                                {login_data.role=="admin"&&
-                                    <li
-                                        className={clsx(
-                                            "side-nav-item", 
-                                            {"menuitem-active":active_page=="Admin/Ppepp/RekapSubPpepp"
-                                        })}
-                                    >
-                                        <Link
-                                            href="/admin/ppepp/type/rekap_sub"
-                                            className={clsx("side-nav-link", "d-flex align-items-center", {"active":active_page=="Admin/Ppepp/RekapSubPpepp"})}
-                                        >
-                                            <FiBookmark/>
-                                            <span> Penilaian </span>
-                                        </Link>
-                                    </li>
-                                }
-
-                                <li
-                                    className={clsx(
-                                        "side-nav-item", {
-                                        "menuitem-active":["Admin/Bukti/Index"].includes(active_page)
-                                    })}
-                                >
-                                    <a 
-                                        className="side-nav-link d-flex align-items-center cursor-pointer"
-                                        onClick={e=>setCollapse(collapse!="bukti"?"bukti":"")}
-                                        aria-expanded={collapse=="bukti"}
-                                    >
-                                        <FiBookOpen/>
-                                        <span> Bukti PPEPP </span>
-                                        <span className='menu-arrow'><FiChevronRight className='ms-auto'/></span>
-                                    </a>
-                                    <Collapse in={collapse=="bukti"}>
-                                        <div>
-                                            <ul className="side-nav-second-level">
-                                                {kriteria.map(sub=>(
-                                                    <>
-                                                        {login_data.role=="pengawal"?
-                                                            <>
-                                                                {sub.id_kriteria==login_data.id_kriteria&&
-                                                                    <li
-                                                                        className={clsx({
-                                                                            "active":(active_page=="Admin/Bukti/Index" && id_kriteria==sub.id_kriteria.toString())
-                                                                        })}
-                                                                    >
-                                                                        <Link
-                                                                            href={`/admin/bukti/${sub.id_kriteria}`}
-                                                                            className={clsx({
-                                                                                "active":(active_page=="Admin/Bukti/Index" && id_kriteria==sub.id_kriteria.toString())
-                                                                            })}
-                                                                        >
-                                                                            {sub.nama_kriteria}
-                                                                        </Link>
-                                                                    </li>
-                                                                }
-                                                            </>
-                                                        :
-                                                            <li
-                                                                className={clsx({
-                                                                    "active":(active_page=="Admin/Bukti/Index" && id_kriteria==sub.id_kriteria.toString())
-                                                                })}
-                                                            >
-                                                                <Link
-                                                                    href={`/admin/bukti/${sub.id_kriteria}`}
-                                                                    className={clsx({
-                                                                        "active":(active_page=="Admin/Bukti/Index" && id_kriteria==sub.id_kriteria.toString())
-                                                                    })}
-                                                                >
-                                                                    {sub.nama_kriteria}
-                                                                </Link>
-                                                            </li>
-                                                        }
-                                                    </>
-                                                ))}
-                                            </ul>
-                                        </div>
-                                    </Collapse>
-                                </li>
-                                {login_data.role=="admin"&&
-                                    <li
-                                        className={clsx(
-                                            "side-nav-item", 
-                                            {"menuitem-active":active_page=="Admin/Bukti/RekapBukti"
-                                        })}
-                                    >
-                                        <Link
-                                            href="/admin/bukti/type/rekap_bukti"
-                                            className={clsx("side-nav-link", "d-flex align-items-center", {"active":active_page=="Admin/Buktu/RekapBukti"})}
-                                        >
-                                            <FiBookmark/>
-                                            <span> Rekap Bukti </span>
-                                        </Link>
-                                    </li>
-                                }
-                                {login_data.role=="admin"&&
-                                    <li
-                                        className={clsx(
-                                            "side-nav-item", {
-                                            "menuitem-active":["Admin/Kontak/Index", "Admin/KontakGroup/Index", "Admin/PesanWhatsapp/Index"].includes(active_page)
-                                        })}
-                                    >
-                                        <a 
-                                            className="side-nav-link d-flex align-items-center cursor-pointer"
-                                            onClick={e=>setCollapse(collapse!="pesan_wa"?"pesan_wa":"")}
-                                            aria-expanded={collapse=="pesan_wa"}
-                                        >
-                                            <FiMessageSquare/>
-                                            <span> Pesan Whatsapp </span>
-                                            <span className='menu-arrow'><FiChevronRight className='ms-auto'/></span>
-                                        </a>
-                                        <Collapse in={collapse=="pesan_wa"}>
-                                            <div>
-                                                <ul className="side-nav-second-level">
-                                                    <li
-                                                        className={clsx({
-                                                            "active":(active_page=="Admin/Kontak/Index")
-                                                        })}
-                                                    >
-                                                        <Link
-                                                            href={`/admin/kontak`}
-                                                            className={clsx({
-                                                                "active":(active_page=="Admin/Kontak/Index")
-                                                            })}
-                                                        >
-                                                            Kontak
-                                                        </Link>
-                                                    </li>
-                                                    <li
-                                                        className={clsx({
-                                                            "active":(active_page=="Admin/KontakGroup/Index")
-                                                        })}
-                                                    >
-                                                        <Link
-                                                            href={`/admin/kontak_group`}
-                                                            className={clsx({
-                                                                "active":(active_page=="Admin/KontakGroup/Index")
-                                                            })}
-                                                        >
-                                                            Group Kontak
-                                                        </Link>
-                                                    </li>
-                                                    <li
-                                                        className={clsx({
-                                                            "active":(active_page=="Admin/PesanWhatsapp/Index")
-                                                        })}
-                                                    >
-                                                        <Link
-                                                            href={`/admin/pesan_whatsapp`}
-                                                            className={clsx({
-                                                                "active":(active_page=="Admin/PesanWhatsapp/Index")
-                                                            })}
-                                                        >
-                                                            Pesan Whatsapp
-                                                        </Link>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </Collapse>
-                                    </li>
-                                }
-                                {login_data.role=="admin"&&
-                                    <li
-                                        className={clsx(
-                                            "side-nav-item", 
-                                            {"menuitem-active":active_page=="Admin/Users/Index"
-                                        })}
-                                    >
-                                        <Link
-                                            href="/admin/users"
-                                            className={clsx("side-nav-link", "d-flex align-items-center", {"active":active_page=="Admin/Users/Index"})}
-                                        >
-                                            <FiUsers/>
-                                            <span> Users </span>
-                                        </Link>
-                                    </li>
-                                }
 
                                 
                                 {/* LAKIN */}
-                                <li className="side-nav-title">LAKIN</li>
+                                <li className="side-nav-title">LAPORAN KINERJA (LAKIN)</li>
                                 <li
                                     className={clsx(
                                         "side-nav-item", 
@@ -721,6 +463,272 @@ export default function Layout({children}){
                                         </div>
                                     </Collapse>
                                 </li>
+                                
+                                {/* AKREDITASI */}
+                                <li className="side-nav-title">AKREDITASI</li>
+                                <li
+                                    className={clsx(
+                                        "side-nav-item", {
+                                        "menuitem-active":["Admin/Ppepp/Index", "Admin/Ppepp/SubPpepp", "Admin/PpeppKriteria/Index"].includes(active_page)
+                                    })}
+                                >
+                                    <a 
+                                        className="side-nav-link d-flex align-items-center cursor-pointer"
+                                        onClick={e=>setCollapse(collapse!="ppepp"?"ppepp":"")}
+                                        aria-expanded={collapse=="ppepp"}
+                                    >
+                                        <FiBookOpen/>
+                                        <span> Master PPEPP </span>
+                                        <span className='menu-arrow'><FiChevronRight className='ms-auto'/></span>
+                                    </a>
+                                    <Collapse in={collapse=="ppepp"}>
+                                        <div>
+                                            <ul className="side-nav-second-level">
+                                                {login_data.role=="admin"&&
+                                                    <li
+                                                        className={clsx({
+                                                            "active":["Admin/PpeppKriteria/Index"].includes(active_page)
+                                                        })}
+                                                    >
+                                                        <Link
+                                                            href="/admin/ppepp_kriteria"
+                                                            className={clsx({
+                                                                "active":["Admin/PpeppKriteria/Index"].includes(active_page)
+                                                            })}
+                                                        >
+                                                            Kriteria
+                                                        </Link>
+                                                    </li>
+                                                }
+                                                <li
+                                                    className={clsx({
+                                                        "active":["Admin/Ppepp/Index"].includes(active_page)
+                                                    })}
+                                                >
+                                                    <Link
+                                                        href="/admin/ppepp"
+                                                        className={clsx({
+                                                            "active":["Admin/Ppepp/Index"].includes(active_page)
+                                                        })}
+                                                    >
+                                                        PPEPP
+                                                    </Link>
+                                                </li>
+                                                <li
+                                                    className={clsx({
+                                                        "active":["Admin/Ppepp/SubPpepp"].includes(active_page)
+                                                    })}
+                                                >
+                                                    <Link
+                                                        href="/admin/ppepp/sub"
+                                                        className={clsx({
+                                                            "active":["Admin/Ppepp/SubPpepp"].includes(active_page)
+                                                        })}
+                                                    >
+                                                        Sub PPEPP
+                                                    </Link>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </Collapse>
+                                </li>
+                                <li
+                                    className={clsx(
+                                        "side-nav-item", {
+                                        "menuitem-active":["Admin/Bukti/Index"].includes(active_page)
+                                    })}
+                                >
+                                    <a 
+                                        className="side-nav-link d-flex align-items-center cursor-pointer"
+                                        onClick={e=>setCollapse(collapse!="bukti"?"bukti":"")}
+                                        aria-expanded={collapse=="bukti"}
+                                    >
+                                        <FiBookOpen/>
+                                        <span> Bukti PPEPP </span>
+                                        <span className='menu-arrow'><FiChevronRight className='ms-auto'/></span>
+                                    </a>
+                                    <Collapse in={collapse=="bukti"}>
+                                        <div>
+                                            <ul className="side-nav-second-level">
+                                                {kriteria.map(sub=>(
+                                                    <>
+                                                        {login_data.role=="pengawal"?
+                                                            <>
+                                                                {sub.id_kriteria==login_data.id_kriteria&&
+                                                                    <li
+                                                                        className={clsx({
+                                                                            "active":(active_page=="Admin/Bukti/Index" && id_kriteria==sub.id_kriteria.toString())
+                                                                        })}
+                                                                    >
+                                                                        <Link
+                                                                            href={`/admin/bukti/${sub.id_kriteria}`}
+                                                                            className={clsx({
+                                                                                "active":(active_page=="Admin/Bukti/Index" && id_kriteria==sub.id_kriteria.toString())
+                                                                            })}
+                                                                        >
+                                                                            {sub.nama_kriteria}
+                                                                        </Link>
+                                                                    </li>
+                                                                }
+                                                            </>
+                                                        :
+                                                            <li
+                                                                className={clsx({
+                                                                    "active":(active_page=="Admin/Bukti/Index" && id_kriteria==sub.id_kriteria.toString())
+                                                                })}
+                                                            >
+                                                                <Link
+                                                                    href={`/admin/bukti/${sub.id_kriteria}`}
+                                                                    className={clsx({
+                                                                        "active":(active_page=="Admin/Bukti/Index" && id_kriteria==sub.id_kriteria.toString())
+                                                                    })}
+                                                                >
+                                                                    {sub.nama_kriteria}
+                                                                </Link>
+                                                            </li>
+                                                        }
+                                                    </>
+                                                ))}
+                                            </ul>
+                                        </div>
+                                    </Collapse>
+                                </li>
+                                {login_data.role=="admin"&&
+                                    <li
+                                        className={clsx(
+                                            "side-nav-item", 
+                                            {"menuitem-active":active_page=="Admin/Bukti/RekapBukti"
+                                        })}
+                                    >
+                                        <Link
+                                            href="/admin/bukti/type/rekap_bukti"
+                                            className={clsx("side-nav-link", "d-flex align-items-center", {"active":active_page=="Admin/Buktu/RekapBukti"})}
+                                        >
+                                            <FiBookmark/>
+                                            <span> Rekap Bukti PPEPP </span>
+                                        </Link>
+                                    </li>
+                                }
+                                {login_data.role=="admin"&&
+                                    <li
+                                        className={clsx(
+                                            "side-nav-item", 
+                                            {"menuitem-active":active_page=="Admin/Ppepp/RekapSubPpepp"
+                                        })}
+                                    >
+                                        <Link
+                                            href="/admin/ppepp/type/rekap_sub"
+                                            className={clsx("side-nav-link", "d-flex align-items-center", {"active":active_page=="Admin/Ppepp/RekapSubPpepp"})}
+                                        >
+                                            <FiBookmark/>
+                                            <span> Penilaian </span>
+                                        </Link>
+                                    </li>
+                                }
+                                
+                                {/* USER */}
+                                <li className="side-nav-title">MANAJEMEN USER</li>
+                                {login_data.role=="admin"&&
+                                    <li
+                                        className={clsx(
+                                            "side-nav-item", 
+                                            {"menuitem-active":active_page=="Admin/Users/Index"
+                                        })}
+                                    >
+                                        <Link
+                                            href="/admin/users"
+                                            className={clsx("side-nav-link", "d-flex align-items-center", {"active":active_page=="Admin/Users/Index"})}
+                                        >
+                                            <FiUsers/>
+                                            <span> Users </span>
+                                        </Link>
+                                    </li>
+                                }
+                                {login_data.role=="admin"&&
+                                    <li
+                                        className={clsx(
+                                            "side-nav-item", {
+                                            "menuitem-active":["Admin/Kontak/Index", "Admin/KontakGroup/Index", "Admin/PesanWhatsapp/Index"].includes(active_page)
+                                        })}
+                                    >
+                                        <a 
+                                            className="side-nav-link d-flex align-items-center cursor-pointer"
+                                            onClick={e=>setCollapse(collapse!="pesan_wa"?"pesan_wa":"")}
+                                            aria-expanded={collapse=="pesan_wa"}
+                                        >
+                                            <FiMessageSquare/>
+                                            <span> Pesan Whatsapp </span>
+                                            <span className='menu-arrow'><FiChevronRight className='ms-auto'/></span>
+                                        </a>
+                                        <Collapse in={collapse=="pesan_wa"}>
+                                            <div>
+                                                <ul className="side-nav-second-level">
+                                                    <li
+                                                        className={clsx({
+                                                            "active":(active_page=="Admin/Kontak/Index")
+                                                        })}
+                                                    >
+                                                        <Link
+                                                            href={`/admin/kontak`}
+                                                            className={clsx({
+                                                                "active":(active_page=="Admin/Kontak/Index")
+                                                            })}
+                                                        >
+                                                            Kontak
+                                                        </Link>
+                                                    </li>
+                                                    <li
+                                                        className={clsx({
+                                                            "active":(active_page=="Admin/KontakGroup/Index")
+                                                        })}
+                                                    >
+                                                        <Link
+                                                            href={`/admin/kontak_group`}
+                                                            className={clsx({
+                                                                "active":(active_page=="Admin/KontakGroup/Index")
+                                                            })}
+                                                        >
+                                                            Group Kontak
+                                                        </Link>
+                                                    </li>
+                                                    <li
+                                                        className={clsx({
+                                                            "active":(active_page=="Admin/PesanWhatsapp/Index")
+                                                        })}
+                                                    >
+                                                        <Link
+                                                            href={`/admin/pesan_whatsapp`}
+                                                            className={clsx({
+                                                                "active":(active_page=="Admin/PesanWhatsapp/Index")
+                                                            })}
+                                                        >
+                                                            Pesan Whatsapp
+                                                        </Link>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </Collapse>
+                                    </li>
+                                }
+
+                                {/* {login_data.role=="admin"&&
+                                    <li
+                                        className={clsx(
+                                            "side-nav-item", 
+                                            {"menuitem-active":active_page=="Admin/ActivityProdi/Index"
+                                        })}
+                                    >
+                                        <Link
+                                            href="/admin/activity_prodi"
+                                            className={clsx("side-nav-link", "d-flex align-items-center", {"active":active_page=="Admin/ActivityProdi/Index"})}
+                                        >
+                                            <FiBookmark/>
+                                            <span> Activity Prodi </span>
+                                        </Link>
+                                    </li>
+                                } */}
+
+                                
                             </ul>
                             <div className="clearfix"></div>
                         </div>

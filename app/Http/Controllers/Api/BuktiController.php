@@ -32,7 +32,7 @@ class BuktiController extends Controller
 
         //VALIDATION
         $validation=Validator::make($req, [
-            'id_ppepp'      =>"required|exists:App\Models\PpeppModel",
+            'id_ppepp'      =>"required|exists:App\Models\PpeppModel|unique:App\Models\BuktiModel",
             'deskripsi'     =>"present",
             'file'          =>"required",
             'link'          =>"required",

@@ -112,3 +112,6 @@
 .side-nav .side-nav-link{
     text-wrap: wrap !important;
 }
+.sidebar-scroll{
+    max-height: calc(100vh - var(--tz-topbar-height));
+}

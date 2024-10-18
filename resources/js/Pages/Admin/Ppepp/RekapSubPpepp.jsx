@@ -253,30 +253,33 @@ const Table=(props)=>{
                 }
 
                 return p.sub_ppepp.map((sp, idx_sp)=>{
+                    const found_bukti=sp.bukti.length>0?true:false
                     const skor=sp.skor
                     const bobot=sp.bobot
                     const na=new Decimal(skor).mul(bobot).toNumber()
 
-                    if(sum_skor=="" && sum_bobot=="" && sum_na==""){
-                        sum_skor=Number(sp.skor)
-                        sum_bobot=Number(sp.bobot)
-                        sum_na=na
-                    }
-                    else{
-                        sum_skor+=Number(sp.skor)
-                        sum_bobot+=Number(sp.bobot)
-                        sum_na+=na
-                    }
-
-                    if(sum_skor_kriteria=="" && sum_bobot_kriteria=="" && sum_na_kriteria==""){
-                        sum_skor_kriteria=Number(sp.skor)
-                        sum_bobot_kriteria=Number(sp.bobot)
-                        sum_na_kriteria=na
-                    }
-                    else{
-                        sum_skor_kriteria+=Number(sp.skor)
-                        sum_bobot_kriteria+=Number(sp.bobot)
-                        sum_na_kriteria+=na
+                    if(found_bukti){
+                        if(sum_skor=="" && sum_bobot=="" && sum_na==""){
+                            sum_skor=Number(sp.skor)
+                            sum_bobot=Number(sp.bobot)
+                            sum_na=na
+                        }
+                        else{
+                            sum_skor+=Number(sp.skor)
+                            sum_bobot+=Number(sp.bobot)
+                            sum_na+=na
+                        }
+    
+                        if(sum_skor_kriteria=="" && sum_bobot_kriteria=="" && sum_na_kriteria==""){
+                            sum_skor_kriteria=Number(sp.skor)
+                            sum_bobot_kriteria=Number(sp.bobot)
+                            sum_na_kriteria=na
+                        }
+                        else{
+                            sum_skor_kriteria+=Number(sp.skor)
+                            sum_bobot_kriteria+=Number(sp.bobot)
+                            sum_na_kriteria+=na
+                        }
                     }
 
                     rendered=rendered.concat([
@@ -294,9 +297,9 @@ const Table=(props)=>{
                                 </>
                             }
                             <td rowspan={sp.rowspan}>{sp.nama_ppepp}</td>
-                            <td>{sp.skor}</td>
-                            <td>{sp.bobot}%</td>
-                            <td>{na}</td>
+                            <td>{found_bukti?sp.skor:""}</td>
+                            <td>{found_bukti?sp.bobot+"%":""}</td>
+                            <td>{found_bukti?na:""}</td>
                         </tr>
                     ])
                     return

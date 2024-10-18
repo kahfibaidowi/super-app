@@ -62,14 +62,21 @@ const Page=(props)=>{
         index:-1,
         data:{}
     })
+    const [edit_detail, setEditDetail]=useState({
+        is_open:false,
+        data:{
+            deskripsi:""
+        }
+    })
 
     //DATA/MUTATION
     const get_lakin=useQuery({
-        queryKey:["get_lakin", filter],
+        queryKey:["get_lakin_avg_dtpr", filter],
         queryFn:async()=>lakin_request.get(filter.type),
         initialData:{
             data:{
-                data:[]
+                data:[],
+                detail:[]
             }
         },
         refetchOnWindowFocus:false,
@@ -100,6 +107,20 @@ const Page=(props)=>{
             data:list
         })
     }
+    const toggleEditDetail=(list={}, show=false)=>{
+        let new_list=list
+        if(_.isNull(list)){
+            new_list={
+                tahun:filter.tahun,
+                deskripsi:""
+            }
+        }
+
+        setEditDetail({
+            is_open:show,
+            data:new_list
+        })
+    }
 
     return (
         <>
@@ -118,8 +139,16 @@ const Page=(props)=>{
                     setFilter={setFilter}
                     toggleTambah={toggleTambah}
                     toggleEdit={toggleEdit}
+                    toggleEditDetail={toggleEditDetail}
                 />
             </Layout>
+
+            <ModalEditDetail
+                filter={filter}
+                lakin={get_lakin}
+                data={edit_detail}
+                toggleEdit={toggleEditDetail}
+            />
 
             <ModalTambah
                 filter={filter}
@@ -144,7 +173,7 @@ const Table=(props)=>{
     const upsert_lakin=useMutation({
         mutationFn:(params)=>lakin_request.upsert(params),
         onSuccess:data=>{
-            queryClient.refetchQueries("get_lakin")
+            queryClient.refetchQueries("get_lakin_avg_dtpr")
         },
         onError:err=>{
             console.log(err)
@@ -159,6 +188,13 @@ const Table=(props)=>{
         }
 
         return props.data.data.data.data.filter(f=>f.tahun==props.filter.tahun)
+    }
+    const filtered_detail=()=>{
+        const detail_tahun=props.data.data.data.detail.filter(f=>f.tahun==props.filter.tahun)
+        if(detail_tahun.length>0){
+            return detail_tahun[0]
+        }
+        return {tahun:props.filter.tahun, deskripsi:""}
     }
     const jumlah_dtpr=(type="")=>{
         if(type=="") return
@@ -252,7 +288,8 @@ const Table=(props)=>{
                 const params={
                     type:props.filter.type,
                     content:{
-                        data:sb.concat(eb)
+                        data:sb.concat(eb),
+                        detail:props.data.data.data.detail
                     }
                 }
 
@@ -298,6 +335,24 @@ const Table=(props)=>{
                                 <FiFileText/> Print PDF
                             </a>
                         </div>
+                        {props.filter.tahun!=""&&
+                            <div className="d-flex flex-column align-items-start mb-3">
+                                <button 
+                                    className="btn btn-secondary rounded-pill mb-1"
+                                    type="button"
+                                    onClick={e=>props.toggleEditDetail(filtered_detail(), true)}
+                                >
+                                    <FiEdit/> Edit
+                                </button>
+                                <div>
+                                    {filtered_detail().deskripsi!=""?
+                                        <div className="text-prewrap">{filtered_detail().deskripsi}</div>
+                                    :
+                                        <span className="text-muted">tidak ada deskripsi!</span>
+                                    }
+                                </div>
+                            </div>
+                        }
                         <div className="table-responsive">
                             <table className="table table-hover table-hover table-custom table-wrap table-sm mb-0 w-100">
                                 <thead>
@@ -383,7 +438,7 @@ const Table=(props)=>{
                                             }
                                             {!_.isNull(props.data.error)&&
                                                 <tr>
-                                                    <td colSpan={11} className="text-center cursor-pointer" onClick={()=>queryClient.refetchQueries("get_lakin")}>
+                                                    <td colSpan={11} className="text-center cursor-pointer" onClick={()=>queryClient.refetchQueries("get_lakin_avg_dtpr")}>
                                                         <span className="text-muted">Gagal Memuat Data! &nbsp;<FiRefreshCw/></span>
                                                     </td>
                                                 </tr>
@@ -418,13 +473,104 @@ const Table=(props)=>{
     )
 }
 
+const ModalEditDetail=(props)=>{
+
+    //MUTATION
+    const upsert_lakin=useMutation({
+        mutationFn:params=>lakin_request.upsert(params),
+        onSuccess:data=>{
+            queryClient.refetchQueries("get_lakin_avg_dtpr")
+            props.toggleEdit()
+        },
+        onError:err=>{
+            if(err.response.data?.error=="VALIDATION_ERROR")
+                toast.error(err.response.data.data, {position:"bottom-center"})
+            else
+                toast.error("Insert Data Failed! ", {position:"bottom-center"})
+        }
+    })
+
+    //FILTER
+    
+    return (
+        <Modal show={props.data.is_open} onHide={props.toggleEdit} backdrop="static" size="md" scrollable>
+            <Formik
+                initialValues={props.data.data}
+                onSubmit={(values, actions)=>{
+                    const detail=props.lakin.data.data.detail.filter(f=>f.tahun!=values.tahun).concat([values])
+
+                    const params={
+                        type:props.filter.type,
+                        content:{
+                            detail:detail,
+                            data:props.lakin.data.data.data
+                        }
+                    }
+
+                    upsert_lakin.mutate(params, {
+                        onSettled:data=>{
+                            actions.setSubmitting(false)
+                        }
+                    })
+                }}
+                validationSchema={
+                    yup.object().shape({
+                        tahun:yup.string().required(),
+                        deskripsi:yup.string().optional()
+                    })
+                }
+            >
+                {formik=>(
+                    <form onSubmit={formik.handleSubmit}>
+                        <Modal.Header closeButton>
+                            <h4 className="modal-title">Edit Detail {formik.values.tahun}</h4>
+                        </Modal.Header>
+                        <Modal.Body>
+                            <div className="row">
+                                <div className="col-12">
+                                    <div className="mb-2">
+                                        <label className="my-1 me-2" for="country">Deskripsi</label>
+                                        <textarea
+                                            rows={5}
+                                            className="form-control"
+                                            name="deskripsi"
+                                            onChange={formik.handleChange}
+                                            value={formik.values.deskripsi}
+                                        ></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </Modal.Body>
+                        <Modal.Footer className="border-top pt-2">
+                            <button 
+                                type="button" 
+                                className="btn btn-link link-dark me-auto" 
+                                onClick={props.toggleTambah}
+                            >
+                                Batal
+                            </button>
+                            <button 
+                                type="submit" 
+                                className="btn btn-primary"
+                                disabled={formik.isSubmitting||!(formik.dirty&&formik.isValid)}
+                            >
+                                Save Changes
+                            </button>
+                        </Modal.Footer>
+                    </form>
+                )}
+            </Formik>
+        </Modal>
+    )
+}
+
 const ModalTambah=(props)=>{
 
     //MUTATION
     const upsert_lakin=useMutation({
         mutationFn:params=>lakin_request.upsert(params),
         onSuccess:data=>{
-            queryClient.refetchQueries("get_lakin")
+            queryClient.refetchQueries("get_lakin_avg_dtpr")
             props.toggleTambah()
         },
         onError:err=>{
@@ -447,7 +593,8 @@ const ModalTambah=(props)=>{
                     const params={
                         type:props.filter.type,
                         content:{
-                            data:[new_values].concat(props.lakin.data.data.data)
+                            data:[new_values].concat(props.lakin.data.data.data),
+                            detail:props.lakin.data.data.detail
                         }
                     }
 
@@ -661,7 +808,7 @@ const ModalEdit=(props)=>{
     const upsert_lakin=useMutation({
         mutationFn:params=>lakin_request.upsert(params),
         onSuccess:data=>{
-            queryClient.refetchQueries("get_lakin")
+            queryClient.refetchQueries("get_lakin_avg_dtpr")
             props.toggleEdit()
         },
         onError:err=>{
@@ -687,7 +834,8 @@ const ModalEdit=(props)=>{
                     const params={
                         type:props.filter.type,
                         content:{
-                            data:sb.concat([new_values]).concat(eb)
+                            data:sb.concat([new_values]).concat(eb),
+                            detail:props.lakin.data.data.detail
                         }
                     }
 

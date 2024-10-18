@@ -38,12 +38,30 @@ const Page=(props)=>{
 
         return props.data.filter(f=>f.tahun==props.tahun)
     }
+    const filtered_detail=()=>{
+        const detail_tahun=props.detail.filter(f=>f.tahun==props.tahun)
+        if(detail_tahun.length>0){
+            return detail_tahun[0]
+        }
+        return {tahun:props.tahun, deskripsi:""}
+    }
 
     return (
         <>
             <div id="table-title" className="d-flex justify-content-center mt-3 mb-5">
                 <h2>IPK Lulusan</h2>
             </div>
+            {props.tahun!=""&&
+                <div className="d-flex flex-column align-items-start w-100 mb-4">
+                    <div>
+                        {filtered_detail().deskripsi!=""?
+                            <div className="text-prewrap">{filtered_detail().deskripsi}</div>
+                        :
+                            <span className="text-muted">tidak ada deskripsi!</span>
+                        }
+                    </div>
+                </div>
+            }
             <div id="table-container">
                 <table id="table" className="table table-sm">
                     <thead>

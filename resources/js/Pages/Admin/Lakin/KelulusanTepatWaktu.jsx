@@ -48,7 +48,8 @@ const Page=(props)=>{
         data:{
             tahun:"",
             jumlah_alumni_3_tahun_terakhir:"",
-            jumlah_perusahaan_responden:""
+            jumlah_perusahaan_responden:"",
+            deskripsi:""
         }
     })
     const [tambah_lakin, setTambahLakin]=useState({
@@ -71,7 +72,7 @@ const Page=(props)=>{
 
     //DATA/MUTATION
     const get_lakin=useQuery({
-        queryKey:["get_lakin", filter],
+        queryKey:["get_lakin_kelulusan_tepat_waktu", filter],
         queryFn:async()=>lakin_request.get(filter.type),
         initialData:{
             data:{
@@ -90,7 +91,8 @@ const Page=(props)=>{
             new_list={
                 tahun:filter.tahun,
                 jumlah_alumni_3_tahun_terakhir:"",
-                jumlah_perusahaan_responden:""
+                jumlah_perusahaan_responden:"",
+                deskripsi:""
             }
         }
 
@@ -172,7 +174,7 @@ const Table=(props)=>{
     const upsert_lakin=useMutation({
         mutationFn:(params)=>lakin_request.upsert(params),
         onSuccess:data=>{
-            queryClient.refetchQueries("get_lakin")
+            queryClient.refetchQueries("get_lakin_kelulusan_tepat_waktu")
         },
         onError:err=>{
             console.log(err)
@@ -196,7 +198,8 @@ const Table=(props)=>{
         return {
             tahun:props.filter.tahun,
             jumlah_alumni_3_tahun_terakhir:"",
-            jumlah_perusahaan_responden:""
+            jumlah_perusahaan_responden:"",
+            deskripsi:""
         }
     }
     const jumlah_kelulusan_tepat_waktu=(type="")=>{
@@ -314,6 +317,36 @@ const Table=(props)=>{
                                 <FiFileText/> Print PDF
                             </a>
                         </div>
+                        {props.filter.tahun!=""&&
+                            <div className="d-flex flex-column align-items-start mb-3">
+                                <button 
+                                    className="btn btn-secondary rounded-pill mb-1"
+                                    type="button"
+                                    onClick={e=>props.toggleEditDetail(filtered_detail(), true)}
+                                >
+                                    <FiEdit/> Edit
+                                </button>
+                                <div>
+                                    Jumlah Alumni/Lulusan dalam 3 tahun terakhir : 
+                                    {filtered_detail().jumlah_alumni_3_tahun_terakhir!=""&&
+                                        <span className="fw-bold text-dark ms-2">{filtered_detail().jumlah_alumni_3_tahun_terakhir} orang</span>
+                                    }
+                                </div>
+                                <div>
+                                    Jumlah Perusahaan sbg Responden : 
+                                    {filtered_detail().jumlah_perusahaan_responden!=""&&
+                                        <span className="fw-bold text-dark ms-2">{filtered_detail().jumlah_perusahaan_responden} orang</span>
+                                    }
+                                </div>
+                                <div className="mt-2">
+                                    {filtered_detail().deskripsi!=""?
+                                        <div className="text-prewrap">{filtered_detail().deskripsi}</div>
+                                    :
+                                        <span className="text-muted">tidak ada deskripsi!</span>
+                                    }
+                                </div>
+                            </div>
+                        }
                         <div className="table-responsive">
                             <table className="table table-hover table-hover table-custom table-wrap table-sm mb-0 w-100">
                                 <thead>
@@ -381,7 +414,7 @@ const Table=(props)=>{
                                             }
                                             {!_.isNull(props.data.error)&&
                                                 <tr>
-                                                    <td colSpan={9} className="text-center cursor-pointer" onClick={()=>queryClient.refetchQueries("get_lakin")}>
+                                                    <td colSpan={9} className="text-center cursor-pointer" onClick={()=>queryClient.refetchQueries("get_lakin_kelulusan_tepat_waktu")}>
                                                         <span className="text-muted">Gagal Memuat Data! &nbsp;<FiRefreshCw/></span>
                                                     </td>
                                                 </tr>
@@ -410,29 +443,7 @@ const Table=(props)=>{
                             </table>
                         </div>
                         
-                        {props.filter.tahun!=""&&
-                            <div className="d-flex flex-column align-items-start mt-3">
-                                <button 
-                                    className="btn btn-secondary rounded-pill mb-1"
-                                    type="button"
-                                    onClick={e=>props.toggleEditDetail(filtered_detail(), true)}
-                                >
-                                    <FiEdit/> Edit
-                                </button>
-                                <div>
-                                    Jumlah Alumni/Lulusan dalam 3 tahun terakhir : 
-                                    {filtered_detail().jumlah_alumni_3_tahun_terakhir!=""&&
-                                        <span className="fw-bold text-dark ms-2">{filtered_detail().jumlah_alumni_3_tahun_terakhir} orang</span>
-                                    }
-                                </div>
-                                <div>
-                                    Jumlah Perusahaan sbg Responden : 
-                                    {filtered_detail().jumlah_perusahaan_responden!=""&&
-                                        <span className="fw-bold text-dark ms-2">{filtered_detail().jumlah_perusahaan_responden} orang</span>
-                                    }
-                                </div>
-                            </div>
-                        }
+                        
                     </div>
                 </div>
             </div>
@@ -446,7 +457,7 @@ const ModalEditDetail=(props)=>{
     const upsert_lakin=useMutation({
         mutationFn:params=>lakin_request.upsert(params),
         onSuccess:data=>{
-            queryClient.refetchQueries("get_lakin")
+            queryClient.refetchQueries("get_lakin_kelulusan_tepat_waktu")
             props.toggleEdit()
         },
         onError:err=>{
@@ -460,7 +471,7 @@ const ModalEditDetail=(props)=>{
     //FILTER
     
     return (
-        <Modal show={props.data.is_open} onHide={props.toggleTambah} backdrop="static" size="md" scrollable>
+        <Modal show={props.data.is_open} onHide={props.toggleEdit} backdrop="static" size="md" scrollable>
             <Formik
                 initialValues={props.data.data}
                 onSubmit={(values, actions)=>{
@@ -484,7 +495,8 @@ const ModalEditDetail=(props)=>{
                     yup.object().shape({
                         tahun:yup.string().required(),
                         jumlah_alumni_3_tahun_terakhir:yup.string().required(),
-                        jumlah_perusahaan_responden:yup.string().required()
+                        jumlah_perusahaan_responden:yup.string().required(),
+                        deskripsi:yup.string().optional()
                     })
                 }
             >
@@ -529,6 +541,18 @@ const ModalEditDetail=(props)=>{
                                         />
                                     </div>
                                 </div>
+                                <div className="col-12">
+                                    <div className="mb-2">
+                                        <label className="my-1 me-2" for="country">Deskripsi</label>
+                                        <textarea
+                                            rows={5}
+                                            className="form-control"
+                                            name="deskripsi"
+                                            onChange={formik.handleChange}
+                                            value={formik.values.deskripsi}
+                                        ></textarea>
+                                    </div>
+                                </div>
                             </div>
                         </Modal.Body>
                         <Modal.Footer className="border-top pt-2">
@@ -560,7 +584,7 @@ const ModalTambah=(props)=>{
     const upsert_lakin=useMutation({
         mutationFn:params=>lakin_request.upsert(params),
         onSuccess:data=>{
-            queryClient.refetchQueries("get_lakin")
+            queryClient.refetchQueries("get_lakin_kelulusan_tepat_waktu")
             props.toggleTambah()
         },
         onError:err=>{
@@ -765,7 +789,7 @@ const ModalEdit=(props)=>{
     const upsert_lakin=useMutation({
         mutationFn:params=>lakin_request.upsert(params),
         onSuccess:data=>{
-            queryClient.refetchQueries("get_lakin")
+            queryClient.refetchQueries("get_lakin_kelulusan_tepat_waktu")
             props.toggleEdit()
         },
         onError:err=>{

@@ -43,7 +43,7 @@ const Page=(props)=>{
         if(detail_tahun.length>0){
             return detail_tahun[0]
         }
-        return {tahun:props.tahun, jumlah:""}
+        return {tahun:props.tahun, jumlah:"", deskripsi:""}
     }
 
     return (
@@ -57,6 +57,13 @@ const Page=(props)=>{
                         Jumlah Mahasiswa Aktif Pada Tahun TS : 
                         {filtered_detail().jumlah!=""&&
                             <span className="fw-bold text-dark ms-2">{filtered_detail().jumlah} orang</span>
+                        }
+                    </div>
+                    <div className="mt-2">
+                        {filtered_detail().deskripsi!=""?
+                            <div className="text-prewrap">{filtered_detail().deskripsi}</div>
+                        :
+                            <span className="text-muted">tidak ada deskripsi!</span>
                         }
                     </div>
                 </div>
