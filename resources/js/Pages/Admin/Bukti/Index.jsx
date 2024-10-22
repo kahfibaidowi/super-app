@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from "react"
 import Layout from "@/Components/layout"
 import { queryClient } from "@/Config/api"
 import { toast } from "react-toastify"
-import { FiChevronLeft, FiChevronRight, FiEdit, FiPlus, FiRefreshCw, FiTrash, FiTrash2, FiUpload } from "react-icons/fi"
+import { FiChevronLeft, FiChevronRight, FiEdit, FiFileText, FiPlus, FiRefreshCw, FiTrash, FiTrash2, FiUpload } from "react-icons/fi"
 import Avatar from "@/Components/ui/avatar"
 import { Modal, Spinner } from "react-bootstrap"
 import swal from "sweetalert2"
@@ -20,6 +20,9 @@ import { file_request, user_request, activity_prodi_request, ppepp_kriteria_requ
 import { SwitchInput } from "@/Components/ui/input_form"
 import { parse_image, parse_pdf } from "@/Config/ocr"
 import extract from "@/Config/xlsx_extract"
+import * as ExcelJS from "exceljs"
+import FileSaver from "file-saver"
+import { sheetColumn } from "@/Config/helpers"
 
 
 const MySwal=withReactContent(swal)
@@ -256,6 +259,85 @@ const Table=(props)=>{
     let timeout=0
 
     //ACTIONS
+    const downloadExcel=async()=>{
+        let aoa_bukti=[]
+        let rows_merge=[]
+
+        //header
+        aoa_bukti=aoa_bukti.concat([
+            [
+                "#",
+                "PPEPP",
+                "Deskripsi",
+                "Sub PPEPP",
+                "Bukti Sahih",
+                "",
+                "",
+                ""
+            ],
+            [
+                "",
+                "",
+                "",
+                "",
+                "Justifikasi",
+                "Dokumen",
+                "Link External",
+                "Skor"
+            ]
+        ])
+        rows_merge=rows_merge.concat([
+            {s:{r:1,c:1}, e:{r:2,c:1}},
+            {s:{r:1,c:2}, e:{r:2,c:2}},
+            {s:{r:1,c:3}, e:{r:2,c:3}},
+            {s:{r:1,c:4}, e:{r:2,c:4}},
+            {s:{r:1,c:5}, e:{r:1,c:8}}
+        ])
+
+        //content
+        const bukti=props.data.data.data
+        for(var i=0; i<bukti.length; i++){
+            aoa_bukti=aoa_bukti.concat([
+                [
+                    ((i+1)+((props.data.data.current_page-1)*props.filter.per_page)).toString(),
+                    bukti[i].sub_ppepp.parent.nama_ppepp.toString(),
+                    bukti[i].sub_ppepp.parent.deskripsi.toString(),
+                    bukti[i].sub_ppepp.nama_ppepp.toString(),
+                    bukti[i].deskripsi.toString(),
+                    bukti[i].file.toString(),
+                    bukti[i].link_external.toString(),
+                    bukti[i].sub_ppepp.skor.toString()
+                ]
+            ])
+        }
+
+        //processing
+        const workBook=new ExcelJS.Workbook()
+        const workSheet1=workBook.addWorksheet("Sheet 1")
+        workSheet1.addRows(aoa_bukti)
+        rows_merge.map(rm=>{
+            workSheet1.mergeCells(`${sheetColumn(rm.s.c)}${rm.s.r}`, `${sheetColumn(rm.e.c)}${rm.e.r}`)
+        })
+        workSheet1.getRow(1).font={bold:true}
+        workSheet1.getRow(2).font={bold:true}
+
+        await workBook.xlsx.writeBuffer()
+        .then((data)=>{
+            let today=new Date()
+            let date=today.getFullYear()+
+                (today.getMonth()+1).toString().padStart(2, "0")+
+                today.getDate().toString().padStart(2, "0")+
+                today.getHours().toString().padStart(2, "0")+
+                today.getMinutes().toString().padStart(2, "0")+
+                today.getSeconds().toString().padStart(2, "0")
+
+            FileSaver.saveAs(new Blob([data]), date+"__bukti.xlsx")
+
+        })
+        .catch(err => {
+            toast.error("Failed to create generated spreadsheet!", {position:"bottom-center"})
+        })
+    }
     const confirmHapus=(list)=>{
         MySwal.fire({
             title: "Yakin ingin menghapus data?",
@@ -315,6 +397,16 @@ const Table=(props)=>{
                                     placeholder="Cari ..."
                                 />
                             </div>
+                        </div>
+                        
+                        <div className="d-flex mt-2">
+                            <button 
+                                type="button"
+                                className="btn btn-secondary ms-2 rounded-pill"
+                                onClick={downloadExcel}
+                            >
+                                <FiFileText/> Download Excel
+                            </button>
                         </div>
                     </div>
                     <div class="card-body">
@@ -426,7 +518,7 @@ const Table=(props)=>{
                                 <div>Halaman {props.data.data.current_page} dari {props.data.data.last_page} ({props.data.data.total} data)</div>
                             </div>
                             <div className="d-flex align-items-center me-auto ms-3">
-                                <select className="form-select" name="per_page" value={props.data.data.per_page} onChange={setPerPage}>
+                                <select className="form-select" name="per_page" value={props.filter.per_page} onChange={setPerPage}>
                                     <option value="15">15 Data</option>
                                     <option value="25">25 Data</option>
                                     <option value="50">50 Data</option>

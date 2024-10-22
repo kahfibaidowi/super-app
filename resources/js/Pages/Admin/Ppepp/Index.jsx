@@ -41,6 +41,8 @@ const Page=(props)=>{
             type:"ppepp",
             id_kriteria:"",
             nested:"",
+            no_butir:"",
+            no_urut:"",
             nama_ppepp:"",
             deskripsi:"",
             standar_minimum:"",
@@ -88,6 +90,8 @@ const Page=(props)=>{
                 type:"ppepp",
                 id_kriteria:filter.id_kriteria,
                 nested:"",
+                no_butir:"",
+                no_urut:"",
                 nama_ppepp:"",
                 deskripsi:"",
                 standar_minimum:"",
@@ -99,7 +103,10 @@ const Page=(props)=>{
     const toggleEdit=(list={}, show=false)=>{
         setEditPpepp({
             is_open:show,
-            ppepp:list
+            ppepp:Object.assign({}, list, {
+                bobot:!_.isNull(list.bobot)?list.bobot:"",
+                skor:!_.isNull(list.skor)?list.skor:""
+            })
         })
     }
 
@@ -270,6 +277,7 @@ const Table=(props)=>{
                                     <tr>
                                         <th className="" width="50">#</th>
                                         <th className="">Kriteria</th>
+                                        <th className="" width="80">No. Butir</th>
                                         <th className="">PPEPP</th>
                                         <th className="">Deskripsi</th>
                                         <th className="" width="50"></th>
@@ -282,6 +290,7 @@ const Table=(props)=>{
                                                 <tr key={list}>
                                                     <td>{(idx+1)+((props.data.data.current_page-1)*props.filter.per_page)}</td>
                                                     <td>{list.kriteria.nama_kriteria}</td>
+                                                    <td>{list.no_butir}</td>
                                                     <td>{list.nama_ppepp}</td>
                                                     <td className="text-prewrap">{list.deskripsi}</td>
                                                     <td className="text-nowrap py-0">
@@ -298,12 +307,12 @@ const Table=(props)=>{
                                             ))}
                                             {(props.data.data.data.length==0&&_.isNull(props.data.error))&&
                                                 <tr>
-                                                    <td colSpan={5} className="text-center">Data tidak ditemukan!</td>
+                                                    <td colSpan={6} className="text-center">Data tidak ditemukan!</td>
                                                 </tr>
                                             }
                                             {!_.isNull(props.data.error)&&
                                                 <tr>
-                                                    <td colSpan={5} className="text-center cursor-pointer" onClick={()=>queryClient.refetchQueries("gets_ppepp")}>
+                                                    <td colSpan={6} className="text-center cursor-pointer" onClick={()=>queryClient.refetchQueries("gets_ppepp")}>
                                                         <span className="text-muted">Gagal Memuat Data! &nbsp;<FiRefreshCw/></span>
                                                     </td>
                                                 </tr>
@@ -312,7 +321,7 @@ const Table=(props)=>{
                                     :
                                         <>
                                             <tr>
-                                                <td colSpan={5} className="text-center">
+                                                <td colSpan={6} className="text-center">
                                                     <div className="d-flex align-items-center justify-content-center">
                                                         <Spinner
                                                             as="span"
@@ -426,6 +435,7 @@ const ModalTambah=(props)=>{
                     yup.object().shape({
                         type:yup.string().required(),
                         id_kriteria:yup.string().required(),
+                        no_butir:yup.string().required(),
                         nama_ppepp:yup.string().required(),
                         deskripsi:yup.string().optional()
                     })
@@ -449,6 +459,18 @@ const ModalTambah=(props)=>{
                                             }}
                                             placeholder="Pilih kriteria"
                                             disabled={props.auth.user.role!="admin"}
+                                        />
+                                    </div>
+                                </div>
+                                <div className="col-12">
+                                    <div className="mb-2">
+                                        <label className="my-1 me-2" for="country">No. Butir <span className="text-danger">*</span></label>
+                                        <input 
+                                            type="text" 
+                                            className="form-control"
+                                            name="no_butir"
+                                            onChange={formik.handleChange}
+                                            value={formik.values.no_butir}
                                         />
                                     </div>
                                 </div>
@@ -535,6 +557,7 @@ const ModalEdit=(props)=>{
                 }}
                 validationSchema={
                     yup.object().shape({
+                        no_butir:yup.string().required(),
                         nama_ppepp:yup.string().required(),
                         deskripsi:yup.string().optional()
                     })
@@ -547,6 +570,18 @@ const ModalEdit=(props)=>{
                         </Modal.Header>
                         <Modal.Body>
                             <div className="row">
+                                <div className="col-12">
+                                    <div className="mb-2">
+                                        <label className="my-1 me-2" for="country">No. Butir <span className="text-danger">*</span></label>
+                                        <input 
+                                            type="text" 
+                                            className="form-control"
+                                            name="no_butir"
+                                            onChange={formik.handleChange}
+                                            value={formik.values.no_butir}
+                                        />
+                                    </div>
+                                </div>
                                 <div className="col-12">
                                     <div className="mb-2">
                                         <label className="my-1 me-2" for="country">PPEPP <span className="text-danger">*</span></label>

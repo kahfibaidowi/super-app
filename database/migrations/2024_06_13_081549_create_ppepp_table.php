@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id("id_ppepp");
             $table->unsignedBigInteger("id_kriteria")->nullable();
             $table->unsignedBigInteger("nested")->nullable();
+            $table->text("no_butir");
+            $table->text("no_urut");
             $table->text("nama_ppepp");
             $table->text("deskripsi");
             $table->text("standar_minimum");

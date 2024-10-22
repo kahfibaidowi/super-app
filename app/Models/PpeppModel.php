@@ -15,6 +15,8 @@ class PpeppModel extends Model
     protected $fillable = [
         'id_kriteria',
         'nested',
+        'no_butir',
+        'no_urut',
         'nama_ppepp',
         'deskripsi',
         'standar_minimum',

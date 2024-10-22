@@ -50,6 +50,20 @@ class PpeppController extends Controller
                     $q->whereNull("nested");
                 })
             ],
+            'no_butir'      =>[
+                Rule::requiredIf(function()use($req){
+                    if(!isset($req['no_butir'])) return true;
+                    if($req['type']=="ppepp") return true;
+                    return false;
+                }),
+            ],
+            'no_urut'       =>[
+                Rule::requiredIf(function()use($req){
+                    if(!isset($req['no_urut'])) return true;
+                    if($req['type']=="sub_ppepp") return true;
+                    return false;
+                }),
+            ],
             'nama_ppepp'    =>"required",
             'deskripsi'     =>"present",
             'standar_minimum'=>"present",
@@ -84,6 +98,8 @@ class PpeppController extends Controller
             PpeppModel::create([
                 'id_kriteria'   =>trim($req['id_kriteria'])!=""?$req['id_kriteria']:null,
                 'nested'        =>trim($req['nested'])!=""?$req['nested']:null,
+                'no_butir'      =>$req['no_butir'],
+                'no_urut'       =>$req['no_urut'],
                 'nama_ppepp'    =>$req['nama_ppepp'],
                 'deskripsi'     =>$req['deskripsi'],
                 'standar_minimum'=>$req['standar_minimum'],
@@ -120,6 +136,28 @@ class PpeppController extends Controller
             'id_ppepp' =>[
                 "required",
                 Rule::exists("App\Models\PpeppModel")
+            ],
+            'no_butir'      =>[
+                Rule::requiredIf(function()use($req){
+                    if(!isset($req['no_butir'])) return true;
+                    
+                    $q=PpeppModel::where("id_ppepp", $req['id_ppepp'])->first();
+                    if(!isset($q)) return true;
+                    if(is_null($q['nested'])) return true;
+
+                    return false;
+                }),
+            ],
+            'no_urut'       =>[
+                Rule::requiredIf(function()use($req){
+                    if(!isset($req['no_urut'])) return true;
+                    
+                    $q=PpeppModel::where("id_ppepp", $req['id_ppepp'])->first();
+                    if(!isset($q)) return true;
+                    if(!is_null($q['nested'])) return true;
+
+                    return false;
+                }),
             ],
             'nama_ppepp'    =>"required",
             'deskripsi'     =>"present",
@@ -161,6 +199,8 @@ class PpeppController extends Controller
         //SUCCESS
         DB::transaction(function()use($req){
             $data_update=[
+                'no_butir'      =>$req['no_butir'],
+                'no_urut'       =>$req['no_urut'],
                 'nama_ppepp'    =>$req['nama_ppepp'],
                 'deskripsi'     =>$req['deskripsi'],
                 'standar_minimum'=>$req['standar_minimum'],
